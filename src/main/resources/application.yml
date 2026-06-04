@@ -1,0 +1,7 @@
+spring:
+  profiles:
+    default: dev
+  application:
+    name: crm
+server:
+  port: 8080
