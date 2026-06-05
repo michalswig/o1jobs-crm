@@ -6,8 +6,8 @@ import lombok.Getter;
 import java.time.Instant;
 
 @Entity
-@Table
 @Getter
+@Table(name = "app_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +37,10 @@ public class User {
     @PrePersist
     protected void onCreate() {
         this.createdAt = Instant.now();
+    }
+
+    public void deactivateUser() {
+        this.active = false;
     }
 
 }
