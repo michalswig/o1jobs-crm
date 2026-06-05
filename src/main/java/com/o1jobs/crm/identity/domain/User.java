@@ -27,11 +27,16 @@ public class User {
     protected User() {
     }
 
-    public User(String username, String passwordHash, UserRole role, boolean active, Instant createdAt) {
+    public User(String username, String passwordHash, UserRole role, boolean active) {
         this.username = username;
         this.passwordHash = passwordHash;
         this.role = role;
         this.active = active;
-        this.createdAt = createdAt;
     }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = Instant.now();
+    }
+
 }
