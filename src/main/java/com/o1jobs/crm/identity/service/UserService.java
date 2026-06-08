@@ -1,7 +1,7 @@
 package com.o1jobs.crm.identity.service;
 
-import com.o1jobs.crm.excpetion.NoSuchUserException;
-import com.o1jobs.crm.excpetion.UserAlreadyExistsException;
+import com.o1jobs.crm.exception.NoSuchUserException;
+import com.o1jobs.crm.exception.UserAlreadyExistsException;
 import com.o1jobs.crm.identity.domain.User;
 import com.o1jobs.crm.identity.dto.UserMapper;
 import com.o1jobs.crm.identity.dto.UserRequest;

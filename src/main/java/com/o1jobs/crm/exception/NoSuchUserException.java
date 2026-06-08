@@ -1,4 +1,4 @@
-package com.o1jobs.crm.excpetion;
+package com.o1jobs.crm.exception;
 
 public class NoSuchUserException extends RuntimeException {
     public NoSuchUserException(String s) {

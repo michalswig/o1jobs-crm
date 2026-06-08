@@ -1,0 +1,75 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20260608
+      author: o1jobs
+      changes:
+        - createTable:
+            tableName: client
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(200)
+              - column:
+                  name: phone_number
+                  type: VARCHAR(50)
+              - column:
+                  name: country
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: city
+                  type: VARCHAR(120)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: postal_code
+                  type: VARCHAR(20)
+              - column:
+                  name: street_address
+                  type: VARCHAR(200)
+              - column:
+                  name: notes
+                  type: TEXT
+              - column:
+                  name: intermediary_id
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: TIMESTAMPTZ
+              - column:
+                  name: created_by_user_id
+                  type: BIGINT
+              - column:
+                  name: updated_at
+                  type: TIMESTAMPTZ
+              - column:
+                  name: updated_by_user_id
+                  type: BIGINT
+              - column:
+                  name: deleted_at
+                  type: TIMESTAMPTZ
+        - addForeignKeyConstraint:
+            constraintName: fk_client_intermediary
+            baseTableName: client
+            baseColumnNames: intermediary_id
+            referencedTableName: intermediary
+            referencedColumnNames: id
+            onDelete: SET NULL
+
+      rollback:
+        - dropTable:
+            tableName: client
+            cascadeConstraints: true

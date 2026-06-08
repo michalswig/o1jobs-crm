@@ -1,4 +1,4 @@
-package com.o1jobs.crm.controller;
+package com.o1jobs.crm.identity.controller;
 
 import com.o1jobs.crm.identity.dto.UserRequest;
 import com.o1jobs.crm.identity.dto.UserResponse;

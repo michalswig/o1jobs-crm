@@ -1,3 +1,7 @@
 databaseChangeLog:
   - include:
       file: db/changelog/feature/001_user.yaml
+  - include:
+      file: db/changelog/feature/002_intermediary.yaml
+  - include:
+      file: db/changelog/feature/003_client.yaml
