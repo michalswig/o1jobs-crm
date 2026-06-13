@@ -53,6 +53,14 @@ public class Client {
         this.intermediary = intermediary;
     }
 
+    public void assignIntermediary(Intermediary intermediary) {
+        this.intermediary = intermediary;
+    }
+
+    public void deactivateClient() {
+        this.deletedAt = Instant.now();
+    }
+
     @PrePersist
     public void onCreate() {
         this.createdAt = Instant.now();
