@@ -7,3 +7,5 @@ databaseChangeLog:
       file: db/changelog/feature/003_client.yaml
   - include:
       file: db/changelog/feature/004_caregiver.yaml
+  - include:
+      file: db/changelog/feature/005_care_recipent.yaml
