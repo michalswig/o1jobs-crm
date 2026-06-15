@@ -42,6 +42,7 @@ public class ClientService {
         return clientMapper.toClientResponse(clientRepository.save(client));
     }
 
+    @Transactional(readOnly = true)
     public ClientResponse getById(Long id) {
         return clientMapper.toClientResponse(getClientById(id));
     }
