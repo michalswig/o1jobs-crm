@@ -37,7 +37,7 @@ public class ClientController {
     @PatchMapping("/{id}/deactivate")
     public ResponseEntity<Void> deactivate(@PathVariable long id) {
         clientService.deactivate(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
 }

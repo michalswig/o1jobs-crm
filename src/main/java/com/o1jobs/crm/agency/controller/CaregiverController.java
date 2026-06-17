@@ -37,7 +37,7 @@ public class CaregiverController {
     @PatchMapping("/{id}/deactivate")
     ResponseEntity<Void> deactivate(@PathVariable long id) {
         caregiverService.deactivate(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
 }
