@@ -1,0 +1,105 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20260617
+      author: o1jobs
+      changes:
+        - createTable:
+            tableName: assignment
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: client_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: care_recipient_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: start_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: city
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: street_address
+                  type: varchar(40)
+              - column:
+                  name: salary_monthly_net
+                  type: numeric(12,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: language_level
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: requirements
+                  type: text
+              - column:
+                  name: status
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: close_reason
+                  type: varchar(40)
+              - column:
+                  name: close_notes
+                  type: text
+              - column:
+                  name: caregiver_id
+                  type: bigint
+              - column:
+                  name: created_at
+                  type: TIMESTAMPTZ
+              - column:
+                  name: created_by_user_id
+                  type: BIGINT
+              - column:
+                  name: updated_at
+                  type: TIMESTAMPTZ
+              - column:
+                  name: updated_by_user_id
+                  type: BIGINT
+              - column:
+                  name: deleted_at
+                  type: TIMESTAMPTZ
+        - addForeignKeyConstraint:
+            constraintName: fk_assignment_client
+            baseTableName: assignment
+            baseColumnNames: client_id
+            referencedTableName: client
+            referencedColumnNames: id
+            onDelete: RESTRICT
+        - addForeignKeyConstraint:
+            constraintName: fk_assignment_care_recipient
+            baseTableName: assignment
+            baseColumnNames: care_recipient_id
+            referencedTableName: care_recipient
+            referencedColumnNames: id
+            onDelete: RESTRICT
+        - addForeignKeyConstraint:
+            constraintName: fk_assignment_caregiver
+            baseTableName: assignment
+            baseColumnNames: caregiver_id
+            referencedTableName: caregiver
+            referencedColumnNames: id
+            onDelete: SET NULL
+      rollback:
+        - dropTable:
+            tableName: assignment
+            cascadeConstraints: true

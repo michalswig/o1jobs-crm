@@ -9,3 +9,5 @@ databaseChangeLog:
       file: db/changelog/feature/004_caregiver.yaml
   - include:
       file: db/changelog/feature/005_care_recipent.yaml
+  - include:
+      file: db/changelog/feature/006_assignment.yml
