@@ -8,8 +8,6 @@ import org.mapstruct.MappingTarget;
 public interface CaregiverMapper {
     CaregiverResponse caregiverToCaregiverResponse(Caregiver caregiver);
 
-    CaregiverResponse caregiverRequestToCaregiverResponse(CaregiverRequest request);
-
     Caregiver caregiverRequestToCaregiver(CaregiverRequest request);
 
     void updateCaregiver(CaregiverRequest request, @MappingTarget Caregiver caregiver);

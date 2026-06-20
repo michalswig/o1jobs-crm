@@ -7,14 +7,10 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface CareRecipientMapper {
-
     @Mapping(source = "client.id", target = "clientId")
     CareRecipientResponse toCareRecipientResponse(CareRecipient careRecipient);
-
-    CareRecipient toCareRecipient(CareRecipientRequest careRecipientRequest);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "client", ignore = true)
     void updateCareRecipient(CareRecipientRequest careRecipientRequest, @MappingTarget CareRecipient careRecipient);
-
 }

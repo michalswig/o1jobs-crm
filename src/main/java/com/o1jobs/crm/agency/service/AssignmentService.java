@@ -20,6 +20,7 @@ public class AssignmentService {
     private final CaregiverService caregiverService;
     private final CareRecipientService careRecipientService;
 
+    @Transactional(readOnly = true)
     public AssignmentResponse getById(Long id) {
         Assignment assignment = assignmentRepository.findById(id).orElseThrow(
                 () -> new NoSuchAssignmentException("No assignment with id " + id)

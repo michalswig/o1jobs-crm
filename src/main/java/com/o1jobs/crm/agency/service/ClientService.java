@@ -7,13 +7,11 @@ import com.o1jobs.crm.agency.dto.ClientRequest;
 import com.o1jobs.crm.agency.dto.ClientResponse;
 import com.o1jobs.crm.agency.repository.ClientRepository;
 import com.o1jobs.crm.agency.repository.IntermediaryRepository;
-import com.o1jobs.crm.exception.IntermediaryNotFoundException;
+import com.o1jobs.crm.exception.NoSuchIntermediaryException;
 import com.o1jobs.crm.exception.NoSuchClientException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +31,7 @@ public class ClientService {
         Intermediary intermediary = null;
         if (request.intermediary_id() != null) {
             intermediary = intermediaryRepository.findById(request.intermediary_id()).orElseThrow(
-                    () -> new IntermediaryNotFoundException("Intermediary with id " + request.intermediary_id())
+                    () -> new NoSuchIntermediaryException("Intermediary with id " + request.intermediary_id())
             );
         }
         Client client = new Client(
@@ -60,7 +58,7 @@ public class ClientService {
         clientMapper.updateClient(request, clientToUpdate);
         if (request.intermediary_id() != null) {
             Intermediary intermediary = intermediaryRepository.findById(request.intermediary_id()).orElseThrow(
-                    () -> new IntermediaryNotFoundException("Intermediary with id " + request.intermediary_id())
+                    () -> new NoSuchIntermediaryException("Intermediary with id " + request.intermediary_id())
             );
             clientToUpdate.assignIntermediary(intermediary);
         }

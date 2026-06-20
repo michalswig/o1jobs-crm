@@ -11,7 +11,7 @@ public record AssignmentRequest(
         @NotNull Long clientId,
         @NotNull Long careRecipientId,
         @NotNull LocalDate startDate,
-        String city,
+        @NotBlank String city,
         @NotBlank String streetAddress,
         @NotNull BigDecimal salaryMonthlyNet,
         @NotNull LanguageLevel languageLevel,

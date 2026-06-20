@@ -13,6 +13,61 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(NoSuchIntermediaryException.class)
+    public ResponseEntity<ErrorResponse> handleNoSuchIntermediaryException(NoSuchIntermediaryException ex) {
+        ErrorResponse error = new ErrorResponse(
+                404,
+                ex.getMessage(),
+                Instant.now(),
+                null
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(NoSuchUserException.class)
+    public ResponseEntity<ErrorResponse> handleNoSuchUserException(NoSuchUserException ex) {
+        ErrorResponse error = new ErrorResponse(
+                404,
+                ex.getMessage(),
+                Instant.now(),
+                null
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(NoSuchAssignmentException.class)
+    public ResponseEntity<ErrorResponse> handleNoSuchAssignmentException(NoSuchAssignmentException ex) {
+        ErrorResponse error = new ErrorResponse(
+                404,
+                ex.getMessage(),
+                Instant.now(),
+                null
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(NoSuchCareRecipientException.class)
+    public ResponseEntity<ErrorResponse> handleNoSuchCareRecipientException(NoSuchCareRecipientException ex) {
+        ErrorResponse error = new ErrorResponse(
+                404,
+                ex.getMessage(),
+                Instant.now(),
+                null
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(NoSuchCaregiverException.class)
+    public ResponseEntity<ErrorResponse> handleNoSuchCaregiverException(NoSuchCaregiverException ex) {
+        ErrorResponse error = new ErrorResponse(
+                404,
+                ex.getMessage(),
+                Instant.now(),
+                null
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
     @ExceptionHandler(NoSuchClientException.class)
     public ResponseEntity<ErrorResponse> handleNoSuchClientException(NoSuchClientException ex) {
         ErrorResponse error = new ErrorResponse(
@@ -46,7 +101,7 @@ public class GlobalExceptionHandler {
                                 Collectors.toMap(
                                         FieldError::getField,
                                         fieldError -> fieldError.getDefaultMessage() != null
-                                        ? fieldError.getDefaultMessage() : "Invalid value"
+                                                ? fieldError.getDefaultMessage() : "Invalid value"
                                 )
                         )
         );
