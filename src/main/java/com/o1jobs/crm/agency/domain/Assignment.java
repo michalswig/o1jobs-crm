@@ -65,6 +65,10 @@ public class Assignment {
         this.caregiver = caregiver;
     }
 
+    public void assignCaregiver(Caregiver caregiver) {
+        this.caregiver = caregiver;
+    }
+
     public void close(AssignmentCloseReason reason, String notes) {
         this.status = AssignmentStatus.CLOSED;
         this.closeReason = reason;

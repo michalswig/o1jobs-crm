@@ -45,4 +45,9 @@ public class CaregiverService {
         caregiver.softDelete();
     }
 
+    public Caregiver getEntityById(Long id) {
+        return caregiverRepository.findById(id).orElseThrow(
+                () -> new NoSuchCaregiverException("No caregiver with id " + id + " was found")
+        );
+    }
 }

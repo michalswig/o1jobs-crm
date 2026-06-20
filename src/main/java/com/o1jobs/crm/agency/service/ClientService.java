@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -20,6 +22,12 @@ public class ClientService {
     private final ClientRepository clientRepository;
     private final IntermediaryRepository intermediaryRepository;
     private final ClientMapper clientMapper;
+
+    public Client getEntityById(Long id) {
+        return clientRepository.findById(id).orElseThrow(
+                () -> new NoSuchClientException("Client with id " + id + " does not exist")
+        );
+    }
 
     public ClientResponse create(ClientRequest request) {
         Intermediary intermediary = null;

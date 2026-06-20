@@ -76,4 +76,9 @@ public class CareRecipientService {
         careRecipient.deactivate();
     }
 
+    public CareRecipient getEntityById(Long id) {
+        return careRecipientRepository.findById(id).orElseThrow(
+                () ->  new NoSuchCareRecipientException("CareRecipient with id " + id + " not found")
+        );
+    }
 }
