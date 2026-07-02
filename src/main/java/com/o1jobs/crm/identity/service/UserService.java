@@ -8,13 +8,16 @@ import com.o1jobs.crm.identity.dto.UserRequest;
 import com.o1jobs.crm.identity.dto.UserResponse;
 import com.o1jobs.crm.identity.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class UserService {
+public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
@@ -49,4 +52,12 @@ public class UserService {
         //TODO hashing function
         return password;
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findUserByUsername(username).orElseThrow(
+                () -> new UsernameNotFoundException("User with username " + username + " do not exists")
+        );
+    }
+
 }
