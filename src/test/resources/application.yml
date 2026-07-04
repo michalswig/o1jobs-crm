@@ -1,0 +1,10 @@
+spring:
+  profiles:
+    default: dev
+  application:
+    name: crm
+server:
+  port: 8080
+jwt:
+  secret: dGVzdFNlY3JldEtleVRoYXRJc0xvbmdFbm91Z2hGb3JIVFQ=
+  expiration: 86400000

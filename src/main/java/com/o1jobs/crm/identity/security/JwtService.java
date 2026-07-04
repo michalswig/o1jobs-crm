@@ -1,4 +1,4 @@
-package com.o1jobs.crm.identity.service;
+package com.o1jobs.crm.identity.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
