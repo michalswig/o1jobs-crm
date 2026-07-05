@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20260705-010
+      author: o1jobs
+      changes:
+        - modifyDataType:
+            tableName: client
+            columnName: notes
+            newDataType: varchar(2000)
+      rollback:
+        - modifyDataType:
+            tableName: client
+            columnName: notes
+            newDataType: text

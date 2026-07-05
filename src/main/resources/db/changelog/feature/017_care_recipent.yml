@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20260705-013
+      author: o1jobs
+      changes:
+        - renameColumn:
+            tableName: care_recipient
+            oldColumnName: is_smoker
+            newColumnName: smoker
+            columnDataType: BOOLEAN
+      rollback:
+        - renameColumn:
+            tableName: care_recipient
+            oldColumnName: smoker
+            newColumnName: is_smoker
+            columnDataType: BOOLEAN

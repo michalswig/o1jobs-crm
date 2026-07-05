@@ -30,12 +30,14 @@ public class Assignment {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private LanguageLevel languageLevel;
+    @Column(length = 2000)
     private String requirements;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AssignmentStatus status;
     @Enumerated(EnumType.STRING)
     private AssignmentCloseReason closeReason;
+    @Column(length = 2000)
     private String closeNotes;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "caregiver_id")

@@ -26,6 +26,7 @@ public class Intermediary {
     private String email;
     @Column(nullable = false)
     private String phone;
+    @Column(length = 2000)
     private String notes;
 
     private Instant createdAt;

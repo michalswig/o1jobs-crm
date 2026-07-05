@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20260705-07
+      author: o1jobs
+      changes:
+        - modifyDataType:
+            tableName: caregiver
+            columnName: medical_qualification_notes
+            newDataType: varchar(2000)
+      rollback:
+        - modifyDataType:
+            tableName: caregiver
+            columnName: medical_qualification_notes
+            newDataType: text
+  - changeSet:
+      id: 20260705-08
+      author: o1jobs
+      changes:
+        - modifyDataType:
+            tableName: caregiver
+            columnName: recruiter_notes
+            newDataType: varchar(2000)
+      rollback:
+        - modifyDataType:
+            tableName: caregiver
+            columnName: recruiter_notes
+            newDataType: text
+  - changeSet:
+      id: 20260705-09
+      author: o1jobs
+      changes:
+        - modifyDataType:
+            tableName: client
+            columnName: notes
+            newDataType: varchar(2000)
+      rollback:
+        - modifyDataType:
+            tableName: client
+            columnName: notes
+            newDataType: text

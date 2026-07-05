@@ -11,3 +11,25 @@ databaseChangeLog:
       file: db/changelog/feature/005_care_recipent.yaml
   - include:
       file: db/changelog/feature/006_assignment.yml
+  - include:
+      file: db/changelog/feature/007_assignment.yml
+  - include:
+      file: db/changelog/feature/008_assignment.yml
+  - include:
+      file: db/changelog/feature/009_care_recipent.yml
+  - include:
+      file: db/changelog/feature/010_care_recipent.yml
+  - include:
+      file: db/changelog/feature/011_care_recipent.yml
+  - include:
+      file: db/changelog/feature/012_care_recipent.yml
+  - include:
+      file: db/changelog/feature/013_caregiver.yml
+  - include:
+      file: db/changelog/feature/014_client.yml
+  - include:
+      file: db/changelog/feature/015_intermediary.yml
+  - include:
+      file: db/changelog/feature/016_caregiver.yml
+  - include:
+      file: db/changelog/feature/017_care_recipent.yml

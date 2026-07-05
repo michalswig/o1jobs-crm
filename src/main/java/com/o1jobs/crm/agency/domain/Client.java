@@ -26,6 +26,7 @@ public class Client {
     private String postalCode;
     @Column(nullable = false)
     private String streetAddress;
+    @Column(length = 2000)
     private String notes;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "intermediary_id")

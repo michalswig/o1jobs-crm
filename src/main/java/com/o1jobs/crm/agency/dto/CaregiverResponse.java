@@ -18,8 +18,7 @@ public record CaregiverResponse(
         Nationality nationality,
         LocalDate careerStartDate,
         boolean hasDriverLicense,
-        boolean isSmoker,
+        boolean smoker,
         String medicalQualificationNotes,
         String recruiterNotes) {
 }
-

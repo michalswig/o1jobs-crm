@@ -35,22 +35,26 @@ public class CareRecipient {
     private boolean hasAlzheimer;
     @Column(nullable = false)
     private boolean hasParkinson;
+    @Column(length = 2000)
     private String diseasesNotes;
     @Column(nullable = false)
-    private boolean isSmoker;
+    private boolean smoker;
     @Column(nullable = false)
     private boolean hasPets;
+    @Column(length = 2000)
     private String petsNotes;
     @Column(nullable = false)
     private boolean needsTransfer;
     @Enumerated(EnumType.STRING)
     private TransferType transferType;
+    @Column(length = 2000)
     private String liftingAidsNotes;
     @Column(nullable = false)
     private boolean hasCatheter;
     @Column(nullable = false)
     private boolean hasStoma;
     private boolean useDiapers;
+    @Column(length = 2000)
     private String medicalNotes;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
@@ -66,7 +70,7 @@ public class CareRecipient {
     protected CareRecipient() {
     }
 
-    public CareRecipient(String firstName, String lastName, LocalDate dateOfBirth, Integer heightCm, Integer weightKg, Gender gender, MobilityLevel mobilityLevel, DementiaLevel dementiaLevel, boolean hasMs, boolean hasAlzheimer, boolean hasParkinson, String diseasesNotes, boolean isSmoker, boolean hasPets, String petsNotes, boolean needsTransfer, TransferType transferType, String liftingAidsNotes, boolean hasCatheter, boolean hasStoma, boolean useDiapers, String medicalNotes, Client client) {
+    public CareRecipient(String firstName, String lastName, LocalDate dateOfBirth, Integer heightCm, Integer weightKg, Gender gender, MobilityLevel mobilityLevel, DementiaLevel dementiaLevel, boolean hasMs, boolean hasAlzheimer, boolean hasParkinson, String diseasesNotes, boolean smoker, boolean hasPets, String petsNotes, boolean needsTransfer, TransferType transferType, String liftingAidsNotes, boolean hasCatheter, boolean hasStoma, boolean useDiapers, String medicalNotes, Client client) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -79,7 +83,7 @@ public class CareRecipient {
         this.hasAlzheimer = hasAlzheimer;
         this.hasParkinson = hasParkinson;
         this.diseasesNotes = diseasesNotes;
-        this.isSmoker = isSmoker;
+        this.smoker = smoker;
         this.hasPets = hasPets;
         this.petsNotes = petsNotes;
         this.needsTransfer = needsTransfer;

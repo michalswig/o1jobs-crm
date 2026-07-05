@@ -45,7 +45,7 @@ public class CareRecipientService {
                 request.hasAlzheimer(),
                 request.hasParkinson(),
                 request.diseasesNotes(),
-                request.isSmoker(),
+                request.smoker(),
                 request.hasPets(),
                 request.petsNotes(),
                 request.needsTransfer(),

@@ -21,7 +21,7 @@ public record CareRecipientResponse(
         boolean hasAlzheimer,
         boolean hasParkinson,
         String diseasesNotes,
-        boolean isSmoker,
+        boolean smoker,
         boolean hasPets,
         String petsNotes,
         boolean needsTransfer,

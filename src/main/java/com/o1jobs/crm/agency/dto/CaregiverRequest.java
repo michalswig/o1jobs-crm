@@ -19,7 +19,7 @@ public record CaregiverRequest(
         @NotNull Nationality nationality,
         @NotNull LocalDate careerStartDate,
         boolean hasDriverLicense,
-        boolean isSmoker,
+        boolean smoker,
         String medicalQualificationNotes,
         String recruiterNotes) {
 }

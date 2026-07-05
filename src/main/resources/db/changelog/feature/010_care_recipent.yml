@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20260705-04
+      author: o1jobs
+      changes:
+        - modifyDataType:
+            tableName: care_recipient
+            columnName: lifting_aids_notes
+            newDataType: varchar(2000)
+      rollback:
+        - modifyDataType:
+            tableName: care_recipient
+            columnName: lifting_aids_notes
+            newDataType: text

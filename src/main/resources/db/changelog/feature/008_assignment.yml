@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20260705-02
+      author: o1jobs
+      changes:
+        - modifyDataType:
+            tableName: assignment
+            columnName: requirements
+            newDataType: varchar(2000)
+      rollback:
+        - modifyDataType:
+            tableName: assignment
+            columnName: requirements
+            newDataType: text

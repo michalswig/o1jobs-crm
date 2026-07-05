@@ -36,8 +36,10 @@ public class Caregiver {
     @Column(nullable = false)
     private boolean hasDriverLicense;
     @Column(nullable = false)
-    private boolean isSmoker;
+    private boolean smoker;
+    @Column(length = 2000)
     private String medicalQualificationNotes;
+    @Column(length = 2000)
     private String recruiterNotes;
 
     private Instant createdAt;
@@ -50,7 +52,7 @@ public class Caregiver {
     protected Caregiver() {
     }
 
-    public Caregiver(String firstName, String lastName, Gender gender, LocalDate birthDate, Integer weightKg, Integer heightCm, String phone, String email, Nationality nationality, LocalDate careerStartDate, boolean hasDriverLicense, boolean isSmoker, String medicalQualificationNotes, String recruiterNotes) {
+    public Caregiver(String firstName, String lastName, Gender gender, LocalDate birthDate, Integer weightKg, Integer heightCm, String phone, String email, Nationality nationality, LocalDate careerStartDate, boolean hasDriverLicense, boolean smoker, String medicalQualificationNotes, String recruiterNotes) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -62,7 +64,7 @@ public class Caregiver {
         this.nationality = nationality;
         this.careerStartDate = careerStartDate;
         this.hasDriverLicense = hasDriverLicense;
-        this.isSmoker = isSmoker;
+        this.smoker = smoker;
         this.medicalQualificationNotes = medicalQualificationNotes;
         this.recruiterNotes = recruiterNotes;
     }

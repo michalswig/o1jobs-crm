@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20260705-06
+      author: o1jobs
+      changes:
+        - modifyDataType:
+            tableName: care_recipient
+            columnName: pets_notes
+            newDataType: varchar(2000)
+      rollback:
+        - modifyDataType:
+            tableName: care_recipient
+            columnName: pets_notes
+            newDataType: text
