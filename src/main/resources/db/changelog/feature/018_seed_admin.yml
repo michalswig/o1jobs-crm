@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20260708-01
+      author: o1jobs
+      changes:
+        - insert:
+            tableName: app_user
+            columns:
+              - column:
+                  name: username
+                  value: admin
+              - column:
+                  name: password_hash
+                  value: "$2a$10$jJxJsznzF/LJ322cpECnT.dhOy5OsG5qDU/dNeSsZ.2EfabSGnoWG"
+              - column:
+                  name: role
+                  value: ADMIN
+              - column:
+                  name: active
+                  valueBoolean: "true"
+              - column:
+                  name: created_at
+                  valueDate: "now()"
+      rollback:
+        - delete:
+            tableName: app_user
+            where: username='admin'
