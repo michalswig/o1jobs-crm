@@ -19,11 +19,15 @@ export class LoginComponent {
   constructor(private authService: AuthService) {
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.authService.login(this.loginForm.value as { username: string; password: string })
       .subscribe({
-        next: (response) => console.log('Sukces, token:', response.token),
+        next: (response) => {
+          this.authService.token = response.token;
+          console.log('Zalogowano, token zapisany:', this.authService.token);
+        },
         error: (err) => console.error('Błąd logowania:', err)
       });
   }
+
 }
