@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../core/services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent {
   });
 
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService,
+              private router: Router) {
   }
 
   onSubmit(): void {
@@ -24,6 +26,7 @@ export class LoginComponent {
       .subscribe({
         next: (response) => {
           this.authService.token = response.token;
+          this.router.navigate(['/dashboard']);
           console.log('Zalogowano, token zapisany:', this.authService.token);
         },
         error: (err) => console.error('Błąd logowania:', err)
