@@ -7,9 +7,12 @@ import com.o1jobs.crm.agency.dto.ClientRequest;
 import com.o1jobs.crm.agency.dto.ClientResponse;
 import com.o1jobs.crm.agency.repository.ClientRepository;
 import com.o1jobs.crm.agency.repository.IntermediaryRepository;
-import com.o1jobs.crm.exception.NoSuchIntermediaryException;
+import com.o1jobs.crm.agency.specification.ClientSpecifications;
 import com.o1jobs.crm.exception.NoSuchClientException;
+import com.o1jobs.crm.exception.NoSuchIntermediaryException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +23,12 @@ public class ClientService {
     private final ClientRepository clientRepository;
     private final IntermediaryRepository intermediaryRepository;
     private final ClientMapper clientMapper;
+
+    @Transactional(readOnly = true)
+    public Page<ClientResponse> getAll(Pageable pageable) {
+        return clientRepository.findAll(ClientSpecifications.notDeleted(), pageable)
+                .map(clientMapper::toClientResponse);
+    }
 
     public Client getEntityById(Long id) {
         return clientRepository.findById(id).orElseThrow(

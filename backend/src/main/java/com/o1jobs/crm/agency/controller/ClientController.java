@@ -4,6 +4,9 @@ import com.o1jobs.crm.agency.dto.ClientRequest;
 import com.o1jobs.crm.agency.dto.ClientResponse;
 import com.o1jobs.crm.agency.service.ClientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +29,11 @@ public class ClientController {
     @GetMapping("/{id}")
     public ResponseEntity<ClientResponse> get(@PathVariable long id) {
         return ResponseEntity.ok(clientService.getById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<ClientResponse>> getAll(@PageableDefault(size = 20, sort = "name") Pageable pageable) {
+        return ResponseEntity.ok(clientService.getAll(pageable));
     }
 
     @PutMapping("/{id}")
