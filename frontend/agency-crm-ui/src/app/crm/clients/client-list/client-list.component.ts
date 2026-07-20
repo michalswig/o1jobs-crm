@@ -13,7 +13,7 @@ export class ClientListComponent implements OnInit {
   clients: Client[] = [];
   totalElements = 0;
 
-  constructor(private clientService: ClientService) {
+  constructor(private readonly clientService: ClientService) {
   }
 
   ngOnInit(): void {

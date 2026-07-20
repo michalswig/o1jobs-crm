@@ -17,8 +17,8 @@ export class LoginComponent {
   });
 
 
-  constructor(private authService: AuthService,
-              private router: Router) {
+  constructor(private readonly authService: AuthService,
+              private readonly router: Router) {
   }
 
   onSubmit(): void {
