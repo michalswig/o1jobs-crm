@@ -1,0 +1,20 @@
+<h2>Lista klientów ({{ totalElements }})</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Nazwa</th>
+    <th>Email</th>
+    <th>Miasto</th>
+    <th>Kraj</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let client of clients">
+    <td>{{ client.name }}</td>
+    <td>{{ client.email }}</td>
+    <td>{{ client.city }}</td>
+    <td>{{ client.country }}</td>
+  </tr>
+  </tbody>
+</table>

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../environments/environment.development';
+import {environment} from '../../../environments/environment';
 
 export interface LoginRequest {
   username: string;
@@ -19,7 +19,7 @@ export class AuthService {
 
   private _token: string | null = null;
 
-  constructor(private http: HttpClient) {
+  constructor(private readonly http: HttpClient) {
   }
 
   login(credentials: LoginRequest): Observable<LoginResponse> {

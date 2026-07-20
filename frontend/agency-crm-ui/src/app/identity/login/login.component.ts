@@ -26,7 +26,10 @@ export class LoginComponent {
       .subscribe({
         next: (response) => {
           this.authService.token = response.token;
-          this.router.navigate(['/dashboard']);
+          // TODO: docelowo przekierować na /dashboard, gdy powstanie jako
+          // activity feed / BI hub (ostatnie działania userów CRM).
+          // Tymczasowo: prosto na /clients, dopóki dashboard to pusty placeholder.
+          this.router.navigate(['/clients']);
           console.log('Zalogowano, token zapisany:', this.authService.token);
         },
         error: (err) => console.error('Błąd logowania:', err)
