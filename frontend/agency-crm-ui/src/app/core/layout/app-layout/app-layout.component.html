@@ -1,0 +1,33 @@
+<mat-sidenav-container class="layout-container">
+
+  <mat-sidenav
+    #sidenav
+    [mode]="(isMobile$ | async) ? 'over' : 'side'"
+    [opened]="!(isMobile$ | async)">
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="/clients" routerLinkActive="active-link">Klienci</a>
+      <a mat-list-item routerLink="/caregivers" routerLinkActive="active-link">Opiekunki</a>
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">Dashboard</a>
+    </mat-nav-list>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="sidenav.toggle()" *ngIf="isMobile$ | async">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>o1jobs CRM</span>
+      <span class="spacer"></span>
+      <button mat-button (click)="logout()">Wyloguj</button>
+    </mat-toolbar>
+
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
