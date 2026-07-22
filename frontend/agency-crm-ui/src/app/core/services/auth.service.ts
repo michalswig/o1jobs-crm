@@ -26,6 +26,10 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${environment.apiUrl}/auth/login`, credentials);
   }
 
+  logout(): void {
+    this._token = null;
+  }
+
   get token(): string | null {
     return this._token;
   }
