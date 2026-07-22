@@ -1,15 +1,17 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import {Component, OnInit, ViewChild, AfterViewInit, inject} from '@angular/core';
 import { Client, Page } from '../../models/client.model';
 import { ClientService } from '../../services/client.service';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatSortModule, MatSort } from '@angular/material/sort';
 import { MatPaginatorModule, MatPaginator, PageEvent } from '@angular/material/paginator';
-import {MatAnchor} from '@angular/material/button';
+import {MatAnchor, MatButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+import {ConfirmDialogComponent, ConfirmDialogData} from '../../../core/dialogs/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-client-list',
-  imports: [MatTableModule, MatSortModule, MatPaginatorModule, MatAnchor, RouterLink],
+  imports: [MatTableModule, MatSortModule, MatPaginatorModule, MatAnchor, RouterLink, MatButton],
   templateUrl: './client-list.component.html',
   styleUrl: './client-list.component.scss'
 })
@@ -20,6 +22,8 @@ export class ClientListComponent implements OnInit, AfterViewInit {
   totalElements = 0;
   pageSize = 20;
   pageIndex = 0;
+
+  private readonly dialog = inject(MatDialog);
 
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -32,6 +36,27 @@ export class ClientListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
+  }
+
+  onDeactivate(id: number): void {
+    const dialogRef = this.dialog.open<ConfirmDialogComponent, ConfirmDialogData, boolean>(
+      ConfirmDialogComponent,
+      {
+        data: {
+          title: 'Dezaktywacja klienta',
+          message: 'Czy na pewno chcesz dezaktywować tego klienta? Tej operacji nie można cofnąć.'
+        }
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (confirmed) {
+        this.clientService.deactivate(id).subscribe({
+          next: () => this.loadClients(),
+          error: (err) => console.error('Error deactivating client:', err)
+        });
+      }
+    });
   }
 
   loadClients(): void {

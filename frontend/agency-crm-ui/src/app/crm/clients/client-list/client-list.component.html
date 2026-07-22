@@ -29,6 +29,7 @@
     <th mat-header-cell *matHeaderCellDef>Akcje</th>
     <td mat-cell *matCellDef="let client">
       <a mat-button color="primary" [routerLink]="['/clients/edit', client.id]">Edytuj</a>
+      <button mat-button color="warn" (click)="onDeactivate(client.id)">Dezaktywuj</button>
     </td>
   </ng-container>
 
