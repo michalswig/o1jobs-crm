@@ -54,6 +54,18 @@ public class Client {
         this.intermediary = intermediary;
     }
 
+    public void updateDetails(String name, String email, String phoneNumber, String country,
+                              String city, String postalCode, String streetAddress, String notes) {
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.country = country;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.streetAddress = streetAddress;
+        this.notes = notes;
+    }
+
     public void assignIntermediary(Intermediary intermediary) {
         this.intermediary = intermediary;
     }

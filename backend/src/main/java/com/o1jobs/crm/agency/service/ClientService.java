@@ -64,7 +64,11 @@ public class ClientService {
 
     public ClientResponse update(ClientRequest request, Long id) {
         Client clientToUpdate = getClientById(id);
-        clientMapper.updateClient(request, clientToUpdate);
+        clientToUpdate.updateDetails(
+                request.name(), request.email(), request.phoneNumber(),
+                request.country(), request.city(), request.postalCode(),
+                request.streetAddress(), request.notes()
+        );
         if (request.intermediary_id() != null) {
             Intermediary intermediary = intermediaryRepository.findById(request.intermediary_id()).orElseThrow(
                     () -> new NoSuchIntermediaryException("Intermediary with id " + request.intermediary_id())
