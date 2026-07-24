@@ -69,11 +69,28 @@ public class Caregiver {
         this.recruiterNotes = recruiterNotes;
     }
 
+    public void updateDetails(String firstName, String lastName, Gender gender, LocalDate birthDate, Integer weightKg, Integer heightCm, String phone, String email, Nationality nationality, LocalDate careerStartDate, boolean hasDriverLicense, boolean smoker, String medicalQualificationNotes, String recruiterNotes) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.weightKg = weightKg;
+        this.heightCm = heightCm;
+        this.phone = phone;
+        this.email = email;
+        this.nationality = nationality;
+        this.careerStartDate = careerStartDate;
+        this.hasDriverLicense = hasDriverLicense;
+        this.smoker = smoker;
+        this.medicalQualificationNotes = medicalQualificationNotes;
+        this.recruiterNotes = recruiterNotes;
+    }
+
     public Integer getExperienceYears() {
         return Period.between(this.careerStartDate, LocalDate.now()).getYears();
     }
 
-    public void softDelete(){
+    public void softDelete() {
         this.deletedAt = Instant.now();
     }
 
