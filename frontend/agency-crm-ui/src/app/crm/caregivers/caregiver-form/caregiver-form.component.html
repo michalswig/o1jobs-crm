@@ -1,0 +1,112 @@
+<h2>{{ isEditMode ? 'Edytuj opiekunkę' : 'Nowa opiekunka' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <mat-form-field appearance="outline">
+    <mat-label>Imię</mat-label>
+    <input matInput formControlName="firstName">
+    @if (form.get('firstName')?.hasError('required') && form.get('firstName')?.touched) {
+      <mat-error>Imię jest wymagane</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Nazwisko</mat-label>
+    <input matInput formControlName="lastName">
+    @if (form.get('lastName')?.hasError('required') && form.get('lastName')?.touched) {
+      <mat-error>Nazwisko jest wymagane</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Płeć</mat-label>
+    <mat-select formControlName="gender">
+      @for (g of genders; track g) {
+        <mat-option [value]="g">{{ g }}</mat-option>
+      }
+    </mat-select>
+    @if (form.get('gender')?.hasError('required') && form.get('gender')?.touched) {
+      <mat-error>Płeć jest wymagana</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Data urodzenia</mat-label>
+    <input matInput [matDatepicker]="birthPicker" formControlName="birthDate">
+    <mat-datepicker-toggle matSuffix [for]="birthPicker"></mat-datepicker-toggle>
+    <mat-datepicker #birthPicker></mat-datepicker>
+    @if (form.get('birthDate')?.hasError('required') && form.get('birthDate')?.touched) {
+      <mat-error>Data urodzenia jest wymagana</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Waga (kg)</mat-label>
+    <input matInput type="number" formControlName="weightKg">
+    @if (form.get('weightKg')?.hasError('required') && form.get('weightKg')?.touched) {
+      <mat-error>Waga jest wymagana</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Wzrost (cm)</mat-label>
+    <input matInput type="number" formControlName="heightCm">
+    @if (form.get('heightCm')?.hasError('required') && form.get('heightCm')?.touched) {
+      <mat-error>Wzrost jest wymagany</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Telefon</mat-label>
+    <input matInput formControlName="phone">
+    @if (form.get('phone')?.hasError('required') && form.get('phone')?.touched) {
+      <mat-error>Telefon jest wymagany</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Narodowość</mat-label>
+    <mat-select formControlName="nationality">
+      @for (n of nationalities; track n) {
+        <mat-option [value]="n">{{ n }}</mat-option>
+      }
+    </mat-select>
+    @if (form.get('nationality')?.hasError('required') && form.get('nationality')?.touched) {
+      <mat-error>Narodowość jest wymagana</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Data rozpoczęcia kariery</mat-label>
+    <input matInput [matDatepicker]="careerPicker" formControlName="careerStartDate">
+    <mat-datepicker-toggle matSuffix [for]="careerPicker"></mat-datepicker-toggle>
+    <mat-datepicker #careerPicker></mat-datepicker>
+    @if (form.get('careerStartDate')?.hasError('required') && form.get('careerStartDate')?.touched) {
+      <mat-error>Data jest wymagana</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-checkbox formControlName="hasDriverLicense">Prawo jazdy</mat-checkbox>
+  <mat-checkbox formControlName="smoker">Pali papierosy</mat-checkbox>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Notatki medyczne / kwalifikacje</mat-label>
+    <textarea matInput formControlName="medicalQualificationNotes" rows="3"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Notatki rekrutera</mat-label>
+    <textarea matInput formControlName="recruiterNotes" rows="3"></textarea>
+  </mat-form-field>
+
+  <div class="actions">
+    <button mat-raised-button color="primary" type="submit">Zapisz</button>
+    <button mat-button type="button" routerLink="/caregivers">Anuluj</button>
+  </div>
+
+</form>

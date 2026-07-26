@@ -34,7 +34,7 @@ public class CareRecipient {
     @Column(nullable = false)
     private boolean hasAlzheimer;
     @Column(nullable = false)
-    private boolean hasParkinson;
+    private boolean hasParkinson; //TODO hasCancer more from Stefan
     @Column(length = 2000)
     private String diseasesNotes;
     @Column(nullable = false)

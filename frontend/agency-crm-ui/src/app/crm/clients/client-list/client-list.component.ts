@@ -1,13 +1,14 @@
-import {Component, OnInit, ViewChild, AfterViewInit, inject} from '@angular/core';
-import { Client, Page } from '../../models/client.model';
-import { ClientService } from '../../services/client.service';
-import { MatTableModule, MatTableDataSource } from '@angular/material/table';
-import { MatSortModule, MatSort } from '@angular/material/sort';
-import { MatPaginatorModule, MatPaginator, PageEvent } from '@angular/material/paginator';
+import {AfterViewInit, Component, inject, OnInit, ViewChild} from '@angular/core';
+import {Client} from '../../models/client.model';
+import {ClientService} from '../../services/client.service';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {MatSort, MatSortModule} from '@angular/material/sort';
+import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import {MatAnchor, MatButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmDialogComponent, ConfirmDialogData} from '../../../core/dialogs/confirm-dialog/confirm-dialog.component';
+import {Page} from '../../../shared/models/page.model';
 
 @Component({
   selector: 'app-client-list',

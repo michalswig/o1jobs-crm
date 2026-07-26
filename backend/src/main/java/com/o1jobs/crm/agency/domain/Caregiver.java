@@ -19,13 +19,13 @@ public class Caregiver {
     @Column(nullable = false)
     private String lastName;
     @Enumerated(EnumType.STRING)
-    private Gender gender;
+    private Gender gender; //TODO JPG photo
     @Column(nullable = false)
     private LocalDate birthDate;
     @Column(nullable = false)
     private Integer weightKg;
     @Column(nullable = false)
-    private Integer heightCm;
+    private Integer heightCm; //TODO add all deseases she knows
     @Column(nullable = false)
     private String phone;
     private String email;
@@ -34,7 +34,7 @@ public class Caregiver {
     @Column(nullable = false)
     private LocalDate careerStartDate;
     @Column(nullable = false)
-    private boolean hasDriverLicense;
+    private boolean hasDriverLicense; //TODO manual & automat
     @Column(nullable = false)
     private boolean smoker;
     @Column(length = 2000)

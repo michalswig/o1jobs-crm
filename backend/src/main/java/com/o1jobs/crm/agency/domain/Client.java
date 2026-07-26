@@ -25,7 +25,7 @@ public class Client {
     @Column(nullable = false)
     private String postalCode;
     @Column(nullable = false)
-    private String streetAddress;
+    private String streetAddress; //TODO formalne zakonczenie pracy z opiekunką
     @Column(length = 2000)
     private String notes;
     @ManyToOne(fetch = FetchType.LAZY)
