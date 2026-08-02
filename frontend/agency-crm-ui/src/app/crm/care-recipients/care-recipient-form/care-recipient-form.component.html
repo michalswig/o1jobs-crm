@@ -1,0 +1,130 @@
+<h2>{{ isEditMode ? 'Edytuj podopiecznego' : 'Nowy podopieczny' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <mat-form-field appearance="outline">
+    <mat-label>Imię</mat-label>
+    <input matInput formControlName="firstName">
+    @if (form.get('firstName')?.hasError('required') && form.get('firstName')?.touched) {
+      <mat-error>Imię jest wymagane</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Nazwisko</mat-label>
+    <input matInput formControlName="lastName">
+    @if (form.get('lastName')?.hasError('required') && form.get('lastName')?.touched) {
+      <mat-error>Nazwisko jest wymagane</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Data urodzenia</mat-label>
+    <input matInput type="date" formControlName="dateOfBirth">
+    @if (form.get('dateOfBirth')?.hasError('required') && form.get('dateOfBirth')?.touched) {
+      <mat-error>Data urodzenia jest wymagana</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Wzrost (cm)</mat-label>
+    <input matInput type="number" formControlName="heightCm">
+    @if (form.get('heightCm')?.hasError('required') && form.get('heightCm')?.touched) {
+      <mat-error>Wzrost jest wymagany</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Waga (kg)</mat-label>
+    <input matInput type="number" formControlName="weightKg">
+    @if (form.get('weightKg')?.hasError('required') && form.get('weightKg')?.touched) {
+      <mat-error>Waga jest wymagana</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Płeć</mat-label>
+    <mat-select formControlName="gender">
+      @for (g of genders; track g) {
+        <mat-option [value]="g">{{ g }}</mat-option>
+      }
+    </mat-select>
+    @if (form.get('gender')?.hasError('required') && form.get('gender')?.touched) {
+      <mat-error>Płeć jest wymagana</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Poziom mobilności</mat-label>
+    <mat-select formControlName="mobilityLevel">
+      @for (m of mobilityLevels; track m) {
+        <mat-option [value]="m">{{ m }}</mat-option>
+      }
+    </mat-select>
+    @if (form.get('mobilityLevel')?.hasError('required') && form.get('mobilityLevel')?.touched) {
+      <mat-error>Poziom mobilności jest wymagany</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Poziom demencji</mat-label>
+    <mat-select formControlName="dementiaLevel">
+      @for (d of dementiaLevels; track d) {
+        <mat-option [value]="d">{{ d }}</mat-option>
+      }
+    </mat-select>
+    @if (form.get('dementiaLevel')?.hasError('required') && form.get('dementiaLevel')?.touched) {
+      <mat-error>Poziom demencji jest wymagany</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Wymagane umiejętności opieki</mat-label>
+    <mat-select formControlName="requiredCapabilities" multiple>
+      @for (cap of capabilities; track cap) {
+        <mat-option [value]="cap">{{ cap }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Klient</mat-label>
+    <mat-select formControlName="clientId">
+      @for (c of clients; track c.id) {
+        <mat-option [value]="c.id">{{ c.name }}</mat-option>
+      }
+    </mat-select>
+    @if (form.get('clientId')?.hasError('required') && form.get('clientId')?.touched) {
+      <mat-error>Klient jest wymagany</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-checkbox formControlName="smoker">Pali papierosy</mat-checkbox>
+  <mat-checkbox formControlName="hasPets">Ma zwierzęta</mat-checkbox>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Notatki o zwierzętach</mat-label>
+    <textarea matInput formControlName="petsNotes" rows="2"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Notatki o chorobach</mat-label>
+    <textarea matInput formControlName="diseasesNotes" rows="3"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Notatki o sprzęcie pomocniczym</mat-label>
+    <textarea matInput formControlName="liftingAidsNotes" rows="2"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Notatki medyczne</mat-label>
+    <textarea matInput formControlName="medicalNotes" rows="3"></textarea>
+  </mat-form-field>
+
+  <div class="actions">
+    <button mat-raised-button color="primary" type="submit">Zapisz</button>
+    <button mat-button type="button" routerLink="/care-recipients">Anuluj</button>
+  </div>
+
+</form>

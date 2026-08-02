@@ -1,0 +1,47 @@
+<div class="toolbar">
+  <a mat-raised-button color="primary" routerLink="/care-recipients/new">+ Nowy podopieczny</a>
+</div>
+
+<h2>Lista podopiecznych ({{ totalElements }})</h2>
+
+<table mat-table [dataSource]="dataSource" matSort>
+
+  <ng-container matColumnDef="lastName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nazwisko</th>
+    <td mat-cell *matCellDef="let cr">{{ cr.lastName }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="firstName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Imię</th>
+    <td mat-cell *matCellDef="let cr">{{ cr.firstName }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="mobilityLevel">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobilność</th>
+    <td mat-cell *matCellDef="let cr">{{ cr.mobilityLevel }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="dementiaLevel">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Demencja</th>
+    <td mat-cell *matCellDef="let cr">{{ cr.dementiaLevel }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Akcje</th>
+    <td mat-cell *matCellDef="let cr">
+      <a mat-button color="primary" [routerLink]="['/care-recipients/edit', cr.id]">Edytuj</a>
+      <button mat-button color="warn" (click)="onDeactivate(cr.id)">Dezaktywuj</button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
+
+<mat-paginator
+  [length]="totalElements"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[10, 20, 50]"
+  (page)="onPageChange($event)">
+</mat-paginator>

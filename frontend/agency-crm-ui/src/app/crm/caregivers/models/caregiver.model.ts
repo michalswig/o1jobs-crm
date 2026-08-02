@@ -1,6 +1,4 @@
-export type Gender = 'MALE' | 'FEMALE';
-
-export type Nationality = 'POLISH' | 'GEORGIAN' | 'MOLDOVAN' | 'RUSSIAN' | 'UKRAINIAN';
+import { Gender, Nationality, DementiaLevel, CareCapability } from '../../../shared/models/domain-enums.model';
 
 export interface Caregiver {
   id: number;
@@ -18,4 +16,7 @@ export interface Caregiver {
   smoker: boolean;
   medicalQualificationNotes: string | null;
   recruiterNotes: string | null;
+  dementiaExperience: DementiaLevel | null;
+  capabilities: CareCapability[];
+  photoPath: string | null;
 }
