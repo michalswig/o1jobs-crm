@@ -5,6 +5,8 @@ import lombok.Getter;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "care_recipient")
@@ -29,12 +31,6 @@ public class CareRecipient {
     private MobilityLevel mobilityLevel;
     @Enumerated(EnumType.STRING)
     private DementiaLevel dementiaLevel;
-    @Column(nullable = false)
-    private boolean hasMs;
-    @Column(nullable = false)
-    private boolean hasAlzheimer;
-    @Column(nullable = false)
-    private boolean hasParkinson; //TODO hasCancer more from Stefan
     @Column(length = 2000)
     private String diseasesNotes;
     @Column(nullable = false)
@@ -43,19 +39,20 @@ public class CareRecipient {
     private boolean hasPets;
     @Column(length = 2000)
     private String petsNotes;
-    @Column(nullable = false)
-    private boolean needsTransfer;
-    @Enumerated(EnumType.STRING)
-    private TransferType transferType;
     @Column(length = 2000)
     private String liftingAidsNotes;
-    @Column(nullable = false)
-    private boolean hasCatheter;
-    @Column(nullable = false)
-    private boolean hasStoma;
-    private boolean useDiapers;
     @Column(length = 2000)
     private String medicalNotes;
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(
+            name = "care_recipient_required_capability",
+            joinColumns = @JoinColumn(name = "care_recipient_id")
+    )
+    @Enumerated(EnumType.STRING)
+    @Column(name = "capability")
+    private Set<CareCapability> requiredCapabilities = new HashSet<>();
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private Client client;
@@ -70,7 +67,10 @@ public class CareRecipient {
     protected CareRecipient() {
     }
 
-    public CareRecipient(String firstName, String lastName, LocalDate dateOfBirth, Integer heightCm, Integer weightKg, Gender gender, MobilityLevel mobilityLevel, DementiaLevel dementiaLevel, boolean hasMs, boolean hasAlzheimer, boolean hasParkinson, String diseasesNotes, boolean smoker, boolean hasPets, String petsNotes, boolean needsTransfer, TransferType transferType, String liftingAidsNotes, boolean hasCatheter, boolean hasStoma, boolean useDiapers, String medicalNotes, Client client) {
+    public CareRecipient(String firstName, String lastName, LocalDate dateOfBirth, Integer heightCm, Integer weightKg,
+                         Gender gender, MobilityLevel mobilityLevel, DementiaLevel dementiaLevel, String diseasesNotes,
+                         boolean smoker, boolean hasPets, String petsNotes, String liftingAidsNotes, String medicalNotes,
+                         Set<CareCapability> requiredCapabilities, Client client) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -79,21 +79,50 @@ public class CareRecipient {
         this.gender = gender;
         this.mobilityLevel = mobilityLevel;
         this.dementiaLevel = dementiaLevel;
-        this.hasMs = hasMs;
-        this.hasAlzheimer = hasAlzheimer;
-        this.hasParkinson = hasParkinson;
         this.diseasesNotes = diseasesNotes;
         this.smoker = smoker;
         this.hasPets = hasPets;
         this.petsNotes = petsNotes;
-        this.needsTransfer = needsTransfer;
-        this.transferType = transferType;
         this.liftingAidsNotes = liftingAidsNotes;
-        this.hasCatheter = hasCatheter;
-        this.hasStoma = hasStoma;
-        this.useDiapers = useDiapers;
         this.medicalNotes = medicalNotes;
+        if (requiredCapabilities != null) {
+            this.requiredCapabilities.addAll(requiredCapabilities);
+        }
         this.client = client;
+    }
+
+    public void updateDetails(String firstName, String lastName, LocalDate dateOfBirth, Integer heightCm, Integer weightKg,
+                              Gender gender, MobilityLevel mobilityLevel, DementiaLevel dementiaLevel, String diseasesNotes,
+                              boolean smoker, boolean hasPets, String petsNotes, String liftingAidsNotes, String medicalNotes) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.heightCm = heightCm;
+        this.weightKg = weightKg;
+        this.gender = gender;
+        this.mobilityLevel = mobilityLevel;
+        this.dementiaLevel = dementiaLevel;
+        this.diseasesNotes = diseasesNotes;
+        this.smoker = smoker;
+        this.hasPets = hasPets;
+        this.petsNotes = petsNotes;
+        this.liftingAidsNotes = liftingAidsNotes;
+        this.medicalNotes = medicalNotes;
+    }
+
+    public void updateRequiredCapabilities(Set<CareCapability> newCapabilities) {
+        this.requiredCapabilities.clear();
+        if (newCapabilities != null) {
+            this.requiredCapabilities.addAll(newCapabilities);
+        }
+    }
+
+    public void assignClient(Client client) {
+        this.client = client;
+    }
+
+    public void deactivate() {
+        this.deletedAt = Instant.now();
     }
 
     @PrePersist
@@ -105,9 +134,4 @@ public class CareRecipient {
     public void onUpdate() {
         this.updatedAt = Instant.now();
     }
-
-    public void deactivate() {
-        this.deletedAt = Instant.now();
-    }
-
 }

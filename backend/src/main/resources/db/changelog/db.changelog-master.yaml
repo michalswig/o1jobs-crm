@@ -35,3 +35,5 @@ databaseChangeLog:
       file: db/changelog/feature/017_care_recipent.yml
   - include:
       file: db/changelog/feature/018_seed_admin.yml
+  - include:
+      file: db/changelog/feature/019_caregiver_care_recipient_capabilities.yml

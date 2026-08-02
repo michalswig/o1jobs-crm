@@ -47,8 +47,10 @@ public class CaregiverService {
                 request.firstName(), request.lastName(), request.gender(), request.birthDate(),
                 request.weightKg(), request.heightCm(), request.phone(), request.email(),
                 request.nationality(), request.careerStartDate(), request.hasDriverLicense(),
-                request.smoker(), request.medicalQualificationNotes(), request.recruiterNotes()
+                request.smoker(), request.medicalQualificationNotes(), request.recruiterNotes(),
+                request.dementiaExperience()
         );
+        caregiver.updateCapabilities(request.capabilities());
         return caregiverMapper.caregiverToCaregiverResponse(caregiver);
     }
 

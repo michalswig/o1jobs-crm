@@ -4,6 +4,9 @@ import com.o1jobs.crm.agency.dto.CareRecipientRequest;
 import com.o1jobs.crm.agency.dto.CareRecipientResponse;
 import com.o1jobs.crm.agency.service.CareRecipientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +19,11 @@ import java.net.URI;
 public class CareRecipientController {
     private final CareRecipientService careRecipientService;
 
+    @GetMapping
+    ResponseEntity<Page<CareRecipientResponse>> getAll(@PageableDefault(size = 20, sort = "lastName") Pageable pageable) {
+        return ResponseEntity.ok(careRecipientService.getAll(pageable));
+    }
+
     @GetMapping("/{id}")
     ResponseEntity<CareRecipientResponse> getById(@PathVariable Long id) {
         CareRecipientResponse careRecipientResponse = careRecipientService.getById(id);
@@ -25,7 +33,7 @@ public class CareRecipientController {
     @PostMapping
     ResponseEntity<CareRecipientResponse> create(@Validated @RequestBody CareRecipientRequest careRecipientRequest) {
         CareRecipientResponse careRecipientResponse = careRecipientService.create(careRecipientRequest);
-        URI uri = URI.create("/api/v1/carerecipients/" + careRecipientResponse.id());
+        URI uri = URI.create("/api/v1/care-recipients/" + careRecipientResponse.id());
         return ResponseEntity.created(uri).body(careRecipientResponse);
     }
 

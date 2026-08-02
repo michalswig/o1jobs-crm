@@ -1,9 +1,12 @@
 package com.o1jobs.crm.agency.dto;
 
+import com.o1jobs.crm.agency.domain.CareCapability;
+import com.o1jobs.crm.agency.domain.DementiaLevel;
 import com.o1jobs.crm.agency.domain.Gender;
 import com.o1jobs.crm.agency.domain.Nationality;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 public record CaregiverResponse(
         Long id,
@@ -20,5 +23,7 @@ public record CaregiverResponse(
         boolean hasDriverLicense,
         boolean smoker,
         String medicalQualificationNotes,
-        String recruiterNotes) {
+        String recruiterNotes,
+        DementiaLevel dementiaExperience,
+        Set<CareCapability> capabilities) {
 }

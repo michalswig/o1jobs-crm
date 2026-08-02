@@ -2,6 +2,6 @@ package com.o1jobs.crm.agency.domain;
 
 public enum DementiaLevel {
     NONE,
-    MILD, //TODO BEGINN
+    MILD,
     ADVANCED
 }

@@ -7,9 +7,12 @@ import com.o1jobs.crm.agency.dto.CareRecipientRequest;
 import com.o1jobs.crm.agency.dto.CareRecipientResponse;
 import com.o1jobs.crm.agency.repository.CareRecipientRepository;
 import com.o1jobs.crm.agency.repository.ClientRepository;
+import com.o1jobs.crm.agency.specification.CareRecipientSpecifications;
 import com.o1jobs.crm.exception.NoSuchCareRecipientException;
 import com.o1jobs.crm.exception.NoSuchClientException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +24,13 @@ public class CareRecipientService {
     private final ClientRepository clientRepository;
     private final CareRecipientMapper careRecipientMapper;
 
+    @Transactional(readOnly = true)
+    public Page<CareRecipientResponse> getAll(Pageable pageable) {
+        return careRecipientRepository.findAll(CareRecipientSpecifications.notDeleted(), pageable)
+                .map(careRecipientMapper::toCareRecipientResponse);
+    }
+
+    @Transactional(readOnly = true)
     public CareRecipientResponse getById(Long id) {
         CareRecipient careRecipient = careRecipientRepository.findById(id).orElseThrow(
                 () -> new NoSuchCareRecipientException("CareRecipient with id " + id + " not found")
@@ -41,31 +51,38 @@ public class CareRecipientService {
                 request.gender(),
                 request.mobilityLevel(),
                 request.dementiaLevel(),
-                request.hasMs(),
-                request.hasAlzheimer(),
-                request.hasParkinson(),
                 request.diseasesNotes(),
                 request.smoker(),
                 request.hasPets(),
                 request.petsNotes(),
-                request.needsTransfer(),
-                request.transferType(),
                 request.liftingAidsNotes(),
-                request.hasCatheter(),
-                request.hasStoma(),
-                request.useDiapers(),
                 request.medicalNotes(),
+                request.requiredCapabilities(),
                 client
         );
-        CareRecipient savedCareRecipent = careRecipientRepository.save(careRecipient);
-        return careRecipientMapper.toCareRecipientResponse(savedCareRecipent);
+        CareRecipient savedCareRecipient = careRecipientRepository.save(careRecipient);
+        return careRecipientMapper.toCareRecipientResponse(savedCareRecipient);
     }
 
     public CareRecipientResponse update(Long id, CareRecipientRequest request) {
         CareRecipient careRecipient = careRecipientRepository.findById(id).orElseThrow(
                 () -> new NoSuchCareRecipientException("CareRecipient with id " + id + " not found")
         );
-        careRecipientMapper.updateCareRecipient(request, careRecipient);
+        careRecipient.updateDetails(
+                request.firstName(), request.lastName(), request.dateOfBirth(), request.heightCm(),
+                request.weightKg(), request.gender(), request.mobilityLevel(), request.dementiaLevel(),
+                request.diseasesNotes(), request.smoker(), request.hasPets(), request.petsNotes(),
+                request.liftingAidsNotes(), request.medicalNotes()
+        );
+        careRecipient.updateRequiredCapabilities(request.requiredCapabilities());
+
+        if (!request.clientId().equals(careRecipient.getClient().getId())) {
+            Client client = clientRepository.findById(request.clientId()).orElseThrow(
+                    () -> new NoSuchClientException("Client with id " + request.clientId() + " does not exist")
+            );
+            careRecipient.assignClient(client);
+        }
+
         return careRecipientMapper.toCareRecipientResponse(careRecipient);
     }
 
@@ -78,7 +95,7 @@ public class CareRecipientService {
 
     public CareRecipient getEntityById(Long id) {
         return careRecipientRepository.findById(id).orElseThrow(
-                () ->  new NoSuchCareRecipientException("CareRecipient with id " + id + " not found")
+                () -> new NoSuchCareRecipientException("CareRecipient with id " + id + " not found")
         );
     }
 }

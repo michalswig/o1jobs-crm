@@ -1,11 +1,12 @@
 package com.o1jobs.crm.agency.dto;
 
+import com.o1jobs.crm.agency.domain.CareCapability;
 import com.o1jobs.crm.agency.domain.DementiaLevel;
 import com.o1jobs.crm.agency.domain.Gender;
 import com.o1jobs.crm.agency.domain.MobilityLevel;
-import com.o1jobs.crm.agency.domain.TransferType;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 public record CareRecipientResponse(
         Long id,
@@ -17,20 +18,13 @@ public record CareRecipientResponse(
         Gender gender,
         MobilityLevel mobilityLevel,
         DementiaLevel dementiaLevel,
-        boolean hasMs,
-        boolean hasAlzheimer,
-        boolean hasParkinson,
         String diseasesNotes,
         boolean smoker,
         boolean hasPets,
         String petsNotes,
-        boolean needsTransfer,
-        TransferType transferType,
         String liftingAidsNotes,
-        boolean hasCatheter,
-        boolean hasStoma,
-        boolean useDiapers,
         String medicalNotes,
+        Set<CareCapability> requiredCapabilities,
         Long clientId
 ) {
 }

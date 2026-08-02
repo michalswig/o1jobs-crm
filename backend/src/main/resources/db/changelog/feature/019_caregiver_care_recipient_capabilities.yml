@@ -1,0 +1,144 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20260802-01
+      author: o1jobs
+      changes:
+        - addColumn:
+            tableName: caregiver
+            columns:
+              - column:
+                  name: dementia_experience
+                  type: VARCHAR(20)
+              - column:
+                  name: photo_path
+                  type: VARCHAR(500)
+      rollback:
+        - dropColumn:
+            tableName: caregiver
+            columnName: dementia_experience
+        - dropColumn:
+            tableName: caregiver
+            columnName: photo_path
+
+  - changeSet:
+      id: 20260802-02
+      author: o1jobs
+      changes:
+        - createTable:
+            tableName: caregiver_capability
+            columns:
+              - column:
+                  name: caregiver_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: capability
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: fk_caregiver_capability_caregiver
+            baseTableName: caregiver_capability
+            baseColumnNames: caregiver_id
+            referencedTableName: caregiver
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addPrimaryKey:
+            tableName: caregiver_capability
+            columnNames: caregiver_id, capability
+            constraintName: pk_caregiver_capability
+      rollback:
+        - dropTable:
+            tableName: caregiver_capability
+            cascadeConstraints: true
+
+  - changeSet:
+      id: 20260802-03
+      author: o1jobs
+      changes:
+        - dropColumn:
+            tableName: care_recipient
+            columnName: has_ms
+        - dropColumn:
+            tableName: care_recipient
+            columnName: has_alzheimer
+        - dropColumn:
+            tableName: care_recipient
+            columnName: has_parkinson
+        - dropColumn:
+            tableName: care_recipient
+            columnName: needs_transfer
+        - dropColumn:
+            tableName: care_recipient
+            columnName: transfer_type
+        - dropColumn:
+            tableName: care_recipient
+            columnName: has_catheter
+        - dropColumn:
+            tableName: care_recipient
+            columnName: has_stoma
+        - dropColumn:
+            tableName: care_recipient
+            columnName: use_diapers
+      rollback:
+        - addColumn:
+            tableName: care_recipient
+            columns:
+              - column:
+                  name: has_ms
+                  type: BOOLEAN
+              - column:
+                  name: has_alzheimer
+                  type: BOOLEAN
+              - column:
+                  name: has_parkinson
+                  type: BOOLEAN
+              - column:
+                  name: needs_transfer
+                  type: BOOLEAN
+              - column:
+                  name: transfer_type
+                  type: VARCHAR(20)
+              - column:
+                  name: has_catheter
+                  type: BOOLEAN
+              - column:
+                  name: has_stoma
+                  type: BOOLEAN
+              - column:
+                  name: use_diapers
+                  type: BOOLEAN
+
+  - changeSet:
+      id: 20260802-04
+      author: o1jobs
+      changes:
+        - createTable:
+            tableName: care_recipient_required_capability
+            columns:
+              - column:
+                  name: care_recipient_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: capability
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: fk_care_recipient_capability_care_recipient
+            baseTableName: care_recipient_required_capability
+            baseColumnNames: care_recipient_id
+            referencedTableName: care_recipient
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addPrimaryKey:
+            tableName: care_recipient_required_capability
+            columnNames: care_recipient_id, capability
+            constraintName: pk_care_recipient_capability
+      rollback:
+        - dropTable:
+            tableName: care_recipient_required_capability
+            cascadeConstraints: true

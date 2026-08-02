@@ -1,11 +1,14 @@
 package com.o1jobs.crm.agency.dto;
 
+import com.o1jobs.crm.agency.domain.CareCapability;
+import com.o1jobs.crm.agency.domain.DementiaLevel;
 import com.o1jobs.crm.agency.domain.Gender;
 import com.o1jobs.crm.agency.domain.Nationality;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 public record CaregiverRequest(
         @NotBlank String firstName,
@@ -21,5 +24,7 @@ public record CaregiverRequest(
         boolean hasDriverLicense,
         boolean smoker,
         String medicalQualificationNotes,
-        String recruiterNotes) {
+        String recruiterNotes,
+        DementiaLevel dementiaExperience,
+        Set<CareCapability> capabilities) {
 }
