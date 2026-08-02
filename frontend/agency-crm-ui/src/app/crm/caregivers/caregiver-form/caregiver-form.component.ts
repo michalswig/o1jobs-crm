@@ -8,7 +8,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CaregiverService } from '../../services/caregiver.service';
-import {Caregiver} from '../models/caregiver.model';
+import { Caregiver } from '../models/caregiver.model';
+import { CareCapability } from '../../../shared/models/domain-enums.model';
 
 @Component({
   selector: 'app-caregiver-form',
@@ -33,6 +34,12 @@ export class CaregiverFormComponent implements OnInit {
 
   genders = ['MALE', 'FEMALE'];
   nationalities = ['POLISH', 'GEORGIAN', 'MOLDOVAN', 'RUSSIAN', 'UKRAINIAN'];
+  dementiaLevels = ['NONE', 'MILD', 'ADVANCED'];
+  capabilities: CareCapability[] = [
+    'TRANSFER', 'TRANSFER_WITH_LIFT', 'CATHETER', 'STOMA', 'DIAPERS', 'PEG',
+    'OXYGEN', 'INSULIN', 'INJECTION', 'ALZHEIMER', 'DEMENTIA', 'PARKINSON',
+    'MS', 'COOKING', 'CLEANING', 'SHOPPING', 'NIGHT_CARE'
+  ];
 
   form: FormGroup;
 
@@ -56,7 +63,9 @@ export class CaregiverFormComponent implements OnInit {
       hasDriverLicense: [false],
       smoker: [false],
       medicalQualificationNotes: [''],
-      recruiterNotes: ['']
+      recruiterNotes: [''],
+      dementiaExperience: [''],
+      capabilities: [[]]
     });
   }
 

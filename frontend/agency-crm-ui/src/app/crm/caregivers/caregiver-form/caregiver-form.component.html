@@ -82,6 +82,24 @@
   </mat-form-field>
 
   <mat-form-field appearance="outline">
+    <mat-label>Doświadczenie z demencją</mat-label>
+    <mat-select formControlName="dementiaExperience">
+      @for (d of dementiaLevels; track d) {
+        <mat-option [value]="d">{{ d }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Umiejętności opieki</mat-label>
+    <mat-select formControlName="capabilities" multiple>
+      @for (cap of capabilities; track cap) {
+        <mat-option [value]="cap">{{ cap }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
     <mat-label>Data rozpoczęcia kariery</mat-label>
     <input matInput [matDatepicker]="careerPicker" formControlName="careerStartDate">
     <mat-datepicker-toggle matSuffix [for]="careerPicker"></mat-datepicker-toggle>
