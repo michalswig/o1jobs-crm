@@ -52,7 +52,9 @@ public class Assignment {
     protected Assignment() {
     }
 
-    public Assignment(Client client, CareRecipient careRecipient, LocalDate startDate, String city, String streetAddress, BigDecimal salaryMonthlyNet, LanguageLevel languageLevel, String requirements, AssignmentStatus status, AssignmentCloseReason closeReason, String closeNotes, Caregiver caregiver) {
+    public Assignment(Client client, CareRecipient careRecipient, LocalDate startDate, String city,
+                      String streetAddress, BigDecimal salaryMonthlyNet, LanguageLevel languageLevel,
+                      String requirements, Caregiver caregiver) {
         this.client = client;
         this.careRecipient = careRecipient;
         this.startDate = startDate;
@@ -61,10 +63,18 @@ public class Assignment {
         this.salaryMonthlyNet = salaryMonthlyNet;
         this.languageLevel = languageLevel;
         this.requirements = requirements;
-        this.status = status;
-        this.closeReason = closeReason;
-        this.closeNotes = closeNotes;
+        this.status = AssignmentStatus.OPEN;
         this.caregiver = caregiver;
+    }
+
+    public void updateDetails(LocalDate startDate, String city, String streetAddress, BigDecimal salaryMonthlyNet,
+                              LanguageLevel languageLevel, String requirements) {
+        this.startDate = startDate;
+        this.city = city;
+        this.streetAddress = streetAddress;
+        this.salaryMonthlyNet = salaryMonthlyNet;
+        this.languageLevel = languageLevel;
+        this.requirements = requirements;
     }
 
     public void assignCaregiver(Caregiver caregiver) {
@@ -72,10 +82,16 @@ public class Assignment {
     }
 
     public void close(AssignmentCloseReason reason, String notes) {
+        if (this.status == AssignmentStatus.CLOSED) {
+            throw new IllegalStateException("Assignment with id " + this.id + " is already closed");
+        }
         this.status = AssignmentStatus.CLOSED;
         this.closeReason = reason;
-        this.deletedAt = Instant.now();
         this.closeNotes = notes;
+    }
+
+    public void softDelete() {
+        this.deletedAt = Instant.now();
     }
 
     @PrePersist
@@ -87,5 +103,4 @@ public class Assignment {
     public void onUpdate() {
         this.updatedAt = Instant.now();
     }
-
 }

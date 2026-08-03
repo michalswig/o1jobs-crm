@@ -7,6 +7,8 @@ import com.o1jobs.crm.agency.dto.AssignmentResponse;
 import com.o1jobs.crm.agency.repository.AssignmentRepository;
 import com.o1jobs.crm.exception.NoSuchAssignmentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,12 @@ public class AssignmentService {
     private final CareRecipientService careRecipientService;
 
     @Transactional(readOnly = true)
+    public Page<AssignmentResponse> getAll(Pageable pageable) {
+        return assignmentRepository.findAll(pageable)
+                .map(assignmentMapper::toAssignmentResponse);
+    }
+
+    @Transactional(readOnly = true)
     public AssignmentResponse getById(Long id) {
         Assignment assignment = assignmentRepository.findById(id).orElseThrow(
                 () -> new NoSuchAssignmentException("No assignment with id " + id)
@@ -29,7 +37,6 @@ public class AssignmentService {
     }
 
     public AssignmentResponse create(AssignmentRequest request) {
-
         Client client = clientService.getEntityById(request.clientId());
         CareRecipient careRecipient = careRecipientService.getEntityById(request.careRecipientId());
         Caregiver caregiver = null;
@@ -45,9 +52,6 @@ public class AssignmentService {
                 request.salaryMonthlyNet(),
                 request.languageLevel(),
                 request.requirements(),
-                request.status(),
-                request.closeReason(),
-                request.closeNotes(),
                 caregiver
         );
         assignmentRepository.save(assignment);
@@ -56,14 +60,18 @@ public class AssignmentService {
 
     public AssignmentResponse update(Long id, AssignmentRequest request) {
         Assignment assignmentToUpdate = assignmentRepository.findById(id).orElseThrow(
-                () -> new NoSuchAssignmentException("No assignmentToUpdate with id " + id)
+                () -> new NoSuchAssignmentException("No assignment with id " + id)
         );
 
-        if(request.caregiverId() != null) {
+        assignmentToUpdate.updateDetails(
+                request.startDate(), request.city(), request.streetAddress(),
+                request.salaryMonthlyNet(), request.languageLevel(), request.requirements()
+        );
+
+        if (request.caregiverId() != null) {
             assignmentToUpdate.assignCaregiver(caregiverService.getEntityById(request.caregiverId()));
         }
 
-        assignmentMapper.updateAssignmentResponse(request, assignmentToUpdate);
         return assignmentMapper.toAssignmentResponse(assignmentToUpdate);
     }
 
@@ -73,5 +81,4 @@ public class AssignmentService {
         );
         assignment.close(reason, notes);
     }
-
 }

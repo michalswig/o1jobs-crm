@@ -5,6 +5,9 @@ import com.o1jobs.crm.agency.dto.AssignmentResponse;
 import com.o1jobs.crm.agency.dto.CloseAssignmentRequest;
 import com.o1jobs.crm.agency.service.AssignmentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +42,11 @@ public class AssignmentController {
     public ResponseEntity<Void> close(@Validated @RequestBody CloseAssignmentRequest request, @PathVariable Long id) {
         assignmentService.close(id, request.reason(), request.notes());
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<AssignmentResponse>> getAll(@PageableDefault(size = 20, sort = "startDate") Pageable pageable) {
+        return ResponseEntity.ok(assignmentService.getAll(pageable));
     }
 
 }
