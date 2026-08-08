@@ -24,3 +24,9 @@ export type CareCapability =
   | 'CLEANING'
   | 'SHOPPING'
   | 'NIGHT_CARE';
+
+export type LanguageLevel = 'NONE' | 'BASIC' | 'COMMUNICATIVE' | 'GOOD' | 'VERY_GOOD';
+
+export type AssignmentStatus = 'OPEN' | 'CLOSED';
+
+export type AssignmentCloseReason = 'FAMILY_CANCELLED' | 'SENIOR_PASSED' | 'NURSING_HOME' | 'OTHER';

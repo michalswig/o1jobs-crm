@@ -9,6 +9,8 @@ import {CaregiverFormComponent} from './crm/caregivers/caregiver-form/caregiver-
 import {CaregiverListComponent} from './crm/caregivers/caregiver-list/caregiver-list.component';
 import {CareRecipientFormComponent} from './crm/care-recipients/care-recipient-form/care-recipient-form.component';
 import {CareRecipientListComponent} from './crm/care-recipients/care-recipient-list/care-recipient-list.component';
+import {AssignmentListComponent} from './crm/assignments/assignment-list/assignment-list.component';
+import {AssignmentFormComponent} from './crm/assignments/assignment-form/assignment-form.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -27,6 +29,9 @@ export const routes: Routes = [
       { path: 'care-recipients', component: CareRecipientListComponent },
       { path: 'care-recipients/new', component: CareRecipientFormComponent },
       { path: 'care-recipients/edit/:id', component: CareRecipientFormComponent },
+      { path: 'assignments', component: AssignmentListComponent },
+      { path: 'assignments/new', component: AssignmentFormComponent },
+      { path: 'assignments/edit/:id', component: AssignmentFormComponent },
     ]
   }
 ];

@@ -1,0 +1,53 @@
+<div class="toolbar">
+  <a mat-raised-button color="primary" routerLink="/assignments/new">+ Nowe zlecenie</a>
+</div>
+
+<h2>Lista zleceń ({{ totalElements }})</h2>
+
+<table mat-table [dataSource]="dataSource" matSort>
+
+  <ng-container matColumnDef="city">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Miasto</th>
+    <td mat-cell *matCellDef="let a">{{ a.city }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="startDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Data rozpoczęcia</th>
+    <td mat-cell *matCellDef="let a">{{ a.startDate }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+    <td mat-cell *matCellDef="let a">
+      <span [class.status-open]="a.status === 'OPEN'" [class.status-closed]="a.status === 'CLOSED'">
+        {{ a.status }}
+      </span>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="salaryMonthlyNet">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Wynagrodzenie</th>
+    <td mat-cell *matCellDef="let a">{{ a.salaryMonthlyNet }} zł</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Akcje</th>
+    <td mat-cell *matCellDef="let a">
+      <a mat-button color="primary" [routerLink]="['/assignments/edit', a.id]">Edytuj</a>
+      @if (a.status === 'OPEN') {
+        <button mat-button color="warn" (click)="onClose(a.id)">Zamknij</button>
+      }
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
+
+<mat-paginator
+  [length]="totalElements"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[10, 20, 50]"
+  (page)="onPageChange($event)">
+</mat-paginator>
