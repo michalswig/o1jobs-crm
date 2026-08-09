@@ -1,5 +1,6 @@
 package com.o1jobs.crm.agency.controller;
 
+import com.o1jobs.crm.agency.dto.AssignmentDetailResponse;
 import com.o1jobs.crm.agency.dto.AssignmentRequest;
 import com.o1jobs.crm.agency.dto.AssignmentResponse;
 import com.o1jobs.crm.agency.dto.CloseAssignmentRequest;
@@ -19,6 +20,11 @@ import java.net.URI;
 @RequiredArgsConstructor
 public class AssignmentController {
     private final AssignmentService assignmentService;
+
+    @GetMapping("/{id}/details")
+    public ResponseEntity<AssignmentDetailResponse> getDetailById(@PathVariable Long id) {
+        return ResponseEntity.ok(assignmentService.getDetailById(id));
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<AssignmentResponse> getById(@PathVariable Long id) {

@@ -1,6 +1,7 @@
 package com.o1jobs.crm.agency.service;
 
 import com.o1jobs.crm.agency.domain.*;
+import com.o1jobs.crm.agency.dto.AssignmentDetailResponse;
 import com.o1jobs.crm.agency.dto.AssignmentMapper;
 import com.o1jobs.crm.agency.dto.AssignmentRequest;
 import com.o1jobs.crm.agency.dto.AssignmentResponse;
@@ -21,6 +22,14 @@ public class AssignmentService {
     private final ClientService clientService;
     private final CaregiverService caregiverService;
     private final CareRecipientService careRecipientService;
+
+    @Transactional(readOnly = true)
+    public AssignmentDetailResponse getDetailById(Long id) {
+        Assignment assignment = assignmentRepository.findById(id).orElseThrow(
+                () -> new NoSuchAssignmentException("No assignment with id " + id)
+        );
+        return assignmentMapper.toAssignmentDetailResponse(assignment);
+    }
 
     @Transactional(readOnly = true)
     public Page<AssignmentResponse> getAll(Pageable pageable) {
