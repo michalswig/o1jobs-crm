@@ -8,7 +8,9 @@
 
   <ng-container matColumnDef="city">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Miasto</th>
-    <td mat-cell *matCellDef="let a">{{ a.city }}</td>
+    <td mat-cell *matCellDef="let a">
+      <a [routerLink]="['/assignments', a.id]">{{ a.city }}</a>
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="startDate">

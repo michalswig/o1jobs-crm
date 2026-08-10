@@ -1,0 +1,79 @@
+@if (assignment) {
+
+  <div class="header">
+    <h2>Zlecenie #{{ assignment.id }} — {{ assignment.city }}</h2>
+    <span [class.status-open]="assignment.status === 'OPEN'" [class.status-closed]="assignment.status === 'CLOSED'">
+      {{ assignment.status }}
+    </span>
+  </div>
+
+  <section>
+    <h3>Szczegóły zlecenia</h3>
+    <p><strong>Data rozpoczęcia:</strong> {{ assignment.startDate }}</p>
+    <p><strong>Adres:</strong> {{ assignment.streetAddress }}, {{ assignment.city }}</p>
+    <p><strong>Wynagrodzenie:</strong> {{ assignment.salaryMonthlyNet }} zł netto/mies.</p>
+    <p><strong>Poziom języka:</strong> {{ assignment.languageLevel }}</p>
+    @if (assignment.requirements) {
+      <p><strong>Wymagania:</strong> {{ assignment.requirements }}</p>
+    }
+    @if (assignment.status === 'CLOSED') {
+      <p><strong>Powód zamknięcia:</strong> {{ assignment.closeReason }}</p>
+      @if (assignment.closeNotes) {
+        <p><strong>Notatki zamknięcia:</strong> {{ assignment.closeNotes }}</p>
+      }
+    }
+  </section>
+
+  <section>
+    <h3>Klient</h3>
+    <p><strong>{{ assignment.client.name }}</strong></p>
+    <p>{{ assignment.client.email }} · {{ assignment.client.phoneNumber }}</p>
+    <p>{{ assignment.client.city }}, {{ assignment.client.country }}</p>
+  </section>
+
+  <section>
+    <h3>Podopieczny</h3>
+    <p><strong>{{ assignment.careRecipient.firstName }} {{ assignment.careRecipient.lastName }}</strong></p>
+    <p><strong>Mobilność:</strong> {{ assignment.careRecipient.mobilityLevel }}</p>
+    <p><strong>Demencja:</strong> {{ assignment.careRecipient.dementiaLevel }}</p>
+    @if (assignment.careRecipient.diseasesNotes) {
+      <p><strong>Choroby:</strong> {{ assignment.careRecipient.diseasesNotes }}</p>
+    }
+    @if (assignment.careRecipient.hasPets) {
+      <p><strong>Zwierzęta:</strong> {{ assignment.careRecipient.petsNotes }}</p>
+    }
+    @if (assignment.careRecipient.medicalNotes) {
+      <p><strong>Notatki medyczne:</strong> {{ assignment.careRecipient.medicalNotes }}</p>
+    }
+
+    <p><strong>Wymagane umiejętności:</strong></p>
+    <div class="capability-tags">
+      @for (cap of assignment.careRecipient.requiredCapabilities; track cap) {
+        <span class="tag" [class.tag-covered]="isCovered(cap)" [class.tag-missing]="!isCovered(cap)">
+          {{ cap }}
+        </span>
+      }
+    </div>
+  </section>
+
+  <section>
+    <h3>Opiekunka</h3>
+    @if (assignment.caregiver) {
+      <p><strong>{{ assignment.caregiver.firstName }} {{ assignment.caregiver.lastName }}</strong></p>
+      <p>{{ assignment.caregiver.nationality }} · doświadczenie z demencją: {{ assignment.caregiver.dementiaExperience ?? 'brak danych' }}</p>
+      <p><strong>Umiejętności:</strong> {{ assignment.caregiver.capabilities.join(', ') }}</p>
+    } @else {
+      <p class="no-caregiver">Brak przypisanej opiekunki.</p>
+      <a mat-button color="primary" [routerLink]="['/assignments/edit', assignment.id]">Przypisz opiekunkę</a>
+    }
+  </section>
+
+  <div class="actions">
+    <a mat-raised-button color="primary" [routerLink]="['/assignments/edit', assignment.id]">Edytuj</a>
+    @if (assignment.status === 'OPEN') {
+      <button mat-button color="warn" (click)="onClose()">Zamknij zlecenie</button>
+    }
+    <button mat-button type="button" routerLink="/assignments">Powrót do listy</button>
+  </div>
+
+}

@@ -5,6 +5,7 @@ import { environment } from '../../../../environments/environment';
 import { Page } from '../../../shared/models/page.model';
 import { AssignmentCloseReason } from '../../../shared/models/domain-enums.model';
 import {Assignment} from '../models/assignment';
+import {AssignmentDetail} from '../models/assignment-detail';
 
 export interface CloseAssignmentPayload {
   reason: AssignmentCloseReason;
@@ -41,5 +42,9 @@ export class AssignmentService {
 
   close(id: number, payload: CloseAssignmentPayload): Observable<void> {
     return this.http.patch<void>(`${this.baseUrl}/${id}/close`, payload);
+  }
+
+  getDetailById(id: number): Observable<AssignmentDetail> {
+    return this.http.get<AssignmentDetail>(`${this.baseUrl}/${id}/details`);
   }
 }

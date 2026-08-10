@@ -1,0 +1,55 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.status-open {
+  color: #2e7d32;
+  font-weight: 500;
+}
+
+.status-closed {
+  color: #757575;
+}
+
+section {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.capability-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.tag {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+}
+
+.tag-covered {
+  background: #c8e6c9;
+  color: #2e7d32;
+}
+
+.tag-missing {
+  background: #ffcdd2;
+  color: #c62828;
+}
+
+.no-caregiver {
+  color: #757575;
+  font-style: italic;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}

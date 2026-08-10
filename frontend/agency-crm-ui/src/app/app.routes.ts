@@ -11,6 +11,7 @@ import {CareRecipientFormComponent} from './crm/care-recipients/care-recipient-f
 import {CareRecipientListComponent} from './crm/care-recipients/care-recipient-list/care-recipient-list.component';
 import {AssignmentListComponent} from './crm/assignments/assignment-list/assignment-list.component';
 import {AssignmentFormComponent} from './crm/assignments/assignment-form/assignment-form.component';
+import {AssignmentDetailComponent} from './crm/assignments/assignment-detail/assignment-detail.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -32,6 +33,7 @@ export const routes: Routes = [
       { path: 'assignments', component: AssignmentListComponent },
       { path: 'assignments/new', component: AssignmentFormComponent },
       { path: 'assignments/edit/:id', component: AssignmentFormComponent },
+      { path: 'assignments/:id', component: AssignmentDetailComponent },
     ]
   }
 ];
