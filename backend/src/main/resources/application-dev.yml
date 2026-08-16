@@ -1,16 +1,12 @@
 spring:
-  h2:
-    console:
-      enabled: false
-      path: /h2-console
   jpa:
     open-in-view: false
     hibernate:
       ddl-auto: validate
   datasource:
-    url: jdbc:h2:mem:crm
-    username: sa
-    password:
+    url: jdbc:postgresql://localhost:5432/crm_db
+    username: user
+    password: password
 logging:
   level:
     org.springframework.security: DEBUG
