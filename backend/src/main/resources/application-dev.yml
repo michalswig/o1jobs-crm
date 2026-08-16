@@ -7,6 +7,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/crm_db
     username: user
     password: password
+  liquibase:
+    contexts: dev
 logging:
   level:
     org.springframework.security: DEBUG
