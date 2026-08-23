@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.o1jobs.de'
+  apiUrl: 'https://o1jobs-crm.onrender.com'
 };
