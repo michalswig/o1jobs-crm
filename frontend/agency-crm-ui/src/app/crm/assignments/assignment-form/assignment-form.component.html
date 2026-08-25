@@ -78,6 +78,21 @@
   </mat-form-field>
 
   <mat-form-field appearance="outline">
+    <mat-label>Typ zakwaterowania</mat-label>
+    <mat-select formControlName="accommodationType">
+      @for (a of accommodationTypes; track a) {
+        <mat-option [value]="a">{{ a === 'HOUSE' ? 'Dom' : 'Mieszkanie' }}</mat-option>
+      }
+    </mat-select>
+    @if (form.get('accommodationType')?.hasError('required') && form.get('accommodationType')?.touched) {
+      <mat-error>Typ zakwaterowania jest wymagany</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-checkbox formControlName="ownBathroom">Własna łazienka</mat-checkbox>
+  <mat-checkbox formControlName="ownRoom">Własny pokój</mat-checkbox>
+
+  <mat-form-field appearance="outline">
     <mat-label>Wymagania</mat-label>
     <textarea matInput formControlName="requirements" rows="3"></textarea>
   </mat-form-field>

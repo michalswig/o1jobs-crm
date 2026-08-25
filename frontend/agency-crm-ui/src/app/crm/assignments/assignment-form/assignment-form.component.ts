@@ -5,13 +5,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { AssignmentService } from '../services/assignment.service';
 import { ClientService } from '../../services/client.service';
 import { Client } from '../../models/client.model';
 import { CareRecipientService } from '../../care-recipients/services/care-recipient.service';
 import { CaregiverService } from '../../services/caregiver.service';
 import { Caregiver } from '../../caregivers/models/caregiver.model';
-import { LanguageLevel } from '../../../shared/models/domain-enums.model';
+import { LanguageLevel, AccommodationType } from '../../../shared/models/domain-enums.model';
 import {CareRecipient} from '../../care-recipients/models/care-recipient';
 import {Assignment} from '../models/assignment';
 
@@ -24,7 +25,8 @@ import {Assignment} from '../models/assignment';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule
   ],
   templateUrl: './assignment-form.component.html',
   styleUrl: './assignment-form.component.scss'
@@ -35,6 +37,7 @@ export class AssignmentFormComponent implements OnInit {
   isEditMode = false;
 
   languageLevels: LanguageLevel[] = ['NONE', 'BASIC', 'COMMUNICATIVE', 'GOOD', 'VERY_GOOD'];
+  accommodationTypes: AccommodationType[] = ['HOUSE', 'APARTMENT'];
 
   clients: Client[] = [];
   careRecipients: CareRecipient[] = [];
@@ -60,7 +63,10 @@ export class AssignmentFormComponent implements OnInit {
       salaryMonthlyNet: ['', Validators.required],
       languageLevel: ['', Validators.required],
       requirements: [''],
-      caregiverId: ['']
+      caregiverId: [''],
+      accommodationType: ['', Validators.required],
+      ownBathroom: [false],
+      ownRoom: [false]
     });
   }
 

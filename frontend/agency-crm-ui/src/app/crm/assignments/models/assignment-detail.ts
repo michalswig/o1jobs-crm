@@ -1,6 +1,6 @@
 import { Client } from '../../models/client.model';
 import { Caregiver } from '../../caregivers/models/caregiver.model';
-import { LanguageLevel, AssignmentStatus, AssignmentCloseReason } from '../../../shared/models/domain-enums.model';
+import { LanguageLevel, AssignmentStatus, AssignmentCloseReason, AccommodationType } from '../../../shared/models/domain-enums.model';
 import {CareRecipient} from '../../care-recipients/models/care-recipient';
 
 export interface AssignmentDetail {
@@ -17,4 +17,7 @@ export interface AssignmentDetail {
   client: Client;
   careRecipient: CareRecipient;
   caregiver: Caregiver | null;
+  accommodationType: AccommodationType | null;
+  ownBathroom: boolean;
+  ownRoom: boolean;
 }

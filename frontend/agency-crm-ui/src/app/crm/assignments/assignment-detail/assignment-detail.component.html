@@ -13,6 +13,11 @@
     <p><strong>Adres:</strong> {{ assignment.streetAddress }}, {{ assignment.city }}</p>
     <p><strong>Wynagrodzenie:</strong> {{ assignment.salaryMonthlyNet }} zł netto/mies.</p>
     <p><strong>Poziom języka:</strong> {{ assignment.languageLevel }}</p>
+    @if (assignment.accommodationType) {
+      <p><strong>Zakwaterowanie:</strong> {{ assignment.accommodationType === 'HOUSE' ? 'Dom' : 'Mieszkanie' }}
+        · {{ assignment.ownBathroom ? 'własna łazienka' : 'współdzielona łazienka' }}
+        · {{ assignment.ownRoom ? 'własny pokój' : 'współdzielony pokój' }}</p>
+    }
     @if (assignment.requirements) {
       <p><strong>Wymagania:</strong> {{ assignment.requirements }}</p>
     }

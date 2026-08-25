@@ -1,4 +1,4 @@
-import { LanguageLevel, AssignmentStatus, AssignmentCloseReason } from '../../../shared/models/domain-enums.model';
+import { LanguageLevel, AssignmentStatus, AssignmentCloseReason, AccommodationType } from '../../../shared/models/domain-enums.model';
 
 export interface Assignment {
   id: number;
@@ -14,4 +14,7 @@ export interface Assignment {
   closeReason: AssignmentCloseReason | null;
   closeNotes: string | null;
   caregiverId: number | null;
+  accommodationType: AccommodationType | null;
+  ownBathroom: boolean;
+  ownRoom: boolean;
 }

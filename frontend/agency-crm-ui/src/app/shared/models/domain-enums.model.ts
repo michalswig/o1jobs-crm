@@ -30,3 +30,5 @@ export type LanguageLevel = 'NONE' | 'BASIC' | 'COMMUNICATIVE' | 'GOOD' | 'VERY_
 export type AssignmentStatus = 'OPEN' | 'CLOSED';
 
 export type AssignmentCloseReason = 'FAMILY_CANCELLED' | 'SENIOR_PASSED' | 'NURSING_HOME' | 'OTHER';
+
+export type AccommodationType = 'HOUSE' | 'APARTMENT';
