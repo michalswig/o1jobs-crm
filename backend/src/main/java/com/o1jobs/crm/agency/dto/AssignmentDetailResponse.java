@@ -1,5 +1,6 @@
 package com.o1jobs.crm.agency.dto;
 
+import com.o1jobs.crm.agency.domain.AccommodationType;
 import com.o1jobs.crm.agency.domain.AssignmentCloseReason;
 import com.o1jobs.crm.agency.domain.AssignmentStatus;
 import com.o1jobs.crm.agency.domain.LanguageLevel;
@@ -20,6 +21,9 @@ public record AssignmentDetailResponse(
         String closeNotes,
         ClientResponse client,
         CareRecipientResponse careRecipient,
-        CaregiverResponse caregiver
+        CaregiverResponse caregiver,
+        AccommodationType accommodationType,
+        boolean ownBathroom,
+        boolean ownRoom
 ) {
 }

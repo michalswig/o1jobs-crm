@@ -39,3 +39,5 @@ databaseChangeLog:
       file: db/changelog/feature/019_caregiver_care_recipient_capabilities.yml
   - include:
       file: db/changelog/feature/020_dev_seed.yml
+  - include:
+      file: db/changelog/feature/021_assignment_accommodation.yml

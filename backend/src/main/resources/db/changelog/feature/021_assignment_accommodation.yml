@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20260825-01
+      author: o1jobs
+      changes:
+        - addColumn:
+            tableName: assignment
+            columns:
+              - column:
+                  name: accommodation_type
+                  type: varchar(50)
+              - column:
+                  name: has_own_bathroom
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: has_own_room
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+      rollback:
+        - dropColumn:
+            tableName: assignment
+            columns:
+              - column:
+                  name: accommodation_type
+              - column:
+                  name: has_own_bathroom
+              - column:
+                  name: has_own_room

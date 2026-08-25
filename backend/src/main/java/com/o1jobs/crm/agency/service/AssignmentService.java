@@ -52,6 +52,9 @@ public class AssignmentService {
         if (request.caregiverId() != null) {
             caregiver = caregiverService.getEntityById(request.caregiverId());
         }
+        Accommodation accommodation = new Accommodation(
+                request.accommodationType(), request.ownBathroom(), request.ownRoom()
+        );
         Assignment assignment = new Assignment(
                 client,
                 careRecipient,
@@ -61,7 +64,8 @@ public class AssignmentService {
                 request.salaryMonthlyNet(),
                 request.languageLevel(),
                 request.requirements(),
-                caregiver
+                caregiver,
+                accommodation
         );
         assignmentRepository.save(assignment);
         return assignmentMapper.toAssignmentResponse(assignment);
@@ -72,9 +76,12 @@ public class AssignmentService {
                 () -> new NoSuchAssignmentException("No assignment with id " + id)
         );
 
+        Accommodation accommodation = new Accommodation(
+                request.accommodationType(), request.ownBathroom(), request.ownRoom()
+        );
         assignmentToUpdate.updateDetails(
                 request.startDate(), request.city(), request.streetAddress(),
-                request.salaryMonthlyNet(), request.languageLevel(), request.requirements()
+                request.salaryMonthlyNet(), request.languageLevel(), request.requirements(), accommodation
         );
 
         if (request.caregiverId() != null) {

@@ -18,6 +18,9 @@ public record AssignmentResponse(
         AssignmentStatus status,
         AssignmentCloseReason closeReason,
         String closeNotes,
-        Long caregiverId
+        Long caregiverId,
+        AccommodationType accommodationType,
+        boolean ownBathroom,
+        boolean ownRoom
 ) {
 }

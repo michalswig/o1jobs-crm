@@ -43,6 +43,9 @@ public class Assignment {
     @JoinColumn(name = "caregiver_id")
     private Caregiver caregiver;
 
+    @Embedded
+    private Accommodation accommodation;
+
     private Instant createdAt;
     private Long createdByUserId;
     private Instant updatedAt;
@@ -54,7 +57,7 @@ public class Assignment {
 
     public Assignment(Client client, CareRecipient careRecipient, LocalDate startDate, String city,
                       String streetAddress, BigDecimal salaryMonthlyNet, LanguageLevel languageLevel,
-                      String requirements, Caregiver caregiver) {
+                      String requirements, Caregiver caregiver, Accommodation accommodation) {
         this.client = client;
         this.careRecipient = careRecipient;
         this.startDate = startDate;
@@ -65,16 +68,18 @@ public class Assignment {
         this.requirements = requirements;
         this.status = AssignmentStatus.OPEN;
         this.caregiver = caregiver;
+        this.accommodation = accommodation;
     }
 
     public void updateDetails(LocalDate startDate, String city, String streetAddress, BigDecimal salaryMonthlyNet,
-                              LanguageLevel languageLevel, String requirements) {
+                              LanguageLevel languageLevel, String requirements, Accommodation accommodation) {
         this.startDate = startDate;
         this.city = city;
         this.streetAddress = streetAddress;
         this.salaryMonthlyNet = salaryMonthlyNet;
         this.languageLevel = languageLevel;
         this.requirements = requirements;
+        this.accommodation = accommodation;
     }
 
     public void assignCaregiver(Caregiver caregiver) {
