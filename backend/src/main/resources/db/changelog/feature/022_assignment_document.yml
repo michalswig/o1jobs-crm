@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20260825-02
+      author: o1jobs
+      changes:
+        - createTable:
+            tableName: assignment_document
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: assignment_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    unique: true
+                    foreignKeyName: fk_assignment_document_assignment
+                    references: assignment(id)
+              - column:
+                  name: file_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content_type
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: file_size
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: file_data
+                  type: blob
+                  constraints:
+                    nullable: false
+              - column:
+                  name: uploaded_at
+                  type: timestamp
+              - column:
+                  name: uploaded_by_user_id
+                  type: bigint
+      rollback:
+        - dropTable:
+            tableName: assignment_document

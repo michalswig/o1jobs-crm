@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20260825-03
+      author: o1jobs
+      changes:
+        - addColumn:
+            tableName: assignment_document
+            columns:
+              - column:
+                  name: storage_key
+                  type: varchar(500)
+        - sql:
+            # Stare wiersze wskazują na pliki trzymane w Postgresie (file_data), których
+            # nie da się automatycznie przenieść do R2 samą migracją SQL - wymagałoby to
+            # osobnego skryptu odczytującego bajty i wgrywającego je do bucketu. Skoro to
+            # środowisko testowe, kasujemy metadane; użytkownicy wgrają umowy ponownie.
+            sql: DELETE FROM assignment_document;
+        - dropColumn:
+            tableName: assignment_document
+            columnName: file_data
+        - addNotNullConstraint:
+            tableName: assignment_document
+            columnName: storage_key
+            columnDataType: varchar(500)
+      rollback:
+        - addColumn:
+            tableName: assignment_document
+            columns:
+              - column:
+                  name: file_data
+                  type: blob
+        - dropColumn:
+            tableName: assignment_document
+            columnName: storage_key

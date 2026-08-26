@@ -41,3 +41,7 @@ databaseChangeLog:
       file: db/changelog/feature/020_dev_seed.yml
   - include:
       file: db/changelog/feature/021_assignment_accommodation.yml
+  - include:
+      file: db/changelog/feature/022_assignment_document.yml
+  - include:
+      file: db/changelog/feature/023_assignment_document_r2_migration.yml
