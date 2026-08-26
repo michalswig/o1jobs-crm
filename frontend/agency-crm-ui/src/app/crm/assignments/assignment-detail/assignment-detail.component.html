@@ -73,6 +73,30 @@
     }
   </section>
 
+  <section>
+    <h3>Umowa</h3>
+    @if (assignmentDocument) {
+      <p><strong>{{ assignmentDocument.fileName }}</strong> ({{ (assignmentDocument.fileSize / 1024) | number:'1.0-0' }} KB)</p>
+      <p>Przesłano: {{ assignmentDocument.uploadedAt | date:'dd.MM.yyyy HH:mm' }}</p>
+      <div class="actions">
+        <button mat-button color="primary" type="button" (click)="onDownload()">Pobierz</button>
+        <button mat-button color="warn" type="button" (click)="onDeleteDocument()">Usuń</button>
+      </div>
+    } @else {
+      <p class="no-caregiver">Brak przesłanej umowy.</p>
+    }
+
+    <div class="document-upload">
+      <input type="file" accept="application/pdf" (change)="onFileSelected($event)">
+      <button mat-raised-button color="primary" type="button" [disabled]="!selectedFile || uploading" (click)="onUpload()">
+        {{ uploading ? 'Przesyłanie...' : 'Prześlij umowę (PDF)' }}
+      </button>
+      @if (uploadError) {
+        <p class="upload-error">{{ uploadError }}</p>
+      }
+    </div>
+  </section>
+
   <div class="actions">
     <a mat-raised-button color="primary" [routerLink]="['/assignments/edit', assignment.id]">Edytuj</a>
     @if (assignment.status === 'OPEN') {

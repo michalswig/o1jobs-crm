@@ -6,6 +6,7 @@ import { Page } from '../../../shared/models/page.model';
 import { AssignmentCloseReason } from '../../../shared/models/domain-enums.model';
 import {Assignment} from '../models/assignment';
 import {AssignmentDetail} from '../models/assignment-detail';
+import {AssignmentDocument} from '../models/assignment-document';
 
 export interface CloseAssignmentPayload {
   reason: AssignmentCloseReason;
@@ -46,5 +47,23 @@ export class AssignmentService {
 
   getDetailById(id: number): Observable<AssignmentDetail> {
     return this.http.get<AssignmentDetail>(`${this.baseUrl}/${id}/details`);
+  }
+
+  uploadDocument(assignmentId: number, file: File): Observable<AssignmentDocument> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<AssignmentDocument>(`${this.baseUrl}/${assignmentId}/document`, formData);
+  }
+
+  getDocumentMetadata(assignmentId: number): Observable<AssignmentDocument> {
+    return this.http.get<AssignmentDocument>(`${this.baseUrl}/${assignmentId}/document`);
+  }
+
+  downloadDocument(assignmentId: number): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}/${assignmentId}/document/download`, { responseType: 'blob' });
+  }
+
+  deleteDocument(assignmentId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${assignmentId}/document`);
   }
 }
