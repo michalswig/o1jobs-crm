@@ -12,12 +12,12 @@ export interface LoginResponse {
   token: string;
 }
 
+const TOKEN_STORAGE_KEY = 'crm_auth_token';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  private _token: string | null = null;
 
   constructor(private readonly http: HttpClient) {
   }
@@ -27,21 +27,23 @@ export class AuthService {
   }
 
   logout(): void {
-    this._token = null;
+    this.token = null;
   }
 
   get token(): string | null {
-    return this._token;
+    return localStorage.getItem(TOKEN_STORAGE_KEY);
   }
 
   set token(value: string | null) {
-    this._token = value;
+    if (value) {
+      localStorage.setItem(TOKEN_STORAGE_KEY, value);
+    } else {
+      localStorage.removeItem(TOKEN_STORAGE_KEY);
+    }
   }
 
   isLoggedIn(): boolean {
-    return this._token !== null;
+    return this.token !== null;
   }
-
-
 
 }
