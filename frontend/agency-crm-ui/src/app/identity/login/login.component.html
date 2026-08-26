@@ -1,11 +1,34 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label>User Name</label>
-    <input type="text" formControlName="username">
-  </div>
-  <div>
-    <label>Password</label>
-    <input type="text" formControlName="password">
-  </div>
-  <button type="submit">Login</button>
-</form>
+<div class="login-container">
+  <mat-card class="login-card">
+
+    <img src="logo.png" alt="o1jobs Care" class="login-logo">
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Nazwa użytkownika</mat-label>
+        <input matInput type="text" formControlName="username" autocomplete="username">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Hasło</mat-label>
+        <input matInput type="password" formControlName="password" autocomplete="current-password">
+      </mat-form-field>
+
+      @if (errorMessage) {
+        <p class="error-message">{{ errorMessage }}</p>
+      }
+
+      <button mat-raised-button color="primary" type="submit"
+              [disabled]="loginForm.invalid || loading" class="submit-button">
+        @if (loading) {
+          <mat-spinner diameter="20"></mat-spinner>
+        } @else {
+          <span>Zaloguj się</span>
+        }
+      </button>
+
+    </form>
+
+  </mat-card>
+</div>

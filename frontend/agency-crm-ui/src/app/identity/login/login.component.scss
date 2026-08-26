@@ -1,0 +1,51 @@
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.login-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 360px;
+  padding: 32px 24px;
+}
+
+.login-logo {
+  width: 220px;
+  height: auto;
+  margin-bottom: 24px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 4px;
+}
+
+.error-message {
+  color: #d32f2f;
+  font-size: 0.875rem;
+  margin: 0 0 8px;
+}
+
+.submit-button {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.submit-button mat-spinner {
+  display: inline-block;
+}
+
+.submit-button ::ng-deep .mat-mdc-progress-spinner circle {
+  stroke: #fff;
+}

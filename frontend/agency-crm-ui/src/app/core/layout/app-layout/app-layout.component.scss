@@ -7,9 +7,40 @@
 }
 
 .content {
-  padding: 16px;
+  padding: 24px;
+  background-color: var(--o1jobs-bg);
+  min-height: calc(100vh - 64px);
+}
+
+.brand-mark {
+  width: 28px;
+  height: 28px;
+  margin-right: 10px;
+}
+
+.brand-name {
+  font-family: 'Outfit', Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.2px;
+}
+
+mat-sidenav {
+  width: 240px;
+  border-right: none !important;
+  box-shadow: 1px 0 4px rgba(0, 0, 0, 0.06);
 }
 
 .active-link {
-  background: rgba(0, 0, 0, 0.05);
+  background: var(--o1jobs-teal) !important;
+  color: white !important;
+
+  ::ng-deep .mat-icon {
+    color: white !important;
+  }
+}
+
+mat-nav-list a {
+  border-radius: 0 20px 20px 0;
+  margin: 4px 8px 4px 0;
 }

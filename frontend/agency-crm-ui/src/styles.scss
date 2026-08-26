@@ -1,4 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'theme';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: var(--o1jobs-bg);
+  color: var(--o1jobs-text);
+}
+
+h1, h2, h3, h4, .mat-toolbar {
+  font-family: 'Outfit', Roboto, "Helvetica Neue", sans-serif;
+}
+
+// Delikatne, ciepłe karty zamiast surowych, ostrych krawędzi Material domyślnie
+.mat-mdc-card {
+  border-radius: 12px !important;
+}
+
+.mat-mdc-table {
+  border-radius: 8px;
+  overflow: hidden;
+}

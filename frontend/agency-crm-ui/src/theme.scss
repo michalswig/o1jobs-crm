@@ -1,0 +1,99 @@
+@use '@angular/material' as mat;
+
+// Paleta wywiedziona z rzeczywistego logo marki (care.o1jobs.de) -
+// teal #027f98 jako kolor główny, koralowy #fe4f39 jako akcent.
+// Wygenerowana programowo (interpolacja z bielą/czernią), nie dobrana na oko.
+
+$o1jobs-teal: (
+  50: #e6f2f5,
+  100: #c0dfe5,
+  200: #95c9d4,
+  300: #67b2c1,
+  400: #3599ad,
+  500: #027f98,
+  600: #027086,
+  700: #026174,
+  800: #015161,
+  900: #01424f,
+  A100: #8dc5d1,
+  A200: #5bacbc,
+  A400: #027990,
+  A700: #02667a,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: rgba(black, 0.87),
+    A400: white,
+    A700: white,
+  )
+);
+
+$o1jobs-coral: (
+  50: #ffedeb,
+  100: #ffd3ce,
+  200: #ffb5ac,
+  300: #fe9588,
+  400: #fe7261,
+  500: #fe4f39,
+  600: #e04632,
+  700: #c13c2b,
+  800: #a33324,
+  900: #84291e,
+  A100: #ffb0a6,
+  A200: #fe8d7e,
+  A400: #f14b36,
+  A700: #cb3f2e,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: rgba(black, 0.87),
+    A400: white,
+    A700: white,
+  )
+);
+
+$o1jobs-primary: mat.m2-define-palette($o1jobs-teal);
+$o1jobs-accent: mat.m2-define-palette($o1jobs-coral);
+$o1jobs-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+$o1jobs-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $o1jobs-primary,
+    accent: $o1jobs-accent,
+    warn: $o1jobs-warn,
+  ),
+  typography: mat.m2-define-typography-config(
+    $font-family: 'Roboto, "Helvetica Neue", sans-serif',
+  ),
+  density: 0,
+));
+
+@include mat.all-component-themes($o1jobs-theme);
+
+// Zmienne CSS custom properties, żeby kolory marki były łatwo dostępne
+// poza komponentami Material (np. w SCSS poszczególnych ekranów).
+:root {
+  --o1jobs-teal: #027f98;
+  --o1jobs-teal-dark: #015161;
+  --o1jobs-coral: #fe4f39;
+  --o1jobs-bg: #fafaf8;
+  --o1jobs-text: #1f2937;
+}
