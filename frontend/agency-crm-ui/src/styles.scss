@@ -24,3 +24,21 @@ h1, h2, h3, h4, .mat-toolbar {
   border-radius: 8px;
   overflow: hidden;
 }
+
+.status-badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-open {
+  background: #e6f2f5;
+  color: var(--o1jobs-teal-dark);
+}
+
+.status-closed {
+  background: #f1f1ef;
+  color: #6b6b6b;
+}

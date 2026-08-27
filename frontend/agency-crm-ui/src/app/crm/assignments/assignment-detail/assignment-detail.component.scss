@@ -1,30 +1,90 @@
-.header {
+.page-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.title-block {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.back-button {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.detail-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.detail-card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+  padding: 24px !important;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+
+  mat-icon {
+    color: var(--o1jobs-teal);
+  }
+
+  h3 {
+    margin: 0;
+  }
+}
+
+.entity-name {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.info-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
   gap: 16px;
-  margin-bottom: 24px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f5f5f3;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
 }
 
-.status-open {
-  color: #2e7d32;
+.label {
+  color: #6b6b6b;
+  font-size: 0.875rem;
+}
+
+.value {
   font-weight: 500;
+  text-align: left;
+  line-height: 1.4;
 }
 
-.status-closed {
-  color: #757575;
-}
-
-section {
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #e0e0e0;
+.subsection-label {
+  color: #6b6b6b;
+  font-size: 0.875rem;
+  margin: 16px 0 8px;
 }
 
 .capability-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 8px;
 }
 
 .tag {
@@ -43,13 +103,47 @@ section {
   color: #c62828;
 }
 
-.no-caregiver {
-  color: #757575;
+.empty-state {
+  color: #6b6b6b;
   font-style: italic;
+  margin-bottom: 12px;
 }
 
-.actions {
+.document-actions {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.document-upload {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0ee;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.file-picker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.file-name {
+  color: #6b6b6b;
+  font-size: 0.9rem;
+}
+
+.upload-error {
+  color: #c62828;
+  font-size: 0.875rem;
+  margin: 0;
+  width: 100%;
+}
+
+.page-actions {
   display: flex;
   gap: 12px;
-  margin-top: 24px;
 }

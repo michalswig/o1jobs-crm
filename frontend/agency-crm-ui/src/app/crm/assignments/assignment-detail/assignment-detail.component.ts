@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AssignmentService, CloseAssignmentPayload } from '../services/assignment.service';
@@ -13,7 +15,7 @@ import {AssignmentDocument} from '../models/assignment-document';
 @Component({
   selector: 'app-assignment-detail',
   standalone: true,
-  imports: [RouterLink, MatButtonModule, MatDialogModule, DatePipe, DecimalPipe],
+  imports: [RouterLink, MatButtonModule, MatIconModule, MatCardModule, MatDialogModule, DatePipe, DecimalPipe],
   templateUrl: './assignment-detail.component.html',
   styleUrl: './assignment-detail.component.scss'
 })
