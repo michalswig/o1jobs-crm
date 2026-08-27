@@ -31,16 +31,22 @@ mat-sidenav {
   box-shadow: 1px 0 4px rgba(0, 0, 0, 0.06);
 }
 
-.active-link {
-  background: var(--o1jobs-teal) !important;
-  color: white !important;
+mat-nav-list a {
+  border-left: 4px solid transparent;
+  margin: 0;
 
   ::ng-deep .mat-icon {
-    color: white !important;
+    color: rgba(0, 0, 0, 0.54);
   }
 }
 
-mat-nav-list a {
-  border-radius: 0 20px 20px 0;
-  margin: 4px 8px 4px 0;
+.active-link {
+  background: #e6f2f5 !important;
+  border-left: 4px solid var(--o1jobs-teal) !important;
+  color: var(--o1jobs-teal-dark) !important;
+  font-weight: 600;
+
+  ::ng-deep .mat-icon {
+    color: var(--o1jobs-teal) !important;
+  }
 }

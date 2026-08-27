@@ -1,0 +1,29 @@
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 0;
+  }
+
+  a[mat-raised-button] {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+.table-card {
+  padding: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+
+  table {
+    width: 100%;
+  }
+
+  th.mat-mdc-header-cell {
+    font-weight: 600;
+  }
+}

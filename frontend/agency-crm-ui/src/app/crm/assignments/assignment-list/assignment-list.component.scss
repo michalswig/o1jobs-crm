@@ -1,0 +1,47 @@
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 0;
+  }
+
+  a[mat-raised-button] {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+.table-card {
+  padding: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+
+  table {
+    width: 100%;
+  }
+
+  th.mat-mdc-header-cell {
+    font-weight: 600;
+  }
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-open {
+  background: #e6f2f5;
+  color: var(--o1jobs-teal-dark);
+}
+
+.status-closed {
+  background: #f1f1ef;
+  color: #6b6b6b;
+}

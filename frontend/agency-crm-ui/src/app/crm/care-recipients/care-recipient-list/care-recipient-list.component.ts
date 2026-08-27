@@ -6,6 +6,8 @@ import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatSortModule, MatSort } from '@angular/material/sort';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent, ConfirmDialogData } from '../../../core/dialogs/confirm-dialog/confirm-dialog.component';
 import {CareRecipient} from '../models/care-recipient';
@@ -19,6 +21,8 @@ import {CareRecipient} from '../models/care-recipient';
     MatSortModule,
     MatPaginatorModule,
     MatButtonModule,
+    MatIconModule,
+    MatCardModule,
     MatDialogModule
   ],
   templateUrl: './care-recipient-list.component.html',

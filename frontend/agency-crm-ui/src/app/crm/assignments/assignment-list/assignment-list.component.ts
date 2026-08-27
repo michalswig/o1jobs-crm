@@ -6,6 +6,8 @@ import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatSortModule, MatSort } from '@angular/material/sort';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CloseAssignmentDialogComponent } from '../../../core/dialogs/close-assignment-dialog/close-assignment-dialog.component';
 import {Assignment} from '../models/assignment';
@@ -19,6 +21,8 @@ import {Assignment} from '../models/assignment';
     MatSortModule,
     MatPaginatorModule,
     MatButtonModule,
+    MatIconModule,
+    MatCardModule,
     MatDialogModule
   ],
   templateUrl: './assignment-list.component.html',

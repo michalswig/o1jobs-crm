@@ -5,6 +5,8 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import {MatAnchor, MatButton} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
 import {RouterLink} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmDialogComponent, ConfirmDialogData} from '../../../core/dialogs/confirm-dialog/confirm-dialog.component';
@@ -12,7 +14,7 @@ import {Page} from '../../../shared/models/page.model';
 
 @Component({
   selector: 'app-client-list',
-  imports: [MatTableModule, MatSortModule, MatPaginatorModule, MatAnchor, RouterLink, MatButton],
+  imports: [MatTableModule, MatSortModule, MatPaginatorModule, MatAnchor, RouterLink, MatButton, MatIconModule, MatCardModule],
   templateUrl: './client-list.component.html',
   styleUrl: './client-list.component.scss'
 })
