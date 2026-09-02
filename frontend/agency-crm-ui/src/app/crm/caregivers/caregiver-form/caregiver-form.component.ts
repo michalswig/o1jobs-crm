@@ -10,6 +10,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CaregiverService } from '../../services/caregiver.service';
 import { Caregiver } from '../models/caregiver.model';
 import { CareCapability } from '../../../shared/models/domain-enums.model';
+import { EnumLabelPipe } from '../../../shared/pipes/enum-label.pipe';
 
 @Component({
   selector: 'app-caregiver-form',
@@ -22,7 +23,8 @@ import { CareCapability } from '../../../shared/models/domain-enums.model';
     MatButtonModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    EnumLabelPipe
   ],
   templateUrl: './caregiver-form.component.html',
   styleUrl: './caregiver-form.component.scss'

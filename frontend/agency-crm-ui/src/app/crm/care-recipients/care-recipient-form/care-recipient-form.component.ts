@@ -10,6 +10,7 @@ import { CareRecipientService } from '../services/care-recipient.service';
 import { ClientService } from '../../services/client.service';
 import { Client } from '../../models/client.model';
 import { CareCapability } from '../../../shared/models/domain-enums.model';
+import { EnumLabelPipe } from '../../../shared/pipes/enum-label.pipe';
 import {CareRecipient} from '../models/care-recipient';
 
 @Component({
@@ -22,7 +23,8 @@ import {CareRecipient} from '../models/care-recipient';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    EnumLabelPipe
   ],
   templateUrl: './care-recipient-form.component.html',
   styleUrl: './care-recipient-form.component.scss'
