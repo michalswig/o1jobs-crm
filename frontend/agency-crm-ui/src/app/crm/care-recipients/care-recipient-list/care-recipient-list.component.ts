@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent, ConfirmDialogData } from '../../../core/dialogs/confirm-dialog/confirm-dialog.component';
+import { EnumLabelPipe } from '../../../shared/pipes/enum-label.pipe';
 import {CareRecipient} from '../models/care-recipient';
 
 @Component({
@@ -23,7 +24,8 @@ import {CareRecipient} from '../models/care-recipient';
     MatButtonModule,
     MatIconModule,
     MatCardModule,
-    MatDialogModule
+    MatDialogModule,
+    EnumLabelPipe
   ],
   templateUrl: './care-recipient-list.component.html',
   styleUrl: './care-recipient-list.component.scss'
@@ -72,8 +74,8 @@ export class CareRecipientListComponent implements OnInit, AfterViewInit {
       ConfirmDialogComponent,
       {
         data: {
-          title: 'Dezaktywacja podopiecznego',
-          message: 'Czy na pewno chcesz dezaktywować tego podopiecznego? Tej operacji nie można cofnąć.'
+          title: 'Pflegebedürftigen deaktivieren',
+          message: 'Möchten Sie diesen Pflegebedürftigen wirklich deaktivieren? Diese Aktion kann nicht rückgängig gemacht werden.'
         }
       }
     );

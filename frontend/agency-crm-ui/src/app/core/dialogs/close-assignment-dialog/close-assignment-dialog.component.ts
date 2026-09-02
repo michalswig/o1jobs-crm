@@ -6,6 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CloseAssignmentPayload } from '../../../crm/assignments/services/assignment.service';
+import { EnumLabelPipe } from '../../../shared/pipes/enum-label.pipe';
 
 @Component({
   selector: 'app-close-assignment-dialog',
@@ -16,7 +17,8 @@ import { CloseAssignmentPayload } from '../../../crm/assignments/services/assign
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    EnumLabelPipe
   ],
   templateUrl: './close-assignment-dialog.component.html',
   styleUrl: './close-assignment-dialog.component.scss'

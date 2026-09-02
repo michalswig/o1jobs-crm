@@ -46,8 +46,8 @@ export class ClientListComponent implements OnInit, AfterViewInit {
       ConfirmDialogComponent,
       {
         data: {
-          title: 'Dezaktywacja klienta',
-          message: 'Czy na pewno chcesz dezaktywować tego klienta? Tej operacji nie można cofnąć.'
+          title: 'Kunde deaktivieren',
+          message: 'Möchten Sie diesen Kunden wirklich deaktivieren? Diese Aktion kann nicht rückgängig gemacht werden.'
         }
       }
     );

@@ -1,8 +1,8 @@
 <div class="page-header">
-  <h2>Lista opiekunek ({{ totalElements }})</h2>
+  <h2>Liste der Betreuerinnen ({{ totalElements }})</h2>
   <a mat-raised-button color="primary" routerLink="/caregivers/new">
     <mat-icon>person_add</mat-icon>
-    Nowa opiekunka
+    Neue Betreuerin
   </a>
 </div>
 
@@ -10,12 +10,12 @@
   <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="lastName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nazwisko</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nachname</th>
       <td mat-cell *matCellDef="let caregiver">{{ caregiver.lastName }}</td>
     </ng-container>
 
     <ng-container matColumnDef="firstName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Imię</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Vorname</th>
       <td mat-cell *matCellDef="let caregiver">{{ caregiver.firstName }}</td>
     </ng-container>
 
@@ -25,15 +25,15 @@
     </ng-container>
 
     <ng-container matColumnDef="nationality">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Narodowość</th>
-      <td mat-cell *matCellDef="let caregiver">{{ caregiver.nationality }}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nationalität</th>
+      <td mat-cell *matCellDef="let caregiver">{{ caregiver.nationality | enumLabel }}</td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Akcje</th>
+      <th mat-header-cell *matHeaderCellDef>Aktionen</th>
       <td mat-cell *matCellDef="let caregiver">
-        <a mat-button color="primary" [routerLink]="['/caregivers/edit', caregiver.id]">Edytuj</a>
-        <button mat-button color="warn" (click)="onDeactivate(caregiver.id)">Dezaktywuj</button>
+        <a mat-button color="primary" [routerLink]="['/caregivers/edit', caregiver.id]">Bearbeiten</a>
+        <button mat-button color="warn" (click)="onDeactivate(caregiver.id)">Deaktivieren</button>
       </td>
     </ng-container>
 

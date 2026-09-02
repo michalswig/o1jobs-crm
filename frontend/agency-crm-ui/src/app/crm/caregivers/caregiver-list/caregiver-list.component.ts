@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent, ConfirmDialogData } from '../../../core/dialogs/confirm-dialog/confirm-dialog.component';
+import { EnumLabelPipe } from '../../../shared/pipes/enum-label.pipe';
 import {Caregiver} from '../models/caregiver.model';
 
 @Component({
@@ -23,7 +24,8 @@ import {Caregiver} from '../models/caregiver.model';
     MatButtonModule,
     MatIconModule,
     MatCardModule,
-    MatDialogModule
+    MatDialogModule,
+    EnumLabelPipe
   ],
   templateUrl: './caregiver-list.component.html',
   styleUrl: './caregiver-list.component.scss'
@@ -72,8 +74,8 @@ export class CaregiverListComponent implements OnInit, AfterViewInit {
       ConfirmDialogComponent,
       {
         data: {
-          title: 'Dezaktywacja opiekunki',
-          message: 'Czy na pewno chcesz dezaktywować tę opiekunkę? Tej operacji nie można cofnąć.'
+          title: 'Betreuerin deaktivieren',
+          message: 'Möchten Sie diese Betreuerin wirklich deaktivieren? Diese Aktion kann nicht rückgängig gemacht werden.'
         }
       }
     );

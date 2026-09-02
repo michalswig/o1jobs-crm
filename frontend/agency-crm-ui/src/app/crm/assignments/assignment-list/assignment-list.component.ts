@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CloseAssignmentDialogComponent } from '../../../core/dialogs/close-assignment-dialog/close-assignment-dialog.component';
+import { EnumLabelPipe } from '../../../shared/pipes/enum-label.pipe';
 import {Assignment} from '../models/assignment';
 
 @Component({
@@ -23,7 +24,8 @@ import {Assignment} from '../models/assignment';
     MatButtonModule,
     MatIconModule,
     MatCardModule,
-    MatDialogModule
+    MatDialogModule,
+    EnumLabelPipe
   ],
   templateUrl: './assignment-list.component.html',
   styleUrl: './assignment-list.component.scss'

@@ -1,8 +1,8 @@
 <div class="page-header">
-  <h2>Lista podopiecznych ({{ totalElements }})</h2>
+  <h2>Liste der Pflegebedürftigen ({{ totalElements }})</h2>
   <a mat-raised-button color="primary" routerLink="/care-recipients/new">
     <mat-icon>person_add</mat-icon>
-    Nowy podopieczny
+    Neuer Pflegebedürftiger
   </a>
 </div>
 
@@ -10,30 +10,30 @@
   <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="lastName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nazwisko</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nachname</th>
       <td mat-cell *matCellDef="let cr">{{ cr.lastName }}</td>
     </ng-container>
 
     <ng-container matColumnDef="firstName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Imię</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Vorname</th>
       <td mat-cell *matCellDef="let cr">{{ cr.firstName }}</td>
     </ng-container>
 
     <ng-container matColumnDef="mobilityLevel">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobilność</th>
-      <td mat-cell *matCellDef="let cr">{{ cr.mobilityLevel }}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobilität</th>
+      <td mat-cell *matCellDef="let cr">{{ cr.mobilityLevel | enumLabel }}</td>
     </ng-container>
 
     <ng-container matColumnDef="dementiaLevel">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Demencja</th>
-      <td mat-cell *matCellDef="let cr">{{ cr.dementiaLevel }}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Demenz</th>
+      <td mat-cell *matCellDef="let cr">{{ cr.dementiaLevel | enumLabel }}</td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Akcje</th>
+      <th mat-header-cell *matHeaderCellDef>Aktionen</th>
       <td mat-cell *matCellDef="let cr">
-        <a mat-button color="primary" [routerLink]="['/care-recipients/edit', cr.id]">Edytuj</a>
-        <button mat-button color="warn" (click)="onDeactivate(cr.id)">Dezaktywuj</button>
+        <a mat-button color="primary" [routerLink]="['/care-recipients/edit', cr.id]">Bearbeiten</a>
+        <button mat-button color="warn" (click)="onDeactivate(cr.id)">Deaktivieren</button>
       </td>
     </ng-container>
 

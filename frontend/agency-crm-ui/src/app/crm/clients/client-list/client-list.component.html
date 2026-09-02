@@ -1,8 +1,8 @@
 <div class="page-header">
-  <h2>Lista klientów ({{ totalElements }})</h2>
+  <h2>Kundenliste ({{ totalElements }})</h2>
   <a mat-raised-button color="primary" routerLink="/clients/new">
     <mat-icon>person_add</mat-icon>
-    Nowy klient
+    Neuer Kunde
   </a>
 </div>
 
@@ -10,30 +10,30 @@
   <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nazwa</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
       <td mat-cell *matCellDef="let client">{{ client.name }}</td>
     </ng-container>
 
     <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>E-Mail</th>
       <td mat-cell *matCellDef="let client">{{ client.email }}</td>
     </ng-container>
 
     <ng-container matColumnDef="city">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Miasto</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Stadt</th>
       <td mat-cell *matCellDef="let client">{{ client.city }}</td>
     </ng-container>
 
     <ng-container matColumnDef="country">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Kraj</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Land</th>
       <td mat-cell *matCellDef="let client">{{ client.country }}</td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Akcje</th>
+      <th mat-header-cell *matHeaderCellDef>Aktionen</th>
       <td mat-cell *matCellDef="let client">
-        <a mat-button color="primary" [routerLink]="['/clients/edit', client.id]">Edytuj</a>
-        <button mat-button color="warn" (click)="onDeactivate(client.id)">Dezaktywuj</button>
+        <a mat-button color="primary" [routerLink]="['/clients/edit', client.id]">Bearbeiten</a>
+        <button mat-button color="warn" (click)="onDeactivate(client.id)">Deaktivieren</button>
       </td>
     </ng-container>
 

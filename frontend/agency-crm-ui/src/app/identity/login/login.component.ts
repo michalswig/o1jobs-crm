@@ -58,8 +58,8 @@ export class LoginComponent {
         error: (err: HttpErrorResponse) => {
           this.loading = false;
           this.errorMessage = err.status === 401
-            ? 'Nieprawidłowa nazwa użytkownika lub hasło.'
-            : 'Nie udało się zalogować. Spróbuj ponownie.';
+            ? 'Ungültiger Benutzername oder ungültiges Passwort.'
+            : 'Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.';
         }
       });
   }

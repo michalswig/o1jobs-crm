@@ -6,12 +6,12 @@
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
       <mat-form-field appearance="outline">
-        <mat-label>Nazwa użytkownika</mat-label>
+        <mat-label>Benutzername</mat-label>
         <input matInput type="text" formControlName="username" autocomplete="username">
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Hasło</mat-label>
+        <mat-label>Passwort</mat-label>
         <input matInput type="password" formControlName="password" autocomplete="current-password">
       </mat-form-field>
 
@@ -24,7 +24,7 @@
         @if (loading) {
           <mat-spinner diameter="20"></mat-spinner>
         } @else {
-          <span>Zaloguj się</span>
+          <span>Anmelden</span>
         }
       </button>
 
