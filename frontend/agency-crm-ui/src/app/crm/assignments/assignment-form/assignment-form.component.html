@@ -1,35 +1,35 @@
-<h2>{{ isEditMode ? 'Edytuj zlecenie' : 'Nowe zlecenie' }}</h2>
+<h2>{{ isEditMode ? 'Auftrag bearbeiten' : 'Neuer Auftrag' }}</h2>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
   <mat-form-field appearance="outline">
-    <mat-label>Klient</mat-label>
+    <mat-label>Kunde</mat-label>
     <mat-select formControlName="clientId">
       @for (c of clients; track c.id) {
         <mat-option [value]="c.id">{{ c.name }}</mat-option>
       }
     </mat-select>
     @if (form.get('clientId')?.hasError('required') && form.get('clientId')?.touched) {
-      <mat-error>Klient jest wymagany</mat-error>
+      <mat-error>Kunde ist erforderlich</mat-error>
     }
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Podopieczny</mat-label>
+    <mat-label>Pflegebedürftiger</mat-label>
     <mat-select formControlName="careRecipientId">
       @for (cr of careRecipients; track cr.id) {
         <mat-option [value]="cr.id">{{ cr.firstName }} {{ cr.lastName }}</mat-option>
       }
     </mat-select>
     @if (form.get('careRecipientId')?.hasError('required') && form.get('careRecipientId')?.touched) {
-      <mat-error>Podopieczny jest wymagany</mat-error>
+      <mat-error>Pflegebedürftiger ist erforderlich</mat-error>
     }
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Opiekunka (opcjonalnie)</mat-label>
+    <mat-label>Betreuerin (optional)</mat-label>
     <mat-select formControlName="caregiverId">
-      <mat-option [value]="''">— brak —</mat-option>
+      <mat-option [value]="''">— keine —</mat-option>
       @for (cg of caregivers; track cg.id) {
         <mat-option [value]="cg.id">{{ cg.firstName }} {{ cg.lastName }}</mat-option>
       }
@@ -37,69 +37,69 @@
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Data rozpoczęcia</mat-label>
+    <mat-label>Startdatum</mat-label>
     <input matInput type="date" formControlName="startDate">
     @if (form.get('startDate')?.hasError('required') && form.get('startDate')?.touched) {
-      <mat-error>Data jest wymagana</mat-error>
+      <mat-error>Datum ist erforderlich</mat-error>
     }
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Miasto</mat-label>
+    <mat-label>Stadt</mat-label>
     <input matInput formControlName="city">
     @if (form.get('city')?.hasError('required') && form.get('city')?.touched) {
-      <mat-error>Miasto jest wymagane</mat-error>
+      <mat-error>Stadt ist erforderlich</mat-error>
     }
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Adres</mat-label>
+    <mat-label>Adresse</mat-label>
     <input matInput formControlName="streetAddress">
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Wynagrodzenie netto (miesięcznie)</mat-label>
+    <mat-label>Nettogehalt (monatlich)</mat-label>
     <input matInput type="number" formControlName="salaryMonthlyNet">
     @if (form.get('salaryMonthlyNet')?.hasError('required') && form.get('salaryMonthlyNet')?.touched) {
-      <mat-error>Wynagrodzenie jest wymagane</mat-error>
+      <mat-error>Gehalt ist erforderlich</mat-error>
     }
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Poziom języka</mat-label>
+    <mat-label>Sprachniveau</mat-label>
     <mat-select formControlName="languageLevel">
       @for (l of languageLevels; track l) {
-        <mat-option [value]="l">{{ l }}</mat-option>
+        <mat-option [value]="l">{{ l | enumLabel }}</mat-option>
       }
     </mat-select>
     @if (form.get('languageLevel')?.hasError('required') && form.get('languageLevel')?.touched) {
-      <mat-error>Poziom języka jest wymagany</mat-error>
+      <mat-error>Sprachniveau ist erforderlich</mat-error>
     }
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Typ zakwaterowania</mat-label>
+    <mat-label>Unterkunftsart</mat-label>
     <mat-select formControlName="accommodationType">
       @for (a of accommodationTypes; track a) {
-        <mat-option [value]="a">{{ a === 'HOUSE' ? 'Dom' : 'Mieszkanie' }}</mat-option>
+        <mat-option [value]="a">{{ a | enumLabel }}</mat-option>
       }
     </mat-select>
     @if (form.get('accommodationType')?.hasError('required') && form.get('accommodationType')?.touched) {
-      <mat-error>Typ zakwaterowania jest wymagany</mat-error>
+      <mat-error>Unterkunftsart ist erforderlich</mat-error>
     }
   </mat-form-field>
 
-  <mat-checkbox formControlName="ownBathroom">Własna łazienka</mat-checkbox>
-  <mat-checkbox formControlName="ownRoom">Własny pokój</mat-checkbox>
+  <mat-checkbox formControlName="ownBathroom">Eigenes Badezimmer</mat-checkbox>
+  <mat-checkbox formControlName="ownRoom">Eigenes Zimmer</mat-checkbox>
 
   <mat-form-field appearance="outline">
-    <mat-label>Wymagania</mat-label>
+    <mat-label>Anforderungen</mat-label>
     <textarea matInput formControlName="requirements" rows="3"></textarea>
   </mat-form-field>
 
   <div class="actions">
-    <button mat-raised-button color="primary" type="submit">Zapisz</button>
-    <button mat-button type="button" routerLink="/assignments">Anuluj</button>
+    <button mat-raised-button color="primary" type="submit">Speichern</button>
+    <button mat-button type="button" routerLink="/assignments">Abbrechen</button>
   </div>
 
 </form>

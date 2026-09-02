@@ -13,6 +13,7 @@ import { CareRecipientService } from '../../care-recipients/services/care-recipi
 import { CaregiverService } from '../../services/caregiver.service';
 import { Caregiver } from '../../caregivers/models/caregiver.model';
 import { LanguageLevel, AccommodationType } from '../../../shared/models/domain-enums.model';
+import { EnumLabelPipe } from '../../../shared/pipes/enum-label.pipe';
 import {CareRecipient} from '../../care-recipients/models/care-recipient';
 import {Assignment} from '../models/assignment';
 
@@ -26,7 +27,8 @@ import {Assignment} from '../models/assignment';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    EnumLabelPipe
   ],
   templateUrl: './assignment-form.component.html',
   styleUrl: './assignment-form.component.scss'
