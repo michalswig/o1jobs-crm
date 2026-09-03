@@ -2,13 +2,13 @@
 
   <div class="page-header">
     <div class="title-block">
-      <a mat-icon-button routerLink="/assignments" class="back-button" aria-label="Powrót do listy">
+      <a mat-icon-button routerLink="/assignments" class="back-button" aria-label="Zurück zur Liste">
         <mat-icon>arrow_back</mat-icon>
       </a>
-      <h2>Zlecenie #{{ assignment.id }} — {{ assignment.city }}</h2>
+      <h2>Auftrag #{{ assignment.id }} — {{ assignment.city }}</h2>
     </div>
     <span class="status-badge" [class.status-open]="assignment.status === 'OPEN'" [class.status-closed]="assignment.status === 'CLOSED'">
-      {{ assignment.status === 'OPEN' ? 'Otwarte' : 'Zamknięte' }}
+      {{ assignment.status | enumLabel }}
     </span>
   </div>
 
@@ -17,47 +17,47 @@
     <mat-card class="detail-card">
       <div class="card-title">
         <mat-icon>description</mat-icon>
-        <h3>Szczegóły zlecenia</h3>
+        <h3>Auftragsdetails</h3>
       </div>
 
       <div class="info-row">
-        <span class="label">Data rozpoczęcia</span>
+        <span class="label">Startdatum</span>
         <span class="value">{{ assignment.startDate }}</span>
       </div>
       <div class="info-row">
-        <span class="label">Adres</span>
+        <span class="label">Adresse</span>
         <span class="value">{{ assignment.streetAddress }}, {{ assignment.city }}</span>
       </div>
       <div class="info-row">
-        <span class="label">Wynagrodzenie</span>
-        <span class="value">{{ assignment.salaryMonthlyNet }} zł netto/mies.</span>
+        <span class="label">Gehalt</span>
+        <span class="value">{{ assignment.salaryMonthlyNet }} € netto/Monat</span>
       </div>
       <div class="info-row">
-        <span class="label">Poziom języka</span>
-        <span class="value">{{ assignment.languageLevel }}</span>
+        <span class="label">Sprachniveau</span>
+        <span class="value">{{ assignment.languageLevel | enumLabel }}</span>
       </div>
       @if (assignment.accommodationType) {
         <div class="info-row">
-          <span class="label">Zakwaterowanie</span>
-          <span class="value">{{ assignment.accommodationType === 'HOUSE' ? 'Dom' : 'Mieszkanie' }}
-            · {{ assignment.ownBathroom ? 'własna łazienka' : 'współdzielona łazienka' }}
-            · {{ assignment.ownRoom ? 'własny pokój' : 'współdzielony pokój' }}</span>
+          <span class="label">Unterkunft</span>
+          <span class="value">{{ assignment.accommodationType | enumLabel }}
+            · {{ assignment.ownBathroom ? 'eigenes Badezimmer' : 'gemeinsames Badezimmer' }}
+            · {{ assignment.ownRoom ? 'eigenes Zimmer' : 'gemeinsames Zimmer' }}</span>
         </div>
       }
       @if (assignment.requirements) {
         <div class="info-row">
-          <span class="label">Wymagania</span>
+          <span class="label">Anforderungen</span>
           <span class="value">{{ assignment.requirements }}</span>
         </div>
       }
       @if (assignment.status === 'CLOSED') {
         <div class="info-row">
-          <span class="label">Powód zamknięcia</span>
-          <span class="value">{{ assignment.closeReason }}</span>
+          <span class="label">Grund der Schließung</span>
+          <span class="value">{{ assignment.closeReason | enumLabel }}</span>
         </div>
         @if (assignment.closeNotes) {
           <div class="info-row">
-            <span class="label">Notatki zamknięcia</span>
+            <span class="label">Schließungsnotizen</span>
             <span class="value">{{ assignment.closeNotes }}</span>
           </div>
         }
@@ -67,7 +67,7 @@
     <mat-card class="detail-card">
       <div class="card-title">
         <mat-icon>groups</mat-icon>
-        <h3>Klient</h3>
+        <h3>Kunde</h3>
       </div>
       <p class="entity-name">{{ assignment.client.name }}</p>
       <div class="info-row">
@@ -75,7 +75,7 @@
         <span class="value">{{ assignment.client.email }} · {{ assignment.client.phoneNumber }}</span>
       </div>
       <div class="info-row">
-        <span class="label">Lokalizacja</span>
+        <span class="label">Standort</span>
         <span class="value">{{ assignment.client.city }}, {{ assignment.client.country }}</span>
       </div>
     </mat-card>
@@ -83,41 +83,41 @@
     <mat-card class="detail-card">
       <div class="card-title">
         <mat-icon>favorite</mat-icon>
-        <h3>Podopieczny</h3>
+        <h3>Pflegebedürftiger</h3>
       </div>
       <p class="entity-name">{{ assignment.careRecipient.firstName }} {{ assignment.careRecipient.lastName }}</p>
       <div class="info-row">
-        <span class="label">Mobilność</span>
-        <span class="value">{{ assignment.careRecipient.mobilityLevel }}</span>
+        <span class="label">Mobilität</span>
+        <span class="value">{{ assignment.careRecipient.mobilityLevel | enumLabel }}</span>
       </div>
       <div class="info-row">
-        <span class="label">Demencja</span>
-        <span class="value">{{ assignment.careRecipient.dementiaLevel }}</span>
+        <span class="label">Demenz</span>
+        <span class="value">{{ assignment.careRecipient.dementiaLevel | enumLabel }}</span>
       </div>
       @if (assignment.careRecipient.diseasesNotes) {
         <div class="info-row">
-          <span class="label">Choroby</span>
+          <span class="label">Erkrankungen</span>
           <span class="value">{{ assignment.careRecipient.diseasesNotes }}</span>
         </div>
       }
       @if (assignment.careRecipient.hasPets) {
         <div class="info-row">
-          <span class="label">Zwierzęta</span>
+          <span class="label">Haustiere</span>
           <span class="value">{{ assignment.careRecipient.petsNotes }}</span>
         </div>
       }
       @if (assignment.careRecipient.medicalNotes) {
         <div class="info-row">
-          <span class="label">Notatki medyczne</span>
+          <span class="label">Medizinische Notizen</span>
           <span class="value">{{ assignment.careRecipient.medicalNotes }}</span>
         </div>
       }
 
-      <p class="subsection-label">Wymagane umiejętności</p>
+      <p class="subsection-label">Erforderliche Kompetenzen</p>
       <div class="capability-tags">
         @for (cap of assignment.careRecipient.requiredCapabilities; track cap) {
           <span class="tag" [class.tag-covered]="isCovered(cap)" [class.tag-missing]="!isCovered(cap)">
-            {{ cap }}
+            {{ cap | enumLabel }}
           </span>
         }
       </div>
@@ -126,27 +126,27 @@
     <mat-card class="detail-card">
       <div class="card-title">
         <mat-icon>volunteer_activism</mat-icon>
-        <h3>Opiekunka</h3>
+        <h3>Betreuerin</h3>
       </div>
       @if (assignment.caregiver) {
         <p class="entity-name">{{ assignment.caregiver.firstName }} {{ assignment.caregiver.lastName }}</p>
         <div class="info-row">
-          <span class="label">Narodowość</span>
-          <span class="value">{{ assignment.caregiver.nationality }}</span>
+          <span class="label">Nationalität</span>
+          <span class="value">{{ assignment.caregiver.nationality | enumLabel }}</span>
         </div>
         <div class="info-row">
-          <span class="label">Dośw. z demencją</span>
-          <span class="value">{{ assignment.caregiver.dementiaExperience ?? 'brak danych' }}</span>
+          <span class="label">Demenzerfahrung</span>
+          <span class="value">{{ (assignment.caregiver.dementiaExperience | enumLabel) || 'keine Angabe' }}</span>
         </div>
         <div class="info-row">
-          <span class="label">Umiejętności</span>
+          <span class="label">Kompetenzen</span>
           <span class="value">{{ assignment.caregiver.capabilities.join(', ') }}</span>
         </div>
       } @else {
-        <p class="empty-state">Brak przypisanej opiekunki.</p>
+        <p class="empty-state">Keine Betreuerin zugewiesen.</p>
         <a mat-button color="primary" [routerLink]="['/assignments/edit', assignment.id]">
           <mat-icon>person_add</mat-icon>
-          Przypisz opiekunkę
+          Betreuerin zuweisen
         </a>
       }
     </mat-card>
@@ -154,29 +154,29 @@
     <mat-card class="detail-card document-card">
       <div class="card-title">
         <mat-icon>picture_as_pdf</mat-icon>
-        <h3>Umowa</h3>
+        <h3>Vertrag</h3>
       </div>
       @if (assignmentDocument) {
         <div class="info-row">
-          <span class="label">Plik</span>
+          <span class="label">Datei</span>
           <span class="value">{{ assignmentDocument.fileName }} ({{ (assignmentDocument.fileSize / 1024) | number:'1.0-0' }} KB)</span>
         </div>
         <div class="info-row">
-          <span class="label">Przesłano</span>
+          <span class="label">Hochgeladen am</span>
           <span class="value">{{ assignmentDocument.uploadedAt | date:'dd.MM.yyyy HH:mm' }}</span>
         </div>
         <div class="document-actions">
           <button mat-button color="primary" type="button" (click)="onDownload()">
             <mat-icon>download</mat-icon>
-            Pobierz
+            Herunterladen
           </button>
           <button mat-button color="warn" type="button" (click)="onDeleteDocument()">
             <mat-icon>delete</mat-icon>
-            Usuń
+            Löschen
           </button>
         </div>
       } @else {
-        <p class="empty-state">Brak przesłanej umowy.</p>
+        <p class="empty-state">Kein Vertrag hochgeladen.</p>
       }
 
       <div class="document-upload">
@@ -184,17 +184,17 @@
           <input type="file" accept="application/pdf" (change)="onFileSelected($event)" #fileInput hidden>
           <button mat-stroked-button type="button" (click)="fileInput.click()">
             <mat-icon>attach_file</mat-icon>
-            Wybierz plik
+            Datei auswählen
           </button>
-          <span class="file-name">{{ selectedFile?.name ?? 'Nie wybrano pliku' }}</span>
+          <span class="file-name">{{ selectedFile?.name ?? 'Keine Datei ausgewählt' }}</span>
         </div>
         <button mat-raised-button color="primary" type="button" [disabled]="!selectedFile || uploading" (click)="onUpload()">
           @if (uploading) {
-            <span>Przesyłanie...</span>
+            <span>Wird hochgeladen...</span>
           } @else {
             <ng-container>
               <mat-icon>upload_file</mat-icon>
-              Prześlij umowę (PDF)
+              Vertrag hochladen (PDF)
             </ng-container>
           }
         </button>
@@ -209,12 +209,12 @@
   <div class="page-actions">
     <a mat-raised-button color="primary" [routerLink]="['/assignments/edit', assignment.id]">
       <mat-icon>edit</mat-icon>
-      Edytuj
+      Bearbeiten
     </a>
     @if (assignment.status === 'OPEN') {
       <button mat-button color="warn" (click)="onClose()">
         <mat-icon>lock</mat-icon>
-        Zamknij zlecenie
+        Auftrag schließen
       </button>
     }
   </div>

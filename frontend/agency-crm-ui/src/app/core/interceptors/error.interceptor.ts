@@ -17,9 +17,9 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         authService.logout();
         router.navigate(['/login']);
       } else if (error.status === 403) {
-        snackBar.open('Brak uprawnień do tej operacji.', 'Zamknij', { duration: 5000 });
+        snackBar.open('Keine Berechtigung für diese Aktion.', 'Schließen', { duration: 5000 });
       } else if (error.status === 500) {
-        snackBar.open('Błąd serwera. Spróbuj ponownie później.', 'Zamknij', { duration: 5000 });
+        snackBar.open('Serverfehler. Bitte versuchen Sie es später erneut.', 'Schließen', { duration: 5000 });
       }
 
       return throwError(() => error);

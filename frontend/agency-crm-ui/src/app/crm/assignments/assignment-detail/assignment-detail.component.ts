@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DatePipe, DecimalPipe } from '@angular/common';
+import { EnumLabelPipe } from '../../../shared/pipes/enum-label.pipe';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
@@ -15,7 +16,7 @@ import {AssignmentDocument} from '../models/assignment-document';
 @Component({
   selector: 'app-assignment-detail',
   standalone: true,
-  imports: [RouterLink, MatButtonModule, MatIconModule, MatCardModule, MatDialogModule, DatePipe, DecimalPipe],
+  imports: [RouterLink, MatButtonModule, MatIconModule, MatCardModule, MatDialogModule, DatePipe, DecimalPipe, EnumLabelPipe],
   templateUrl: './assignment-detail.component.html',
   styleUrl: './assignment-detail.component.scss'
 })
@@ -74,7 +75,7 @@ export class AssignmentDetailComponent implements OnInit {
       return;
     }
     if (this.selectedFile.type !== 'application/pdf') {
-      this.uploadError = 'Dozwolone są tylko pliki PDF.';
+      this.uploadError = 'Es sind nur PDF-Dateien zulässig.';
       return;
     }
 
@@ -87,8 +88,8 @@ export class AssignmentDetailComponent implements OnInit {
       },
       error: (err: HttpErrorResponse) => {
         this.uploadError = err.status === 400
-          ? 'Przesłany plik jest nieprawidłowy.'
-          : 'Nie udało się przesłać pliku. Spróbuj ponownie.';
+          ? 'Die hochgeladene Datei ist ungültig.'
+          : 'Datei konnte nicht hochgeladen werden. Bitte versuchen Sie es erneut.';
         this.uploading = false;
       }
     });
@@ -109,7 +110,7 @@ export class AssignmentDetailComponent implements OnInit {
   }
 
   onDeleteDocument(): void {
-    if (!confirm('Czy na pewno chcesz usunąć umowę?')) {
+    if (!confirm('Möchten Sie den Vertrag wirklich löschen?')) {
       return;
     }
     this.assignmentService.deleteDocument(this.assignmentId).subscribe({
