@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CaregiverService } from '../../services/caregiver.service';
 import { Caregiver } from '../models/caregiver.model';
@@ -28,6 +29,7 @@ import { CaregiverAvatarComponent } from '../caregiver-avatar/caregiver-avatar.c
     MatDatepickerModule,
     MatCheckboxModule,
     MatIconModule,
+    MatCardModule,
     EnumLabelPipe,
     CaregiverAvatarComponent
   ],

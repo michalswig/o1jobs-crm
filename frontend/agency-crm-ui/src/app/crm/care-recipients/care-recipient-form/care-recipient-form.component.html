@@ -1,130 +1,140 @@
-<h2>{{ isEditMode ? 'Pflegebedürftigen bearbeiten' : 'Neuer Pflegebedürftiger' }}</h2>
+<div class="page-header">
+  <h2>{{ isEditMode ? 'Pflegebedürftigen bearbeiten' : 'Neuer Pflegebedürftiger' }}</h2>
+</div>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<mat-card class="form-card">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-  <mat-form-field appearance="outline">
-    <mat-label>Vorname</mat-label>
-    <input matInput formControlName="firstName">
-    @if (form.get('firstName')?.hasError('required') && form.get('firstName')?.touched) {
-      <mat-error>Vorname ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+    <div class="form-grid">
 
-  <mat-form-field appearance="outline">
-    <mat-label>Nachname</mat-label>
-    <input matInput formControlName="lastName">
-    @if (form.get('lastName')?.hasError('required') && form.get('lastName')?.touched) {
-      <mat-error>Nachname ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Vorname</mat-label>
+        <input matInput formControlName="firstName">
+        @if (form.get('firstName')?.hasError('required') && form.get('firstName')?.touched) {
+          <mat-error>Vorname ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Geburtsdatum</mat-label>
-    <input matInput type="date" formControlName="dateOfBirth">
-    @if (form.get('dateOfBirth')?.hasError('required') && form.get('dateOfBirth')?.touched) {
-      <mat-error>Geburtsdatum ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Nachname</mat-label>
+        <input matInput formControlName="lastName">
+        @if (form.get('lastName')?.hasError('required') && form.get('lastName')?.touched) {
+          <mat-error>Nachname ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Größe (cm)</mat-label>
-    <input matInput type="number" formControlName="heightCm">
-    @if (form.get('heightCm')?.hasError('required') && form.get('heightCm')?.touched) {
-      <mat-error>Größe ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Geburtsdatum</mat-label>
+        <input matInput type="date" formControlName="dateOfBirth">
+        @if (form.get('dateOfBirth')?.hasError('required') && form.get('dateOfBirth')?.touched) {
+          <mat-error>Geburtsdatum ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Gewicht (kg)</mat-label>
-    <input matInput type="number" formControlName="weightKg">
-    @if (form.get('weightKg')?.hasError('required') && form.get('weightKg')?.touched) {
-      <mat-error>Gewicht ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Größe (cm)</mat-label>
+        <input matInput type="number" formControlName="heightCm">
+        @if (form.get('heightCm')?.hasError('required') && form.get('heightCm')?.touched) {
+          <mat-error>Größe ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Geschlecht</mat-label>
-    <mat-select formControlName="gender">
-      @for (g of genders; track g) {
-        <mat-option [value]="g">{{ g | enumLabel }}</mat-option>
-      }
-    </mat-select>
-    @if (form.get('gender')?.hasError('required') && form.get('gender')?.touched) {
-      <mat-error>Geschlecht ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Gewicht (kg)</mat-label>
+        <input matInput type="number" formControlName="weightKg">
+        @if (form.get('weightKg')?.hasError('required') && form.get('weightKg')?.touched) {
+          <mat-error>Gewicht ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Mobilitätsgrad</mat-label>
-    <mat-select formControlName="mobilityLevel">
-      @for (m of mobilityLevels; track m) {
-        <mat-option [value]="m">{{ m | enumLabel }}</mat-option>
-      }
-    </mat-select>
-    @if (form.get('mobilityLevel')?.hasError('required') && form.get('mobilityLevel')?.touched) {
-      <mat-error>Mobilitätsgrad ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Geschlecht</mat-label>
+        <mat-select formControlName="gender">
+          @for (g of genders; track g) {
+            <mat-option [value]="g">{{ g | enumLabel }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('gender')?.hasError('required') && form.get('gender')?.touched) {
+          <mat-error>Geschlecht ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Demenzgrad</mat-label>
-    <mat-select formControlName="dementiaLevel">
-      @for (d of dementiaLevels; track d) {
-        <mat-option [value]="d">{{ d | enumLabel }}</mat-option>
-      }
-    </mat-select>
-    @if (form.get('dementiaLevel')?.hasError('required') && form.get('dementiaLevel')?.touched) {
-      <mat-error>Demenzgrad ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Mobilitätsgrad</mat-label>
+        <mat-select formControlName="mobilityLevel">
+          @for (m of mobilityLevels; track m) {
+            <mat-option [value]="m">{{ m | enumLabel }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('mobilityLevel')?.hasError('required') && form.get('mobilityLevel')?.touched) {
+          <mat-error>Mobilitätsgrad ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Erforderliche Pflegekompetenzen</mat-label>
-    <mat-select formControlName="requiredCapabilities" multiple>
-      @for (cap of capabilities; track cap) {
-        <mat-option [value]="cap">{{ cap | enumLabel }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Demenzgrad</mat-label>
+        <mat-select formControlName="dementiaLevel">
+          @for (d of dementiaLevels; track d) {
+            <mat-option [value]="d">{{ d | enumLabel }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('dementiaLevel')?.hasError('required') && form.get('dementiaLevel')?.touched) {
+          <mat-error>Demenzgrad ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Kunde</mat-label>
-    <mat-select formControlName="clientId">
-      @for (c of clients; track c.id) {
-        <mat-option [value]="c.id">{{ c.name }}</mat-option>
-      }
-    </mat-select>
-    @if (form.get('clientId')?.hasError('required') && form.get('clientId')?.touched) {
-      <mat-error>Kunde ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Erforderliche Pflegekompetenzen</mat-label>
+        <mat-select formControlName="requiredCapabilities" multiple>
+          @for (cap of capabilities; track cap) {
+            <mat-option [value]="cap">{{ cap | enumLabel }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
 
-  <mat-checkbox formControlName="smoker">Raucher(in)</mat-checkbox>
-  <mat-checkbox formControlName="hasPets">Hat Haustiere</mat-checkbox>
+      <mat-form-field appearance="outline">
+        <mat-label>Kunde</mat-label>
+        <mat-select formControlName="clientId">
+          @for (c of clients; track c.id) {
+            <mat-option [value]="c.id">{{ c.name }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('clientId')?.hasError('required') && form.get('clientId')?.touched) {
+          <mat-error>Kunde ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Notizen zu Haustieren</mat-label>
-    <textarea matInput formControlName="petsNotes" rows="2"></textarea>
-  </mat-form-field>
+      <div class="checkbox-group">
+        <mat-checkbox formControlName="smoker">Raucher(in)</mat-checkbox>
+        <mat-checkbox formControlName="hasPets">Hat Haustiere</mat-checkbox>
+      </div>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Notizen zu Erkrankungen</mat-label>
-    <textarea matInput formControlName="diseasesNotes" rows="3"></textarea>
-  </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Notizen zu Haustieren</mat-label>
+        <textarea matInput formControlName="petsNotes" rows="2"></textarea>
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Notizen zu Hilfsmitteln</mat-label>
-    <textarea matInput formControlName="liftingAidsNotes" rows="2"></textarea>
-  </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Notizen zu Erkrankungen</mat-label>
+        <textarea matInput formControlName="diseasesNotes" rows="3"></textarea>
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Medizinische Notizen</mat-label>
-    <textarea matInput formControlName="medicalNotes" rows="3"></textarea>
-  </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Notizen zu Hilfsmitteln</mat-label>
+        <textarea matInput formControlName="liftingAidsNotes" rows="2"></textarea>
+      </mat-form-field>
 
-  <div class="actions">
-    <button mat-raised-button color="primary" type="submit">Speichern</button>
-    <button mat-button type="button" routerLink="/care-recipients">Abbrechen</button>
-  </div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Medizinische Notizen</mat-label>
+        <textarea matInput formControlName="medicalNotes" rows="3"></textarea>
+      </mat-form-field>
 
-</form>
+    </div>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" type="submit">Speichern</button>
+      <button mat-button type="button" routerLink="/care-recipients">Abbrechen</button>
+    </div>
+
+  </form>
+</mat-card>

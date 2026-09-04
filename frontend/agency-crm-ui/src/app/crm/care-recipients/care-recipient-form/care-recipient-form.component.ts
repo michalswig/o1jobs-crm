@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCardModule } from '@angular/material/card';
 import { CareRecipientService } from '../services/care-recipient.service';
 import { ClientService } from '../../services/client.service';
 import { Client } from '../../models/client.model';
@@ -24,6 +25,7 @@ import {CareRecipient} from '../models/care-recipient';
     MatButtonModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatCardModule,
     EnumLabelPipe
   ],
   templateUrl: './care-recipient-form.component.html',

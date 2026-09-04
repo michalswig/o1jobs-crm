@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCardModule } from '@angular/material/card';
 import { AssignmentService } from '../services/assignment.service';
 import { ClientService } from '../../services/client.service';
 import { Client } from '../../models/client.model';
@@ -28,6 +29,7 @@ import {Assignment} from '../models/assignment';
     MatButtonModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatCardModule,
     EnumLabelPipe
   ],
   templateUrl: './assignment-form.component.html',

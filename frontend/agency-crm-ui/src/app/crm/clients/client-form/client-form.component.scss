@@ -1,0 +1,28 @@
+.page-header {
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.form-card {
+  padding: 24px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px 20px;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}

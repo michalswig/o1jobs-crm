@@ -1,4 +1,6 @@
-<h2>{{ isEditMode ? 'Betreuerin bearbeiten' : 'Neue Betreuerin' }}</h2>
+<div class="page-header">
+  <h2>{{ isEditMode ? 'Betreuerin bearbeiten' : 'Neue Betreuerin' }}</h2>
+</div>
 
 @if (isEditMode) {
   <div class="photo-section">
@@ -30,131 +32,139 @@
   </p>
 }
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<mat-card class="form-card">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-  <mat-form-field appearance="outline">
-    <mat-label>Vorname</mat-label>
-    <input matInput formControlName="firstName">
-    @if (form.get('firstName')?.hasError('required') && form.get('firstName')?.touched) {
-      <mat-error>Vorname ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+    <div class="form-grid">
 
-  <mat-form-field appearance="outline">
-    <mat-label>Nachname</mat-label>
-    <input matInput formControlName="lastName">
-    @if (form.get('lastName')?.hasError('required') && form.get('lastName')?.touched) {
-      <mat-error>Nachname ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Vorname</mat-label>
+        <input matInput formControlName="firstName">
+        @if (form.get('firstName')?.hasError('required') && form.get('firstName')?.touched) {
+          <mat-error>Vorname ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Geschlecht</mat-label>
-    <mat-select formControlName="gender">
-      @for (g of genders; track g) {
-        <mat-option [value]="g">{{ g | enumLabel }}</mat-option>
-      }
-    </mat-select>
-    @if (form.get('gender')?.hasError('required') && form.get('gender')?.touched) {
-      <mat-error>Geschlecht ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Nachname</mat-label>
+        <input matInput formControlName="lastName">
+        @if (form.get('lastName')?.hasError('required') && form.get('lastName')?.touched) {
+          <mat-error>Nachname ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Geburtsdatum</mat-label>
-    <input matInput [matDatepicker]="birthPicker" formControlName="birthDate">
-    <mat-datepicker-toggle matSuffix [for]="birthPicker"></mat-datepicker-toggle>
-    <mat-datepicker #birthPicker></mat-datepicker>
-    @if (form.get('birthDate')?.hasError('required') && form.get('birthDate')?.touched) {
-      <mat-error>Geburtsdatum ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Geschlecht</mat-label>
+        <mat-select formControlName="gender">
+          @for (g of genders; track g) {
+            <mat-option [value]="g">{{ g | enumLabel }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('gender')?.hasError('required') && form.get('gender')?.touched) {
+          <mat-error>Geschlecht ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Gewicht (kg)</mat-label>
-    <input matInput type="number" formControlName="weightKg">
-    @if (form.get('weightKg')?.hasError('required') && form.get('weightKg')?.touched) {
-      <mat-error>Gewicht ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Geburtsdatum</mat-label>
+        <input matInput [matDatepicker]="birthPicker" formControlName="birthDate">
+        <mat-datepicker-toggle matSuffix [for]="birthPicker"></mat-datepicker-toggle>
+        <mat-datepicker #birthPicker></mat-datepicker>
+        @if (form.get('birthDate')?.hasError('required') && form.get('birthDate')?.touched) {
+          <mat-error>Geburtsdatum ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Größe (cm)</mat-label>
-    <input matInput type="number" formControlName="heightCm">
-    @if (form.get('heightCm')?.hasError('required') && form.get('heightCm')?.touched) {
-      <mat-error>Größe ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Gewicht (kg)</mat-label>
+        <input matInput type="number" formControlName="weightKg">
+        @if (form.get('weightKg')?.hasError('required') && form.get('weightKg')?.touched) {
+          <mat-error>Gewicht ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Telefon</mat-label>
-    <input matInput formControlName="phone">
-    @if (form.get('phone')?.hasError('required') && form.get('phone')?.touched) {
-      <mat-error>Telefon ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Größe (cm)</mat-label>
+        <input matInput type="number" formControlName="heightCm">
+        @if (form.get('heightCm')?.hasError('required') && form.get('heightCm')?.touched) {
+          <mat-error>Größe ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>E-Mail</mat-label>
-    <input matInput formControlName="email">
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Telefon</mat-label>
+        <input matInput formControlName="phone">
+        @if (form.get('phone')?.hasError('required') && form.get('phone')?.touched) {
+          <mat-error>Telefon ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Nationalität</mat-label>
-    <mat-select formControlName="nationality">
-      @for (n of nationalities; track n) {
-        <mat-option [value]="n">{{ n | enumLabel }}</mat-option>
-      }
-    </mat-select>
-    @if (form.get('nationality')?.hasError('required') && form.get('nationality')?.touched) {
-      <mat-error>Nationalität ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>E-Mail</mat-label>
+        <input matInput formControlName="email">
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Erfahrung mit Demenz</mat-label>
-    <mat-select formControlName="dementiaExperience">
-      @for (d of dementiaLevels; track d) {
-        <mat-option [value]="d">{{ d | enumLabel }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Nationalität</mat-label>
+        <mat-select formControlName="nationality">
+          @for (n of nationalities; track n) {
+            <mat-option [value]="n">{{ n | enumLabel }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('nationality')?.hasError('required') && form.get('nationality')?.touched) {
+          <mat-error>Nationalität ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Pflegekompetenzen</mat-label>
-    <mat-select formControlName="capabilities" multiple>
-      @for (cap of capabilities; track cap) {
-        <mat-option [value]="cap">{{ cap | enumLabel }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Erfahrung mit Demenz</mat-label>
+        <mat-select formControlName="dementiaExperience">
+          @for (d of dementiaLevels; track d) {
+            <mat-option [value]="d">{{ d | enumLabel }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Beginn der Berufstätigkeit</mat-label>
-    <input matInput [matDatepicker]="careerPicker" formControlName="careerStartDate">
-    <mat-datepicker-toggle matSuffix [for]="careerPicker"></mat-datepicker-toggle>
-    <mat-datepicker #careerPicker></mat-datepicker>
-    @if (form.get('careerStartDate')?.hasError('required') && form.get('careerStartDate')?.touched) {
-      <mat-error>Datum ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Pflegekompetenzen</mat-label>
+        <mat-select formControlName="capabilities" multiple>
+          @for (cap of capabilities; track cap) {
+            <mat-option [value]="cap">{{ cap | enumLabel }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
 
-  <mat-checkbox formControlName="hasDriverLicense">Führerschein</mat-checkbox>
-  <mat-checkbox formControlName="smoker">Raucher(in)</mat-checkbox>
+      <mat-form-field appearance="outline">
+        <mat-label>Beginn der Berufstätigkeit</mat-label>
+        <input matInput [matDatepicker]="careerPicker" formControlName="careerStartDate">
+        <mat-datepicker-toggle matSuffix [for]="careerPicker"></mat-datepicker-toggle>
+        <mat-datepicker #careerPicker></mat-datepicker>
+        @if (form.get('careerStartDate')?.hasError('required') && form.get('careerStartDate')?.touched) {
+          <mat-error>Datum ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Medizinische Notizen / Qualifikationen</mat-label>
-    <textarea matInput formControlName="medicalQualificationNotes" rows="3"></textarea>
-  </mat-form-field>
+      <div class="checkbox-group">
+        <mat-checkbox formControlName="hasDriverLicense">Führerschein</mat-checkbox>
+        <mat-checkbox formControlName="smoker">Raucher(in)</mat-checkbox>
+      </div>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Notizen der Personalvermittlung</mat-label>
-    <textarea matInput formControlName="recruiterNotes" rows="3"></textarea>
-  </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Medizinische Notizen / Qualifikationen</mat-label>
+        <textarea matInput formControlName="medicalQualificationNotes" rows="3"></textarea>
+      </mat-form-field>
 
-  <div class="actions">
-    <button mat-raised-button color="primary" type="submit">Speichern</button>
-    <button mat-button type="button" routerLink="/caregivers">Abbrechen</button>
-  </div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Notizen der Personalvermittlung</mat-label>
+        <textarea matInput formControlName="recruiterNotes" rows="3"></textarea>
+      </mat-form-field>
 
-</form>
+    </div>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" type="submit">Speichern</button>
+      <button mat-button type="button" routerLink="/caregivers">Abbrechen</button>
+    </div>
+
+  </form>
+</mat-card>

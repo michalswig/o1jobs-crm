@@ -1,105 +1,115 @@
-<h2>{{ isEditMode ? 'Auftrag bearbeiten' : 'Neuer Auftrag' }}</h2>
+<div class="page-header">
+  <h2>{{ isEditMode ? 'Auftrag bearbeiten' : 'Neuer Auftrag' }}</h2>
+</div>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<mat-card class="form-card">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-  <mat-form-field appearance="outline">
-    <mat-label>Kunde</mat-label>
-    <mat-select formControlName="clientId">
-      @for (c of clients; track c.id) {
-        <mat-option [value]="c.id">{{ c.name }}</mat-option>
-      }
-    </mat-select>
-    @if (form.get('clientId')?.hasError('required') && form.get('clientId')?.touched) {
-      <mat-error>Kunde ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+    <div class="form-grid">
 
-  <mat-form-field appearance="outline">
-    <mat-label>Pflegebedürftiger</mat-label>
-    <mat-select formControlName="careRecipientId">
-      @for (cr of careRecipients; track cr.id) {
-        <mat-option [value]="cr.id">{{ cr.firstName }} {{ cr.lastName }}</mat-option>
-      }
-    </mat-select>
-    @if (form.get('careRecipientId')?.hasError('required') && form.get('careRecipientId')?.touched) {
-      <mat-error>Pflegebedürftiger ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Kunde</mat-label>
+        <mat-select formControlName="clientId">
+          @for (c of clients; track c.id) {
+            <mat-option [value]="c.id">{{ c.name }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('clientId')?.hasError('required') && form.get('clientId')?.touched) {
+          <mat-error>Kunde ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Betreuerin (optional)</mat-label>
-    <mat-select formControlName="caregiverId">
-      <mat-option [value]="''">— keine —</mat-option>
-      @for (cg of caregivers; track cg.id) {
-        <mat-option [value]="cg.id">{{ cg.firstName }} {{ cg.lastName }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Pflegebedürftiger</mat-label>
+        <mat-select formControlName="careRecipientId">
+          @for (cr of careRecipients; track cr.id) {
+            <mat-option [value]="cr.id">{{ cr.firstName }} {{ cr.lastName }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('careRecipientId')?.hasError('required') && form.get('careRecipientId')?.touched) {
+          <mat-error>Pflegebedürftiger ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Startdatum</mat-label>
-    <input matInput type="date" formControlName="startDate">
-    @if (form.get('startDate')?.hasError('required') && form.get('startDate')?.touched) {
-      <mat-error>Datum ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Betreuerin (optional)</mat-label>
+        <mat-select formControlName="caregiverId">
+          <mat-option [value]="''">— keine —</mat-option>
+          @for (cg of caregivers; track cg.id) {
+            <mat-option [value]="cg.id">{{ cg.firstName }} {{ cg.lastName }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Stadt</mat-label>
-    <input matInput formControlName="city">
-    @if (form.get('city')?.hasError('required') && form.get('city')?.touched) {
-      <mat-error>Stadt ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Startdatum</mat-label>
+        <input matInput type="date" formControlName="startDate">
+        @if (form.get('startDate')?.hasError('required') && form.get('startDate')?.touched) {
+          <mat-error>Datum ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Adresse</mat-label>
-    <input matInput formControlName="streetAddress">
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Stadt</mat-label>
+        <input matInput formControlName="city">
+        @if (form.get('city')?.hasError('required') && form.get('city')?.touched) {
+          <mat-error>Stadt ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Nettogehalt (monatlich)</mat-label>
-    <input matInput type="number" formControlName="salaryMonthlyNet">
-    @if (form.get('salaryMonthlyNet')?.hasError('required') && form.get('salaryMonthlyNet')?.touched) {
-      <mat-error>Gehalt ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Adresse</mat-label>
+        <input matInput formControlName="streetAddress">
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Sprachniveau</mat-label>
-    <mat-select formControlName="languageLevel">
-      @for (l of languageLevels; track l) {
-        <mat-option [value]="l">{{ l | enumLabel }}</mat-option>
-      }
-    </mat-select>
-    @if (form.get('languageLevel')?.hasError('required') && form.get('languageLevel')?.touched) {
-      <mat-error>Sprachniveau ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Nettogehalt (monatlich)</mat-label>
+        <input matInput type="number" formControlName="salaryMonthlyNet">
+        @if (form.get('salaryMonthlyNet')?.hasError('required') && form.get('salaryMonthlyNet')?.touched) {
+          <mat-error>Gehalt ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Unterkunftsart</mat-label>
-    <mat-select formControlName="accommodationType">
-      @for (a of accommodationTypes; track a) {
-        <mat-option [value]="a">{{ a | enumLabel }}</mat-option>
-      }
-    </mat-select>
-    @if (form.get('accommodationType')?.hasError('required') && form.get('accommodationType')?.touched) {
-      <mat-error>Unterkunftsart ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Sprachniveau</mat-label>
+        <mat-select formControlName="languageLevel">
+          @for (l of languageLevels; track l) {
+            <mat-option [value]="l">{{ l | enumLabel }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('languageLevel')?.hasError('required') && form.get('languageLevel')?.touched) {
+          <mat-error>Sprachniveau ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-checkbox formControlName="ownBathroom">Eigenes Badezimmer</mat-checkbox>
-  <mat-checkbox formControlName="ownRoom">Eigenes Zimmer</mat-checkbox>
+      <mat-form-field appearance="outline">
+        <mat-label>Unterkunftsart</mat-label>
+        <mat-select formControlName="accommodationType">
+          @for (a of accommodationTypes; track a) {
+            <mat-option [value]="a">{{ a | enumLabel }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('accommodationType')?.hasError('required') && form.get('accommodationType')?.touched) {
+          <mat-error>Unterkunftsart ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Anforderungen</mat-label>
-    <textarea matInput formControlName="requirements" rows="3"></textarea>
-  </mat-form-field>
+      <div class="checkbox-group">
+        <mat-checkbox formControlName="ownBathroom">Eigenes Badezimmer</mat-checkbox>
+        <mat-checkbox formControlName="ownRoom">Eigenes Zimmer</mat-checkbox>
+      </div>
 
-  <div class="actions">
-    <button mat-raised-button color="primary" type="submit">Speichern</button>
-    <button mat-button type="button" routerLink="/assignments">Abbrechen</button>
-  </div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Anforderungen</mat-label>
+        <textarea matInput formControlName="requirements" rows="3"></textarea>
+      </mat-form-field>
 
-</form>
+    </div>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" type="submit">Speichern</button>
+      <button mat-button type="button" routerLink="/assignments">Abbrechen</button>
+    </div>
+
+  </form>
+</mat-card>

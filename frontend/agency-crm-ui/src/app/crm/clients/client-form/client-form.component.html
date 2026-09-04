@@ -1,74 +1,82 @@
-<h2>{{ isEditMode ? 'Kunde bearbeiten' : 'Neuer Kunde' }}</h2>
+<div class="page-header">
+  <h2>{{ isEditMode ? 'Kunde bearbeiten' : 'Neuer Kunde' }}</h2>
+</div>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<mat-card class="form-card">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-  <mat-form-field appearance="outline">
-    <mat-label>Name</mat-label>
-    <input matInput formControlName="name">
-    @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
-      <mat-error>Name ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+    <div class="form-grid">
 
-  <mat-form-field appearance="outline">
-    <mat-label>E-Mail</mat-label>
-    <input matInput formControlName="email">
-    @if (form.get('email')?.hasError('required') && form.get('email')?.touched) {
-      <mat-error>E-Mail ist erforderlich</mat-error>
-    }
-    @if (form.get('email')?.hasError('email') && form.get('email')?.touched) {
-      <mat-error>Ungültiges E-Mail-Format</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name">
+        @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+          <mat-error>Name ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Telefon</mat-label>
-    <input matInput formControlName="phoneNumber">
-    @if (form.get('phoneNumber')?.hasError('required') && form.get('phoneNumber')?.touched) {
-      <mat-error>Telefon ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>E-Mail</mat-label>
+        <input matInput formControlName="email">
+        @if (form.get('email')?.hasError('required') && form.get('email')?.touched) {
+          <mat-error>E-Mail ist erforderlich</mat-error>
+        }
+        @if (form.get('email')?.hasError('email') && form.get('email')?.touched) {
+          <mat-error>Ungültiges E-Mail-Format</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Land</mat-label>
-    <input matInput formControlName="country">
-    @if (form.get('country')?.hasError('required') && form.get('country')?.touched) {
-      <mat-error>Land ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Telefon</mat-label>
+        <input matInput formControlName="phoneNumber">
+        @if (form.get('phoneNumber')?.hasError('required') && form.get('phoneNumber')?.touched) {
+          <mat-error>Telefon ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Stadt</mat-label>
-    <input matInput formControlName="city">
-    @if (form.get('city')?.hasError('required') && form.get('city')?.touched) {
-      <mat-error>Stadt ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Land</mat-label>
+        <input matInput formControlName="country">
+        @if (form.get('country')?.hasError('required') && form.get('country')?.touched) {
+          <mat-error>Land ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Postleitzahl</mat-label>
-    <input matInput formControlName="postalCode">
-    @if (form.get('postalCode')?.hasError('required') && form.get('postalCode')?.touched) {
-      <mat-error>Postleitzahl ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Stadt</mat-label>
+        <input matInput formControlName="city">
+        @if (form.get('city')?.hasError('required') && form.get('city')?.touched) {
+          <mat-error>Stadt ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Adresse</mat-label>
-    <input matInput formControlName="streetAddress">
-    @if (form.get('streetAddress')?.hasError('required') && form.get('streetAddress')?.touched) {
-      <mat-error>Adresse ist erforderlich</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Postleitzahl</mat-label>
+        <input matInput formControlName="postalCode">
+        @if (form.get('postalCode')?.hasError('required') && form.get('postalCode')?.touched) {
+          <mat-error>Postleitzahl ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Notizen</mat-label>
-    <textarea matInput formControlName="notes" rows="3"></textarea>
-  </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Adresse</mat-label>
+        <input matInput formControlName="streetAddress">
+        @if (form.get('streetAddress')?.hasError('required') && form.get('streetAddress')?.touched) {
+          <mat-error>Adresse ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
-  <div class="actions">
-    <button mat-raised-button color="primary" type="submit">Speichern</button>
-    <button mat-button type="button" routerLink="/clients">Abbrechen</button>
-  </div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Notizen</mat-label>
+        <textarea matInput formControlName="notes" rows="3"></textarea>
+      </mat-form-field>
 
-</form>
+    </div>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" type="submit">Speichern</button>
+      <button mat-button type="button" routerLink="/clients">Abbrechen</button>
+    </div>
+
+  </form>
+</mat-card>

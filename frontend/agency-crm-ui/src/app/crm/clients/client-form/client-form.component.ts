@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { ClientService } from '../../services/client.service';
 import { Client } from '../../models/client.model';
 
@@ -15,7 +16,8 @@ import { Client } from '../../models/client.model';
     RouterLink,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule
   ],
   templateUrl: './client-form.component.html',
   styleUrl: './client-form.component.scss'
