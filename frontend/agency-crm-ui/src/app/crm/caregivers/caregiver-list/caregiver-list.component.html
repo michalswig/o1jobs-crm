@@ -9,6 +9,13 @@
 <mat-card class="table-card">
   <table mat-table [dataSource]="dataSource" matSort>
 
+    <ng-container matColumnDef="photo">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let caregiver">
+        <app-caregiver-avatar [caregiverId]="caregiver.id" [hasPhoto]="caregiver.hasPhoto" [size]="36"></app-caregiver-avatar>
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="lastName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Nachname</th>
       <td mat-cell *matCellDef="let caregiver">{{ caregiver.lastName }}</td>

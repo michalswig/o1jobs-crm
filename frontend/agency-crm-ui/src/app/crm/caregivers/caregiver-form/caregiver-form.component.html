@@ -1,5 +1,35 @@
 <h2>{{ isEditMode ? 'Betreuerin bearbeiten' : 'Neue Betreuerin' }}</h2>
 
+@if (isEditMode) {
+  <div class="photo-section">
+    <app-caregiver-avatar [caregiverId]="caregiverId!" [hasPhoto]="hasPhoto" [size]="80"></app-caregiver-avatar>
+    <div class="photo-actions">
+      <div class="file-picker">
+        <input type="file" accept="image/jpeg" (change)="onPhotoSelected($event)" #photoInput hidden>
+        <button mat-stroked-button type="button" (click)="photoInput.click()">
+          <mat-icon>attach_file</mat-icon>
+          Datei auswählen
+        </button>
+        <span class="file-name">{{ selectedPhotoFile?.name ?? 'Keine Datei ausgewählt' }}</span>
+      </div>
+      <button mat-raised-button color="primary" type="button" [disabled]="!selectedPhotoFile || uploadingPhoto" (click)="onUploadPhoto()">
+        {{ uploadingPhoto ? 'Wird hochgeladen...' : 'Foto hochladen (JPG)' }}
+      </button>
+      @if (hasPhoto) {
+        <button mat-button color="warn" type="button" (click)="onDeletePhoto()">Foto löschen</button>
+      }
+      @if (photoError) {
+        <p class="upload-error">{{ photoError }}</p>
+      }
+    </div>
+  </div>
+} @else {
+  <p class="photo-hint">
+    <mat-icon>info</mat-icon>
+    Ein Foto kann hinzugefügt werden, nachdem die Betreuerin gespeichert wurde.
+  </p>
+}
+
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
   <mat-form-field appearance="outline">

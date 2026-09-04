@@ -36,4 +36,18 @@ export class CaregiverService {
   deactivate(id: number): Observable<void> {
     return this.http.patch<void>(`${this.baseUrl}/${id}/deactivate`, {});
   }
+
+  uploadPhoto(id: number, file: File): Observable<void> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<void>(`${this.baseUrl}/${id}/photo`, formData);
+  }
+
+  getPhoto(id: number): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}/${id}/photo`, { responseType: 'blob' });
+  }
+
+  deletePhoto(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}/photo`);
+  }
 }

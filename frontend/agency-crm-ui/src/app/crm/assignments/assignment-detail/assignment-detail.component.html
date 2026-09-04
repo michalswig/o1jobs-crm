@@ -129,7 +129,10 @@
         <h3>Betreuerin</h3>
       </div>
       @if (assignment.caregiver) {
-        <p class="entity-name">{{ assignment.caregiver.firstName }} {{ assignment.caregiver.lastName }}</p>
+        <div class="caregiver-header">
+          <app-caregiver-avatar [caregiverId]="assignment.caregiver.id" [hasPhoto]="assignment.caregiver.hasPhoto" [size]="56"></app-caregiver-avatar>
+          <p class="entity-name">{{ assignment.caregiver.firstName }} {{ assignment.caregiver.lastName }}</p>
+        </div>
         <div class="info-row">
           <span class="label">Nationalität</span>
           <span class="value">{{ assignment.caregiver.nationality | enumLabel }}</span>

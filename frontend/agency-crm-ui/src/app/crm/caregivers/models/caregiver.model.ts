@@ -18,5 +18,5 @@ export interface Caregiver {
   recruiterNotes: string | null;
   dementiaExperience: DementiaLevel | null;
   capabilities: CareCapability[];
-  photoPath: string | null;
+  hasPhoto: boolean;
 }

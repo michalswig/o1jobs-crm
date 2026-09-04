@@ -38,7 +38,7 @@ public class DocumentStorageService {
         try (ResponseInputStream<GetObjectResponse> response = s3Client.getObject(request)) {
             return response.readAllBytes();
         } catch (IOException e) {
-            throw new UncheckedIOException("Nie udało się pobrać pliku z magazynu.", e);
+            throw new UncheckedIOException("Datei konnte nicht aus dem Speicher abgerufen werden.", e);
         }
     }
 

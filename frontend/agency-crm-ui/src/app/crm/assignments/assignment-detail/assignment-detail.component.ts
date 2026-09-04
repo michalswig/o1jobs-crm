@@ -12,11 +12,12 @@ import { CareCapability } from '../../../shared/models/domain-enums.model';
 import { CloseAssignmentDialogComponent } from '../../../core/dialogs/close-assignment-dialog/close-assignment-dialog.component';
 import {AssignmentDetail} from '../models/assignment-detail';
 import {AssignmentDocument} from '../models/assignment-document';
+import { CaregiverAvatarComponent } from '../../caregivers/caregiver-avatar/caregiver-avatar.component';
 
 @Component({
   selector: 'app-assignment-detail',
   standalone: true,
-  imports: [RouterLink, MatButtonModule, MatIconModule, MatCardModule, MatDialogModule, DatePipe, DecimalPipe, EnumLabelPipe],
+  imports: [RouterLink, MatButtonModule, MatIconModule, MatCardModule, MatDialogModule, DatePipe, DecimalPipe, EnumLabelPipe, CaregiverAvatarComponent],
   templateUrl: './assignment-detail.component.html',
   styleUrl: './assignment-detail.component.scss'
 })

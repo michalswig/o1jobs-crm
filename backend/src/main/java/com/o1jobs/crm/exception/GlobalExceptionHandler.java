@@ -91,6 +91,17 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
+    @ExceptionHandler(NoSuchPhotoException.class)
+    public ResponseEntity<ErrorResponse> handleNoSuchPhotoException(NoSuchPhotoException ex) {
+        ErrorResponse error = new ErrorResponse(
+                404,
+                ex.getMessage(),
+                Instant.now(),
+                null
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
     @ExceptionHandler(InvalidFileTypeException.class)
     public ResponseEntity<ErrorResponse> handleInvalidFileTypeException(InvalidFileTypeException ex) {
         ErrorResponse error = new ErrorResponse(
@@ -106,7 +117,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException ex) {
         ErrorResponse error = new ErrorResponse(
                 413,
-                "Plik przekracza maksymalny dozwolony rozmiar.",
+                "Die Datei überschreitet die maximal zulässige Größe.",
                 Instant.now(),
                 null
         );

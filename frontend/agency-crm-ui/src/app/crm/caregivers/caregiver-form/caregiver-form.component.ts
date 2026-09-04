@@ -7,10 +7,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { HttpErrorResponse } from '@angular/common/http';
 import { CaregiverService } from '../../services/caregiver.service';
 import { Caregiver } from '../models/caregiver.model';
 import { CareCapability } from '../../../shared/models/domain-enums.model';
 import { EnumLabelPipe } from '../../../shared/pipes/enum-label.pipe';
+import { CaregiverAvatarComponent } from '../caregiver-avatar/caregiver-avatar.component';
 
 @Component({
   selector: 'app-caregiver-form',
@@ -24,7 +27,9 @@ import { EnumLabelPipe } from '../../../shared/pipes/enum-label.pipe';
     MatSelectModule,
     MatDatepickerModule,
     MatCheckboxModule,
-    EnumLabelPipe
+    MatIconModule,
+    EnumLabelPipe,
+    CaregiverAvatarComponent
   ],
   templateUrl: './caregiver-form.component.html',
   styleUrl: './caregiver-form.component.scss'
@@ -33,6 +38,11 @@ export class CaregiverFormComponent implements OnInit {
 
   caregiverId: number | null = null;
   isEditMode = false;
+
+  hasPhoto = false;
+  selectedPhotoFile: File | null = null;
+  uploadingPhoto = false;
+  photoError: string | null = null;
 
   genders = ['MALE', 'FEMALE'];
   nationalities = ['POLISH', 'GEORGIAN', 'MOLDOVAN', 'RUSSIAN', 'UKRAINIAN'];
@@ -85,8 +95,50 @@ export class CaregiverFormComponent implements OnInit {
     this.caregiverService.getById(id).subscribe({
       next: (caregiver: Caregiver) => {
         this.form.patchValue(caregiver);
+        this.hasPhoto = caregiver.hasPhoto;
       },
       error: (err) => console.error('Error loading caregiver:', err)
+    });
+  }
+
+  onPhotoSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.selectedPhotoFile = input.files?.length ? input.files[0] : null;
+    this.photoError = null;
+  }
+
+  onUploadPhoto(): void {
+    if (!this.selectedPhotoFile || !this.caregiverId) {
+      return;
+    }
+    if (this.selectedPhotoFile.type !== 'image/jpeg') {
+      this.photoError = 'Es sind nur JPG-Dateien zulässig.';
+      return;
+    }
+
+    this.uploadingPhoto = true;
+    this.caregiverService.uploadPhoto(this.caregiverId, this.selectedPhotoFile).subscribe({
+      next: () => {
+        this.hasPhoto = true;
+        this.selectedPhotoFile = null;
+        this.uploadingPhoto = false;
+      },
+      error: (err: HttpErrorResponse) => {
+        this.photoError = err.status === 400
+          ? 'Das hochgeladene Foto ist ungültig.'
+          : 'Foto konnte nicht hochgeladen werden. Bitte versuchen Sie es erneut.';
+        this.uploadingPhoto = false;
+      }
+    });
+  }
+
+  onDeletePhoto(): void {
+    if (!this.caregiverId || !confirm('Möchten Sie das Foto wirklich löschen?')) {
+      return;
+    }
+    this.caregiverService.deletePhoto(this.caregiverId).subscribe({
+      next: () => this.hasPhoto = false,
+      error: (err) => console.error('Error deleting photo:', err)
     });
   }
 

@@ -46,6 +46,17 @@
   }
 }
 
+.caregiver-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+
+  .entity-name {
+    margin: 0;
+  }
+}
+
 .entity-name {
   font-size: 1.05rem;
   font-weight: 600;

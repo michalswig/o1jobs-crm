@@ -25,5 +25,6 @@ public record CaregiverResponse(
         String medicalQualificationNotes,
         String recruiterNotes,
         DementiaLevel dementiaExperience,
-        Set<CareCapability> capabilities) {
+        Set<CareCapability> capabilities,
+        boolean hasPhoto) {
 }

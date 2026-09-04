@@ -1,0 +1,7 @@
+<div class="avatar" [class.avatar-placeholder]="!photoUrl" [style.width.px]="size" [style.height.px]="size">
+  @if (photoUrl) {
+    <img [src]="photoUrl" alt="">
+  } @else {
+    <mat-icon [style.font-size.px]="size * 0.6" [style.width.px]="size * 0.6" [style.height.px]="size * 0.6">person</mat-icon>
+  }
+</div>

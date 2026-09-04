@@ -11,6 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent, ConfirmDialogData } from '../../../core/dialogs/confirm-dialog/confirm-dialog.component';
 import { EnumLabelPipe } from '../../../shared/pipes/enum-label.pipe';
+import { CaregiverAvatarComponent } from '../caregiver-avatar/caregiver-avatar.component';
 import {Caregiver} from '../models/caregiver.model';
 
 @Component({
@@ -25,14 +26,15 @@ import {Caregiver} from '../models/caregiver.model';
     MatIconModule,
     MatCardModule,
     MatDialogModule,
-    EnumLabelPipe
+    EnumLabelPipe,
+    CaregiverAvatarComponent
   ],
   templateUrl: './caregiver-list.component.html',
   styleUrl: './caregiver-list.component.scss'
 })
 export class CaregiverListComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['lastName', 'firstName', 'phone', 'nationality', 'actions'];
+  displayedColumns: string[] = ['photo', 'lastName', 'firstName', 'phone', 'nationality', 'actions'];
   dataSource = new MatTableDataSource<Caregiver>([]);
   totalElements = 0;
   pageSize = 20;

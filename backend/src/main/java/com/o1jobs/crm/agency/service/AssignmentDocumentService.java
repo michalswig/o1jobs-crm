@@ -30,10 +30,10 @@ public class AssignmentDocumentService {
 
     public AssignmentDocumentResponse upload(Long assignmentId, MultipartFile file) {
         if (file.isEmpty()) {
-            throw new InvalidFileTypeException("Przesłany plik jest pusty.");
+            throw new InvalidFileTypeException("Die hochgeladene Datei ist leer.");
         }
         if (!ALLOWED_CONTENT_TYPE.equals(file.getContentType())) {
-            throw new InvalidFileTypeException("Dozwolone są tylko pliki PDF.");
+            throw new InvalidFileTypeException("Es sind nur PDF-Dateien zulässig.");
         }
 
         Assignment assignment = assignmentRepository.findById(assignmentId).orElseThrow(
@@ -94,7 +94,7 @@ public class AssignmentDocumentService {
         try {
             return file.getBytes();
         } catch (IOException e) {
-            throw new UncheckedIOException("Nie udało się odczytać przesłanego pliku.", e);
+            throw new UncheckedIOException("Die hochgeladene Datei konnte nicht gelesen werden.", e);
         }
     }
 
