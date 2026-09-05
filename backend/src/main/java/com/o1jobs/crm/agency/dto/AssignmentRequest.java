@@ -15,6 +15,7 @@ public record AssignmentRequest(
         @NotBlank String city,
         String streetAddress,
         @NotNull BigDecimal salaryMonthlyNet,
+        BigDecimal contractValue,
         @NotNull LanguageLevel languageLevel,
         String requirements,
         Long caregiverId,

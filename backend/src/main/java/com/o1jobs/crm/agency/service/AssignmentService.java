@@ -6,17 +6,29 @@ import com.o1jobs.crm.agency.dto.AssignmentMapper;
 import com.o1jobs.crm.agency.dto.AssignmentRequest;
 import com.o1jobs.crm.agency.dto.AssignmentResponse;
 import com.o1jobs.crm.agency.repository.AssignmentRepository;
+import com.o1jobs.crm.agency.specification.AssignmentSpecifications;
 import com.o1jobs.crm.exception.NoSuchAssignmentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class AssignmentService {
+
+    // Role widzące wartość kontraktu (Auftragswert) w odpowiedziach API.
+    // RECRUITER celowo pominięty - nie zajmuje się stroną finansową zleceń.
+    private static final Set<String> CONTRACT_VALUE_VISIBLE_ROLES = Set.of("ADMIN", "MANAGER", "PARTNER");
+
     private final AssignmentRepository assignmentRepository;
     private final AssignmentMapper assignmentMapper;
     private final ClientService clientService;
@@ -28,13 +40,17 @@ public class AssignmentService {
         Assignment assignment = assignmentRepository.findById(id).orElseThrow(
                 () -> new NoSuchAssignmentException("No assignment with id " + id)
         );
-        return assignmentMapper.toAssignmentDetailResponse(assignment);
+        return maskContractValue(assignmentMapper.toAssignmentDetailResponse(assignment));
     }
 
     @Transactional(readOnly = true)
-    public Page<AssignmentResponse> getAll(Pageable pageable) {
-        return assignmentRepository.findAll(pageable)
-                .map(assignmentMapper::toAssignmentResponse);
+    public Page<AssignmentResponse> getAll(Pageable pageable, Long clientId) {
+        Specification<Assignment> spec = Specification
+                .where(AssignmentSpecifications.notDeleted())
+                .and(AssignmentSpecifications.byClientId(clientId));
+        return assignmentRepository.findAll(spec, pageable)
+                .map(assignmentMapper::toAssignmentResponse)
+                .map(this::maskContractValue);
     }
 
     @Transactional(readOnly = true)
@@ -42,7 +58,7 @@ public class AssignmentService {
         Assignment assignment = assignmentRepository.findById(id).orElseThrow(
                 () -> new NoSuchAssignmentException("No assignment with id " + id)
         );
-        return assignmentMapper.toAssignmentResponse(assignment);
+        return maskContractValue(assignmentMapper.toAssignmentResponse(assignment));
     }
 
     public AssignmentResponse create(AssignmentRequest request) {
@@ -67,8 +83,9 @@ public class AssignmentService {
                 caregiver,
                 accommodation
         );
+        assignment.updateContractValue(request.contractValue());
         assignmentRepository.save(assignment);
-        return assignmentMapper.toAssignmentResponse(assignment);
+        return maskContractValue(assignmentMapper.toAssignmentResponse(assignment));
     }
 
     public AssignmentResponse update(Long id, AssignmentRequest request) {
@@ -83,12 +100,13 @@ public class AssignmentService {
                 request.startDate(), request.city(), request.streetAddress(),
                 request.salaryMonthlyNet(), request.languageLevel(), request.requirements(), accommodation
         );
+        assignmentToUpdate.updateContractValue(request.contractValue());
 
         if (request.caregiverId() != null) {
             assignmentToUpdate.assignCaregiver(caregiverService.getEntityById(request.caregiverId()));
         }
 
-        return assignmentMapper.toAssignmentResponse(assignmentToUpdate);
+        return maskContractValue(assignmentMapper.toAssignmentResponse(assignmentToUpdate));
     }
 
     public void close(Long id, AssignmentCloseReason reason, String notes) {
@@ -96,5 +114,41 @@ public class AssignmentService {
                 () -> new NoSuchAssignmentException("No assignment with id " + id)
         );
         assignment.close(reason, notes);
+    }
+
+    private boolean canSeeContractValue() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            return false;
+        }
+        return authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .anyMatch(CONTRACT_VALUE_VISIBLE_ROLES::contains);
+    }
+
+    private AssignmentResponse maskContractValue(AssignmentResponse response) {
+        if (canSeeContractValue()) {
+            return response;
+        }
+        return new AssignmentResponse(
+                response.id(), response.clientId(), response.careRecipientId(), response.startDate(),
+                response.city(), response.streetAddress(), response.salaryMonthlyNet(), null,
+                response.languageLevel(), response.requirements(), response.status(), response.closeReason(),
+                response.closeNotes(), response.caregiverId(), response.accommodationType(),
+                response.ownBathroom(), response.ownRoom()
+        );
+    }
+
+    private AssignmentDetailResponse maskContractValue(AssignmentDetailResponse response) {
+        if (canSeeContractValue()) {
+            return response;
+        }
+        return new AssignmentDetailResponse(
+                response.id(), response.startDate(), response.city(), response.streetAddress(),
+                response.salaryMonthlyNet(), null, response.languageLevel(), response.requirements(),
+                response.status(), response.closeReason(), response.closeNotes(), response.client(),
+                response.careRecipient(), response.caregiver(), response.accommodationType(),
+                response.ownBathroom(), response.ownRoom()
+        );
     }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Page } from '../../../shared/models/page.model';
 import { AssignmentService, CloseAssignmentPayload } from '../services/assignment.service';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
@@ -37,16 +37,24 @@ export class AssignmentListComponent implements OnInit, AfterViewInit {
   totalElements = 0;
   pageSize = 20;
   pageIndex = 0;
+  filterClientId: number | null = null;
 
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private readonly assignmentService: AssignmentService,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
-    this.loadAssignments();
+    this.route.queryParamMap.subscribe(params => {
+      const clientIdParam = params.get('clientId');
+      this.filterClientId = clientIdParam ? Number(clientIdParam) : null;
+      this.pageIndex = 0;
+      this.loadAssignments();
+    });
   }
 
   ngAfterViewInit(): void {
@@ -54,13 +62,17 @@ export class AssignmentListComponent implements OnInit, AfterViewInit {
   }
 
   loadAssignments(): void {
-    this.assignmentService.getAll(this.pageIndex, this.pageSize).subscribe({
+    this.assignmentService.getAll(this.pageIndex, this.pageSize, this.filterClientId ?? undefined).subscribe({
       next: (page: Page<Assignment>) => {
         this.dataSource.data = page.content;
         this.totalElements = page.totalElements;
       },
       error: (err) => console.error('Error fetching assignments:', err)
     });
+  }
+
+  clearFilter(): void {
+    this.router.navigate(['/assignments']);
   }
 
   onPageChange(event: PageEvent): void {

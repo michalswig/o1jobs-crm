@@ -64,6 +64,12 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/assignments/**")
                         .hasAnyAuthority("ADMIN", "MANAGER", "RECRUITER")
 
+                        // intermediaries (partnerzy): na razie wyłącznie personel wewnętrzny -
+                        // partnerzy jeszcze się nie logują, docelowo dostaną dostęp ograniczony
+                        // tylko do własnego rekordu, nie do całej listy partnerów
+                        .requestMatchers("/api/v1/intermediaries/**")
+                        .hasAnyAuthority("ADMIN", "MANAGER")
+
                         .anyRequest().authenticated())
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

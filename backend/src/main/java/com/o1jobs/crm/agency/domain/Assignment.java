@@ -46,6 +46,12 @@ public class Assignment {
     @Embedded
     private Accommodation accommodation;
 
+    // Wartość kontraktu (to co płaci klient) - CELOWO osobne od salaryMonthlyNet
+    // (to co dostaje opiekunka). Różnica to marża agencji. Widoczność tego pola
+    // w odpowiedziach API jest ograniczona rolami na poziomie AssignmentService,
+    // nie tutaj - encja sama w sobie nic nie wie o rolach.
+    private BigDecimal contractValue;
+
     private Instant createdAt;
     private Long createdByUserId;
     private Instant updatedAt;
@@ -84,6 +90,10 @@ public class Assignment {
 
     public void assignCaregiver(Caregiver caregiver) {
         this.caregiver = caregiver;
+    }
+
+    public void updateContractValue(BigDecimal contractValue) {
+        this.contractValue = contractValue;
     }
 
     public void close(AssignmentCloseReason reason, String notes) {

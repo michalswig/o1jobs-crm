@@ -1,5 +1,6 @@
 package com.o1jobs.crm.agency.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.o1jobs.crm.agency.domain.AccommodationType;
 import com.o1jobs.crm.agency.domain.AssignmentCloseReason;
 import com.o1jobs.crm.agency.domain.AssignmentStatus;
@@ -14,6 +15,7 @@ public record AssignmentDetailResponse(
         String city,
         String streetAddress,
         BigDecimal salaryMonthlyNet,
+        @JsonInclude(JsonInclude.Include.NON_NULL) BigDecimal contractValue,
         LanguageLevel languageLevel,
         String requirements,
         AssignmentStatus status,

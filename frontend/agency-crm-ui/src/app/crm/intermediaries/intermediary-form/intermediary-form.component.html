@@ -1,11 +1,23 @@
 <div class="page-header">
-  <h2>{{ isEditMode ? 'Kunde bearbeiten' : 'Neuer Kunde' }}</h2>
+  <h2>{{ isEditMode ? 'Partner bearbeiten' : 'Neuer Partner' }}</h2>
 </div>
 
 <mat-card class="form-card">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
     <div class="form-grid">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Typ</mat-label>
+        <mat-select formControlName="intermediaryType">
+          @for (t of intermediaryTypes; track t) {
+            <mat-option [value]="t">{{ t | enumLabel }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('intermediaryType')?.hasError('required') && form.get('intermediaryType')?.touched) {
+          <mat-error>Typ ist erforderlich</mat-error>
+        }
+      </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Name</mat-label>
@@ -21,15 +33,12 @@
         @if (form.get('email')?.hasError('required') && form.get('email')?.touched) {
           <mat-error>E-Mail ist erforderlich</mat-error>
         }
-        @if (form.get('email')?.hasError('email') && form.get('email')?.touched) {
-          <mat-error>Ungültiges E-Mail-Format</mat-error>
-        }
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Telefon</mat-label>
-        <input matInput formControlName="phoneNumber">
-        @if (form.get('phoneNumber')?.hasError('required') && form.get('phoneNumber')?.touched) {
+        <input matInput formControlName="phone">
+        @if (form.get('phone')?.hasError('required') && form.get('phone')?.touched) {
           <mat-error>Telefon ist erforderlich</mat-error>
         }
       </mat-form-field>
@@ -37,33 +46,21 @@
       <mat-form-field appearance="outline">
         <mat-label>Land</mat-label>
         <input matInput formControlName="country">
-        @if (form.get('country')?.hasError('required') && form.get('country')?.touched) {
-          <mat-error>Land ist erforderlich</mat-error>
-        }
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Stadt</mat-label>
         <input matInput formControlName="city">
-        @if (form.get('city')?.hasError('required') && form.get('city')?.touched) {
-          <mat-error>Stadt ist erforderlich</mat-error>
-        }
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Postleitzahl</mat-label>
         <input matInput formControlName="postalCode">
-        @if (form.get('postalCode')?.hasError('required') && form.get('postalCode')?.touched) {
-          <mat-error>Postleitzahl ist erforderlich</mat-error>
-        }
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline">
         <mat-label>Adresse</mat-label>
         <input matInput formControlName="streetAddress">
-        @if (form.get('streetAddress')?.hasError('required') && form.get('streetAddress')?.touched) {
-          <mat-error>Adresse ist erforderlich</mat-error>
-        }
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
@@ -71,21 +68,11 @@
         <textarea matInput formControlName="notes" rows="3"></textarea>
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Partner (optional)</mat-label>
-        <mat-select formControlName="intermediary_id">
-          <mat-option [value]="''">— keiner —</mat-option>
-          @for (i of intermediaries; track i.id) {
-            <mat-option [value]="i.id">{{ i.name }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-
     </div>
 
     <div class="actions">
       <button mat-raised-button color="primary" type="submit">Speichern</button>
-      <button mat-button type="button" routerLink="/clients">Abbrechen</button>
+      <button mat-button type="button" routerLink="/intermediaries">Abbrechen</button>
     </div>
 
   </form>

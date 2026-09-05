@@ -45,3 +45,5 @@ databaseChangeLog:
       file: db/changelog/feature/022_assignment_document.yml
   - include:
       file: db/changelog/feature/023_assignment_document_r2_migration.yml
+  - include:
+      file: db/changelog/feature/024_assignment_contract_value.yml

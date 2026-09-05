@@ -6,6 +6,14 @@
   </a>
 </div>
 
+@if (filterClientId) {
+  <div class="filter-banner">
+    <mat-icon>filter_alt</mat-icon>
+    <span>Gefiltert nach Kunde #{{ filterClientId }}</span>
+    <button mat-button (click)="clearFilter()">Filter entfernen</button>
+  </div>
+}
+
 <mat-card class="table-card">
   <table mat-table [dataSource]="dataSource" matSort>
 

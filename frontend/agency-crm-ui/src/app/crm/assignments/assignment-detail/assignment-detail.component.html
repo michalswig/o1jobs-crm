@@ -32,6 +32,12 @@
         <span class="label">Gehalt</span>
         <span class="value">{{ assignment.salaryMonthlyNet }} € netto/Monat</span>
       </div>
+      @if (assignment.contractValue != null) {
+        <div class="info-row">
+          <span class="label">Auftragswert</span>
+          <span class="value">{{ assignment.contractValue }} € / Monat</span>
+        </div>
+      }
       <div class="info-row">
         <span class="label">Sprachniveau</span>
         <span class="value">{{ assignment.languageLevel | enumLabel }}</span>

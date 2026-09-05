@@ -1,0 +1,51 @@
+<div class="page-header">
+  <h2>Liste der Partner ({{ totalElements }})</h2>
+  <a mat-raised-button color="primary" routerLink="/intermediaries/new">
+    <mat-icon>person_add</mat-icon>
+    Neuer Partner
+  </a>
+</div>
+
+<mat-card class="table-card">
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let i">{{ i.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="intermediaryType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Typ</th>
+      <td mat-cell *matCellDef="let i">{{ i.intermediaryType | enumLabel }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>E-Mail</th>
+      <td mat-cell *matCellDef="let i">{{ i.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef>Telefon</th>
+      <td mat-cell *matCellDef="let i">{{ i.phone }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Aktionen</th>
+      <td mat-cell *matCellDef="let i">
+        <a mat-button color="primary" [routerLink]="['/intermediaries/edit', i.id]">Bearbeiten</a>
+        <button mat-button color="warn" (click)="onDeactivate(i.id)">Deaktivieren</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+  <mat-paginator
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[10, 20, 50]"
+    (page)="onPageChange($event)">
+  </mat-paginator>
+</mat-card>

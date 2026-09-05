@@ -60,8 +60,10 @@ public class AssignmentController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<AssignmentResponse>> getAll(@PageableDefault(size = 20, sort = "startDate") Pageable pageable) {
-        return ResponseEntity.ok(assignmentService.getAll(pageable));
+    public ResponseEntity<Page<AssignmentResponse>> getAll(
+            @PageableDefault(size = 20, sort = "startDate") Pageable pageable,
+            @RequestParam(required = false) Long clientId) {
+        return ResponseEntity.ok(assignmentService.getAll(pageable, clientId));
     }
 
     @PostMapping("/{id}/document")

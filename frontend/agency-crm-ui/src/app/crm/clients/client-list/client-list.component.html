@@ -29,10 +29,16 @@
       <td mat-cell *matCellDef="let client">{{ client.country }}</td>
     </ng-container>
 
+    <ng-container matColumnDef="intermediaryName">
+      <th mat-header-cell *matHeaderCellDef>Partner</th>
+      <td mat-cell *matCellDef="let client">{{ client.intermediaryName ?? '—' }}</td>
+    </ng-container>
+
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Aktionen</th>
       <td mat-cell *matCellDef="let client">
         <a mat-button color="primary" [routerLink]="['/clients/edit', client.id]">Bearbeiten</a>
+        <a mat-button [routerLink]="['/assignments']" [queryParams]="{clientId: client.id}">Aufträge</a>
         <button mat-button color="warn" (click)="onDeactivate(client.id)">Deaktivieren</button>
       </td>
     </ng-container>

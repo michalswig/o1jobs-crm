@@ -9,4 +9,5 @@ export interface Client {
   streetAddress: string;
   notes: string | null;
   intermediary_id: number | null;
+  intermediaryName: string | null;
 }

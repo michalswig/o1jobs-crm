@@ -8,6 +8,7 @@ export interface Assignment {
   city: string;
   streetAddress: string | null;
   salaryMonthlyNet: number;
+  contractValue?: number | null;
   languageLevel: LanguageLevel;
   requirements: string | null;
   status: AssignmentStatus;

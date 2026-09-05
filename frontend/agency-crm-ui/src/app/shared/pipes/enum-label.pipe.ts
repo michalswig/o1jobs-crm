@@ -72,6 +72,11 @@ export const ENUM_LABELS_DE: Record<string, string> = {
   ADMIN: 'Administrator',
   MANAGER: 'Manager',
   RECRUITER: 'Recruiter',
+
+  // IntermediaryType
+  PARTNER: 'Partner',
+  CAREGIVER: 'Betreuerinnen-Vermittler',
+  EMPLOYEE: 'Mitarbeiter',
 };
 
 @Pipe({

@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, inject, OnInit, ViewChild} from '@angular/core';
-import {Client} from '../../models/client.model';
-import {ClientService} from '../../services/client.service';
+import {IntermediaryService} from '../services/intermediary.service';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
@@ -11,17 +10,20 @@ import {RouterLink} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmDialogComponent, ConfirmDialogData} from '../../../core/dialogs/confirm-dialog/confirm-dialog.component';
 import {Page} from '../../../shared/models/page.model';
+import {EnumLabelPipe} from '../../../shared/pipes/enum-label.pipe';
+import {Intermediary} from '../models/intermediary.interface';
 
 @Component({
-  selector: 'app-client-list',
-  imports: [MatTableModule, MatSortModule, MatPaginatorModule, MatAnchor, RouterLink, MatButton, MatIconModule, MatCardModule],
-  templateUrl: './client-list.component.html',
-  styleUrl: './client-list.component.scss'
+  selector: 'app-intermediary-list',
+  standalone: true,
+  imports: [MatTableModule, MatSortModule, MatPaginatorModule, MatAnchor, RouterLink, MatButton, MatIconModule, MatCardModule, EnumLabelPipe],
+  templateUrl: './intermediary-list.component.html',
+  styleUrl: './intermediary-list.component.scss'
 })
-export class ClientListComponent implements OnInit, AfterViewInit {
+export class IntermediaryListComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['name', 'email', 'city', 'country', 'intermediaryName', 'actions'];
-  dataSource = new MatTableDataSource<Client>([]);
+  displayedColumns: string[] = ['name', 'intermediaryType', 'email', 'phone', 'actions'];
+  dataSource = new MatTableDataSource<Intermediary>([]);
   totalElements = 0;
   pageSize = 20;
   pageIndex = 0;
@@ -30,11 +32,11 @@ export class ClientListComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private readonly clientService: ClientService) {
+  constructor(private readonly intermediaryService: IntermediaryService) {
   }
 
   ngOnInit(): void {
-    this.loadClients();
+    this.loadIntermediaries();
   }
 
   ngAfterViewInit(): void {
@@ -46,35 +48,35 @@ export class ClientListComponent implements OnInit, AfterViewInit {
       ConfirmDialogComponent,
       {
         data: {
-          title: 'Kunde deaktivieren',
-          message: 'Möchten Sie diesen Kunden wirklich deaktivieren? Diese Aktion kann nicht rückgängig gemacht werden.'
+          title: 'Partner deaktivieren',
+          message: 'Möchten Sie diesen Partner wirklich deaktivieren? Diese Aktion kann nicht rückgängig gemacht werden.'
         }
       }
     );
 
     dialogRef.afterClosed().subscribe((confirmed) => {
       if (confirmed) {
-        this.clientService.deactivate(id).subscribe({
-          next: () => this.loadClients(),
-          error: (err) => console.error('Error deactivating client:', err)
+        this.intermediaryService.deactivate(id).subscribe({
+          next: () => this.loadIntermediaries(),
+          error: (err) => console.error('Error deactivating intermediary:', err)
         });
       }
     });
   }
 
-  loadClients(): void {
-    this.clientService.getAll(this.pageIndex, this.pageSize).subscribe({
-      next: (page: Page<Client>) => {
+  loadIntermediaries(): void {
+    this.intermediaryService.getAll(this.pageIndex, this.pageSize).subscribe({
+      next: (page: Page<Intermediary>) => {
         this.dataSource.data = page.content;
         this.totalElements = page.totalElements;
       },
-      error: (err) => console.error('Error fetching Clients:', err)
+      error: (err) => console.error('Error fetching intermediaries:', err)
     });
   }
 
   onPageChange(event: PageEvent): void {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.loadClients();
+    this.loadIntermediaries();
   }
 }

@@ -2,7 +2,6 @@ package com.o1jobs.crm.agency.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.Instant;
 
@@ -62,6 +61,22 @@ public class Intermediary {
         this.updatedAt = Instant.now();
     }
 
+    public void updateDetails(String name, String email, String phone, String streetAddress,
+                              String postalCode, String city, String country, String notes,
+                              IntermediaryType intermediaryType) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.streetAddress = streetAddress;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.country = country;
+        this.notes = notes;
+        this.intermediaryType = intermediaryType;
+    }
 
+    public void deactivate() {
+        this.deletedAt = Instant.now();
+    }
 
 }

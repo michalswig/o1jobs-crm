@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20260905-01
+      author: o1jobs
+      changes:
+        - addColumn:
+            tableName: assignment
+            columns:
+              - column:
+                  name: contract_value
+                  type: decimal(10,2)
+      rollback:
+        - dropColumn:
+            tableName: assignment
+            columnName: contract_value

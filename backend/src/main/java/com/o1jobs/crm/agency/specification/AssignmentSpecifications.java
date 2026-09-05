@@ -9,4 +9,10 @@ public class AssignmentSpecifications {
         return (root, query, cb) -> cb.isNull(root.get("deletedAt"));
     }
 
+    public static Specification<Assignment> byClientId(Long clientId) {
+        return (root, query, cb) -> clientId == null
+                ? cb.conjunction()
+                : cb.equal(root.get("client").get("id"), clientId);
+    }
+
 }

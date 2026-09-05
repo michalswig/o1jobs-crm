@@ -65,6 +65,7 @@ export class AssignmentFormComponent implements OnInit {
       city: ['', Validators.required],
       streetAddress: [''],
       salaryMonthlyNet: ['', Validators.required],
+      contractValue: [''],
       languageLevel: ['', Validators.required],
       requirements: [''],
       caregiverId: [''],
@@ -123,7 +124,15 @@ export class AssignmentFormComponent implements OnInit {
       return;
     }
 
-    const formValue = this.form.value;
+    // Puste pole liczbowe/ID wysłane jako '' powoduje błąd deserializacji po stronie
+    // backendu (BigDecimal/Long nie parsują pustego stringa) - zamieniamy na null.
+    const formValue = { ...this.form.value };
+    if (formValue.contractValue === '') {
+      formValue.contractValue = null;
+    }
+    if (formValue.caregiverId === '') {
+      formValue.caregiverId = null;
+    }
 
     if (this.isEditMode && this.assignmentId) {
       this.assignmentService.update(this.assignmentId, formValue).subscribe({

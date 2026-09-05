@@ -21,10 +21,14 @@ export class AssignmentService {
 
   constructor(private readonly http: HttpClient) { }
 
-  getAll(page: number = 0, size: number = 20): Observable<Page<Assignment>> {
-    const params = new HttpParams()
+  getAll(page: number = 0, size: number = 20, clientId?: number): Observable<Page<Assignment>> {
+    let params = new HttpParams()
       .set('page', page)
       .set('size', size);
+
+    if (clientId != null) {
+      params = params.set('clientId', clientId);
+    }
 
     return this.http.get<Page<Assignment>>(this.baseUrl, { params });
   }
