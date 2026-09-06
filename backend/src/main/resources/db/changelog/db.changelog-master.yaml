@@ -47,3 +47,5 @@ databaseChangeLog:
       file: db/changelog/feature/023_assignment_document_r2_migration.yml
   - include:
       file: db/changelog/feature/024_assignment_contract_value.yml
+  - include:
+      file: db/changelog/feature/025_dev_seed_v2_german.yml

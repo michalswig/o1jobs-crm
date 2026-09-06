@@ -1,0 +1,624 @@
+databaseChangeLog:
+
+  # --- usuwamy stary (polski) seed data po jego znanych ID ---
+  # UWAGA: usuwamy TYLKO wiersze wstawione przez oryginalny 020_dev_seed.yml
+  # (zakres ID 101-104), NIE robimy blanket DELETE FROM - żeby nie ruszyć
+  # żadnych danych, które mogłeś od tamtej pory ręcznie dodać przez UI
+  # (np. testowe rekordy z zakresu 105+ widoczne w logach).
+  - changeSet:
+      id: 20260905-02
+      author: o1jobs
+      context: dev
+      changes:
+        - sql:
+            sql: |
+              DELETE FROM assignment_document WHERE assignment_id IN (
+                SELECT id FROM assignment
+                WHERE client_id IN (101, 102, 103)
+                   OR care_recipient_id IN (101, 102, 103)
+                   OR caregiver_id IN (101, 102, 103, 104)
+              );
+              DELETE FROM assignment
+              WHERE client_id IN (101, 102, 103)
+                 OR care_recipient_id IN (101, 102, 103)
+                 OR caregiver_id IN (101, 102, 103, 104);
+              DELETE FROM care_recipient_required_capability WHERE care_recipient_id IN (101, 102, 103);
+              DELETE FROM caregiver_capability WHERE caregiver_id IN (101, 102, 103, 104);
+              DELETE FROM care_recipient WHERE id IN (101, 102, 103);
+              DELETE FROM caregiver WHERE id IN (101, 102, 103, 104);
+              DELETE FROM client WHERE id IN (101, 102, 103);
+              DELETE FROM intermediary WHERE id IN (101, 102);
+      rollback:
+        - empty
+
+  # --- Partner (wyłącznie typ PARTNER, zgodnie z wymaganiem) ---
+  - changeSet:
+      id: 20260905-03
+      author: o1jobs
+      context: dev
+      changes:
+        - insert:
+            tableName: intermediary
+            columns:
+              - column: {name: id, valueNumeric: 301}
+              - column: {name: intermediary_type, value: PARTNER}
+              - column: {name: name, value: "Physiotherapie-Zentrum Berlin"}
+              - column: {name: country, value: Deutschland}
+              - column: {name: city, value: Berlin}
+              - column: {name: postal_code, value: "10115"}
+              - column: {name: street_address, value: "Torstraße 45"}
+              - column: {name: email, value: "kontakt@physio-zentrum-berlin.de"}
+              - column: {name: phone, value: "+49 30 44 55 66 77"}
+              - column: {name: notes, value: "Vermittelt regelmäßig Familien nach Reha-Aufenthalten."}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: intermediary
+            columns:
+              - column: {name: id, valueNumeric: 302}
+              - column: {name: intermediary_type, value: PARTNER}
+              - column: {name: name, value: "Sozialstation Wien-Mitte"}
+              - column: {name: country, value: Österreich}
+              - column: {name: city, value: Wien}
+              - column: {name: postal_code, value: "1030"}
+              - column: {name: street_address, value: "Landstraßer Hauptstraße 12"}
+              - column: {name: email, value: "info@sozialstation-wien-mitte.at"}
+              - column: {name: phone, value: "+43 1 234 56 78"}
+              - column: {name: notes, value: "Guter, langjähriger Kontakt - zuverlässige Weiterempfehlungen."}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: intermediary
+            columns:
+              - column: {name: id, valueNumeric: 303}
+              - column: {name: intermediary_type, value: PARTNER}
+              - column: {name: name, value: "Julia Hartmann"}
+              - column: {name: country, value: Deutschland}
+              - column: {name: city, value: München}
+              - column: {name: postal_code, value: "80331"}
+              - column: {name: street_address, value: "Sendlinger Straße 8"}
+              - column: {name: email, value: "julia.hartmann@vermittlung-muenchen.de"}
+              - column: {name: phone, value: "+49 176 22334455"}
+              - column: {name: notes, value: null}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+      rollback:
+        - delete:
+            tableName: intermediary
+            where: "id IN (301, 302, 303)"
+
+  # --- Kunden (Familien) ---
+  - changeSet:
+      id: 20260905-04
+      author: o1jobs
+      context: dev
+      changes:
+        - insert:
+            tableName: client
+            columns:
+              - column: {name: id, valueNumeric: 301}
+              - column: {name: name, value: "Familie Weber"}
+              - column: {name: email, value: "weber.familie@example.com"}
+              - column: {name: phone_number, value: "+49 172 3456789"}
+              - column: {name: country, value: Deutschland}
+              - column: {name: city, value: Berlin}
+              - column: {name: postal_code, value: "10117"}
+              - column: {name: street_address, value: "Unter den Linden 22"}
+              - column: {name: notes, value: "Kontakt bevorzugt über den Sohn, Herrn Weber Jr."}
+              - column: {name: intermediary_id, valueNumeric: 301}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: client
+            columns:
+              - column: {name: id, valueNumeric: 302}
+              - column: {name: name, value: "Familie Gruber"}
+              - column: {name: email, value: "gruber@example.com"}
+              - column: {name: phone_number, value: "+43 660 1122334"}
+              - column: {name: country, value: Österreich}
+              - column: {name: city, value: Wien}
+              - column: {name: postal_code, value: "1030"}
+              - column: {name: street_address, value: "Rennweg 5"}
+              - column: {name: notes, value: null}
+              - column: {name: intermediary_id, valueNumeric: 302}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: client
+            columns:
+              - column: {name: id, valueNumeric: 303}
+              - column: {name: name, value: "Familie Meier"}
+              - column: {name: email, value: "meier.zuerich@example.com"}
+              - column: {name: phone_number, value: "+41 79 887 6655"}
+              - column: {name: country, value: Schweiz}
+              - column: {name: city, value: Zürich}
+              - column: {name: postal_code, value: "8001"}
+              - column: {name: street_address, value: "Bahnhofstrasse 30"}
+              - column: {name: notes, value: "Direktanfrage, kein Vermittler."}
+              - column: {name: intermediary_id, value: null}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: client
+            columns:
+              - column: {name: id, valueNumeric: 304}
+              - column: {name: name, value: "Familie Hoffmann"}
+              - column: {name: email, value: "hoffmann@example.com"}
+              - column: {name: phone_number, value: "+49 89 998877"}
+              - column: {name: country, value: Deutschland}
+              - column: {name: city, value: München}
+              - column: {name: postal_code, value: "80335"}
+              - column: {name: street_address, value: "Bayerstraße 14"}
+              - column: {name: notes, value: null}
+              - column: {name: intermediary_id, valueNumeric: 303}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: client
+            columns:
+              - column: {name: id, valueNumeric: 305}
+              - column: {name: name, value: "Familie Keller"}
+              - column: {name: email, value: "keller.hamburg@example.com"}
+              - column: {name: phone_number, value: "+49 40 5566778"}
+              - column: {name: country, value: Deutschland}
+              - column: {name: city, value: Hamburg}
+              - column: {name: postal_code, value: "20095"}
+              - column: {name: street_address, value: "Mönckebergstraße 3"}
+              - column: {name: notes, value: "Kurzfristiger Bedarf nach Krankenhausaufenthalt."}
+              - column: {name: intermediary_id, value: null}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+      rollback:
+        - delete:
+            tableName: client
+            where: "id IN (301, 302, 303, 304, 305)"
+
+  # --- Betreuerinnen ---
+  - changeSet:
+      id: 20260905-05
+      author: o1jobs
+      context: dev
+      changes:
+        - insert:
+            tableName: caregiver
+            columns:
+              - column: {name: id, valueNumeric: 301}
+              - column: {name: first_name, value: Olena}
+              - column: {name: last_name, value: Kovalenko}
+              - column: {name: gender, value: FEMALE}
+              - column: {name: birth_date, valueDate: "1987-02-14"}
+              - column: {name: weight_kg, valueNumeric: 65}
+              - column: {name: height_cm, valueNumeric: 168}
+              - column: {name: phone, value: "+380671234567"}
+              - column: {name: email, value: "olena.kovalenko@crm.local"}
+              - column: {name: nationality, value: UKRAINIAN}
+              - column: {name: career_start_date, valueDate: "2014-04-01"}
+              - column: {name: has_driver_license, valueBoolean: "true"}
+              - column: {name: smoker, valueBoolean: "false"}
+              - column: {name: medical_qualification_notes, value: "Ausbildung zur Pflegehelferin, mehrjährige Erfahrung mit Demenzpatienten."}
+              - column: {name: recruiter_notes, value: "Sehr geduldig, spricht gutes Deutsch."}
+              - column: {name: dementia_experience, value: MILD}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: caregiver
+            columns:
+              - column: {name: id, valueNumeric: 302}
+              - column: {name: first_name, value: Tomasz}
+              - column: {name: last_name, value: Nowicki}
+              - column: {name: gender, value: MALE}
+              - column: {name: birth_date, valueDate: "1981-09-30"}
+              - column: {name: weight_kg, valueNumeric: 88}
+              - column: {name: height_cm, valueNumeric: 183}
+              - column: {name: phone, value: "+48602233445"}
+              - column: {name: email, value: "tomasz.nowicki@crm.local"}
+              - column: {name: nationality, value: POLISH}
+              - column: {name: career_start_date, valueDate: "2017-01-10"}
+              - column: {name: has_driver_license, valueBoolean: "true"}
+              - column: {name: smoker, valueBoolean: "false"}
+              - column: {name: medical_qualification_notes, value: "Erfahrung im Umgang mit Lifter und Katheterpflege."}
+              - column: {name: recruiter_notes, value: null}
+              - column: {name: dementia_experience, value: NONE}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: caregiver
+            columns:
+              - column: {name: id, valueNumeric: 303}
+              - column: {name: first_name, value: Ana}
+              - column: {name: last_name, value: Rusu}
+              - column: {name: gender, value: FEMALE}
+              - column: {name: birth_date, valueDate: "1993-06-18"}
+              - column: {name: weight_kg, valueNumeric: 58}
+              - column: {name: height_cm, valueNumeric: 162}
+              - column: {name: phone, value: "+37369112233"}
+              - column: {name: email, value: "ana.rusu@crm.local"}
+              - column: {name: nationality, value: MOLDOVAN}
+              - column: {name: career_start_date, valueDate: "2021-05-01"}
+              - column: {name: has_driver_license, valueBoolean: "false"}
+              - column: {name: smoker, valueBoolean: "false"}
+              - column: {name: medical_qualification_notes, value: null}
+              - column: {name: recruiter_notes, value: "Kocht sehr gut, freundlich und zuverlässig."}
+              - column: {name: dementia_experience, value: NONE}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: caregiver
+            columns:
+              - column: {name: id, valueNumeric: 304}
+              - column: {name: first_name, value: Giorgi}
+              - column: {name: last_name, value: Beridze}
+              - column: {name: gender, value: MALE}
+              - column: {name: birth_date, valueDate: "1985-11-02"}
+              - column: {name: weight_kg, valueNumeric: 79}
+              - column: {name: height_cm, valueNumeric: 179}
+              - column: {name: phone, value: "+995555998877"}
+              - column: {name: email, value: "giorgi.beridze@crm.local"}
+              - column: {name: nationality, value: GEORGIAN}
+              - column: {name: career_start_date, valueDate: "2012-08-15"}
+              - column: {name: has_driver_license, valueBoolean: "true"}
+              - column: {name: smoker, valueBoolean: "true"}
+              - column: {name: medical_qualification_notes, value: "Erste-Hilfe-Zertifikat, Erfahrung mit Sauerstofftherapie und Nachtwachen."}
+              - column: {name: recruiter_notes, value: null}
+              - column: {name: dementia_experience, value: ADVANCED}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: caregiver
+            columns:
+              - column: {name: id, valueNumeric: 305}
+              - column: {name: first_name, value: Natalia}
+              - column: {name: last_name, value: Sokolova}
+              - column: {name: gender, value: FEMALE}
+              - column: {name: birth_date, valueDate: "1990-03-27"}
+              - column: {name: weight_kg, valueNumeric: 61}
+              - column: {name: height_cm, valueNumeric: 165}
+              - column: {name: phone, value: "+79161234567"}
+              - column: {name: email, value: "natalia.sokolova@crm.local"}
+              - column: {name: nationality, value: RUSSIAN}
+              - column: {name: career_start_date, valueDate: "2019-02-01"}
+              - column: {name: has_driver_license, valueBoolean: "true"}
+              - column: {name: smoker, valueBoolean: "false"}
+              - column: {name: medical_qualification_notes, value: "Erfahrung mit Insulingabe und Injektionen bei Diabetikern."}
+              - column: {name: recruiter_notes, value: "Aktuell ohne Zuweisung, sehr flexibel einsetzbar."}
+              - column: {name: dementia_experience, value: MILD}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+      rollback:
+        - delete:
+            tableName: caregiver
+            where: "id IN (301, 302, 303, 304, 305)"
+
+  # --- Kompetenzen der Betreuerinnen ---
+  - changeSet:
+      id: 20260905-06
+      author: o1jobs
+      context: dev
+      changes:
+        - insert: {tableName: caregiver_capability, columns: [{column: {name: caregiver_id, valueNumeric: 301}}, {column: {name: capability, value: TRANSFER}}]}
+        - insert: {tableName: caregiver_capability, columns: [{column: {name: caregiver_id, valueNumeric: 301}}, {column: {name: capability, value: COOKING}}]}
+        - insert: {tableName: caregiver_capability, columns: [{column: {name: caregiver_id, valueNumeric: 301}}, {column: {name: capability, value: DEMENTIA}}]}
+        - insert: {tableName: caregiver_capability, columns: [{column: {name: caregiver_id, valueNumeric: 302}}, {column: {name: capability, value: TRANSFER_WITH_LIFT}}]}
+        - insert: {tableName: caregiver_capability, columns: [{column: {name: caregiver_id, valueNumeric: 302}}, {column: {name: capability, value: CATHETER}}]}
+        - insert: {tableName: caregiver_capability, columns: [{column: {name: caregiver_id, valueNumeric: 303}}, {column: {name: capability, value: COOKING}}]}
+        - insert: {tableName: caregiver_capability, columns: [{column: {name: caregiver_id, valueNumeric: 303}}, {column: {name: capability, value: CLEANING}}]}
+        - insert: {tableName: caregiver_capability, columns: [{column: {name: caregiver_id, valueNumeric: 303}}, {column: {name: capability, value: SHOPPING}}]}
+        - insert: {tableName: caregiver_capability, columns: [{column: {name: caregiver_id, valueNumeric: 304}}, {column: {name: capability, value: TRANSFER}}]}
+        - insert: {tableName: caregiver_capability, columns: [{column: {name: caregiver_id, valueNumeric: 304}}, {column: {name: capability, value: NIGHT_CARE}}]}
+        - insert: {tableName: caregiver_capability, columns: [{column: {name: caregiver_id, valueNumeric: 304}}, {column: {name: capability, value: OXYGEN}}]}
+        - insert: {tableName: caregiver_capability, columns: [{column: {name: caregiver_id, valueNumeric: 305}}, {column: {name: capability, value: INSULIN}}]}
+        - insert: {tableName: caregiver_capability, columns: [{column: {name: caregiver_id, valueNumeric: 305}}, {column: {name: capability, value: INJECTION}}]}
+        - insert: {tableName: caregiver_capability, columns: [{column: {name: caregiver_id, valueNumeric: 305}}, {column: {name: capability, value: COOKING}}]}
+      rollback:
+        - delete:
+            tableName: caregiver_capability
+            where: "caregiver_id IN (301, 302, 303, 304, 305)"
+
+  # --- Pflegebedürftige ---
+  - changeSet:
+      id: 20260905-07
+      author: o1jobs
+      context: dev
+      changes:
+        - insert:
+            tableName: care_recipient
+            columns:
+              - column: {name: id, valueNumeric: 301}
+              - column: {name: first_name, value: Klaus}
+              - column: {name: last_name, value: Weber}
+              - column: {name: date_of_birth, valueDate: "1939-05-20"}
+              - column: {name: height_cm, valueNumeric: 172}
+              - column: {name: weight_kg, valueNumeric: 74}
+              - column: {name: gender, value: MALE}
+              - column: {name: mobility_level, value: WHEELCHAIR}
+              - column: {name: dementia_level, value: MILD}
+              - column: {name: diseases_notes, value: "Bluthochdruck, Diabetes Typ 2."}
+              - column: {name: smoker, valueBoolean: "false"}
+              - column: {name: has_pets, valueBoolean: "true"}
+              - column: {name: pets_notes, value: "Kater, benötigt keine besondere Pflege."}
+              - column: {name: lifting_aids_notes, value: "Transfer vom Bett in den Rollstuhl erforderlich."}
+              - column: {name: medical_notes, value: "Nimmt Blutdrucktabletten morgens und abends."}
+              - column: {name: client_id, valueNumeric: 301}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: care_recipient
+            columns:
+              - column: {name: id, valueNumeric: 302}
+              - column: {name: first_name, value: Erika}
+              - column: {name: last_name, value: Gruber}
+              - column: {name: date_of_birth, valueDate: "1944-08-11"}
+              - column: {name: height_cm, valueNumeric: 158}
+              - column: {name: weight_kg, valueNumeric: 60}
+              - column: {name: gender, value: FEMALE}
+              - column: {name: mobility_level, value: CANE}
+              - column: {name: dementia_level, value: NONE}
+              - column: {name: diseases_notes, value: "Arthrose in beiden Knien."}
+              - column: {name: smoker, valueBoolean: "false"}
+              - column: {name: has_pets, valueBoolean: "false"}
+              - column: {name: pets_notes, value: null}
+              - column: {name: lifting_aids_notes, value: null}
+              - column: {name: medical_notes, value: "Weitgehend selbstständig im Alltag."}
+              - column: {name: client_id, valueNumeric: 302}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: care_recipient
+            columns:
+              - column: {name: id, valueNumeric: 303}
+              - column: {name: first_name, value: Hans}
+              - column: {name: last_name, value: Meier}
+              - column: {name: date_of_birth, valueDate: "1934-01-09"}
+              - column: {name: height_cm, valueNumeric: 176}
+              - column: {name: weight_kg, valueNumeric: 68}
+              - column: {name: gender, value: MALE}
+              - column: {name: mobility_level, value: BEDRIDDEN}
+              - column: {name: dementia_level, value: ADVANCED}
+              - column: {name: diseases_notes, value: "Zustand nach Schlaganfall, halbseitige Lähmung."}
+              - column: {name: smoker, valueBoolean: "false"}
+              - column: {name: has_pets, valueBoolean: "false"}
+              - column: {name: pets_notes, value: null}
+              - column: {name: lifting_aids_notes, value: "Pflegebett und Deckenlifter vorhanden."}
+              - column: {name: medical_notes, value: "Benötigt Rundumbetreuung, Dauerkatheter."}
+              - column: {name: client_id, valueNumeric: 303}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: care_recipient
+            columns:
+              - column: {name: id, valueNumeric: 304}
+              - column: {name: first_name, value: Ingrid}
+              - column: {name: last_name, value: Hoffmann}
+              - column: {name: date_of_birth, valueDate: "1941-12-03"}
+              - column: {name: height_cm, valueNumeric: 163}
+              - column: {name: weight_kg, valueNumeric: 66}
+              - column: {name: gender, value: FEMALE}
+              - column: {name: mobility_level, value: ROLLATOR}
+              - column: {name: dementia_level, value: MILD}
+              - column: {name: diseases_notes, value: "Beginnende Demenz, gelegentliche Verwirrtheit."}
+              - column: {name: smoker, valueBoolean: "false"}
+              - column: {name: has_pets, valueBoolean: "false"}
+              - column: {name: pets_notes, value: null}
+              - column: {name: lifting_aids_notes, value: null}
+              - column: {name: medical_notes, value: "Tagesstruktur mit festen Ritualen hilft sehr."}
+              - column: {name: client_id, valueNumeric: 304}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: care_recipient
+            columns:
+              - column: {name: id, valueNumeric: 305}
+              - column: {name: first_name, value: Werner}
+              - column: {name: last_name, value: Keller}
+              - column: {name: date_of_birth, valueDate: "1948-07-22"}
+              - column: {name: height_cm, valueNumeric: 180}
+              - column: {name: weight_kg, valueNumeric: 82}
+              - column: {name: gender, value: MALE}
+              - column: {name: mobility_level, value: FULL}
+              - column: {name: dementia_level, value: NONE}
+              - column: {name: diseases_notes, value: "Nach Hüftoperation, vorübergehend eingeschränkt."}
+              - column: {name: smoker, valueBoolean: "false"}
+              - column: {name: has_pets, valueBoolean: "false"}
+              - column: {name: pets_notes, value: null}
+              - column: {name: lifting_aids_notes, value: null}
+              - column: {name: medical_notes, value: "Nur vorübergehende Unterstützung bis zur vollständigen Genesung nötig."}
+              - column: {name: client_id, valueNumeric: 305}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+      rollback:
+        - delete:
+            tableName: care_recipient
+            where: "id IN (301, 302, 303, 304, 305)"
+
+  # --- Erforderliche Kompetenzen der Pflegebedürftigen ---
+  - changeSet:
+      id: 20260905-08
+      author: o1jobs
+      context: dev
+      changes:
+        - insert: {tableName: care_recipient_required_capability, columns: [{column: {name: care_recipient_id, valueNumeric: 301}}, {column: {name: capability, value: TRANSFER}}]}
+        - insert: {tableName: care_recipient_required_capability, columns: [{column: {name: care_recipient_id, valueNumeric: 301}}, {column: {name: capability, value: DEMENTIA}}]}
+        - insert: {tableName: care_recipient_required_capability, columns: [{column: {name: care_recipient_id, valueNumeric: 302}}, {column: {name: capability, value: COOKING}}]}
+        - insert: {tableName: care_recipient_required_capability, columns: [{column: {name: care_recipient_id, valueNumeric: 302}}, {column: {name: capability, value: SHOPPING}}]}
+        - insert: {tableName: care_recipient_required_capability, columns: [{column: {name: care_recipient_id, valueNumeric: 303}}, {column: {name: capability, value: TRANSFER_WITH_LIFT}}]}
+        - insert: {tableName: care_recipient_required_capability, columns: [{column: {name: care_recipient_id, valueNumeric: 303}}, {column: {name: capability, value: CATHETER}}]}
+        - insert: {tableName: care_recipient_required_capability, columns: [{column: {name: care_recipient_id, valueNumeric: 303}}, {column: {name: capability, value: NIGHT_CARE}}]}
+        - insert: {tableName: care_recipient_required_capability, columns: [{column: {name: care_recipient_id, valueNumeric: 304}}, {column: {name: capability, value: DEMENTIA}}]}
+        - insert: {tableName: care_recipient_required_capability, columns: [{column: {name: care_recipient_id, valueNumeric: 305}}, {column: {name: capability, value: COOKING}}]}
+      rollback:
+        - delete:
+            tableName: care_recipient_required_capability
+            where: "care_recipient_id IN (301, 302, 303, 304, 305)"
+
+  # --- Aufträge ---
+  # 301: offen, mit Betreuerin, Vertragswert gesetzt
+  # 302: offen, mit Betreuerin
+  # 303: offen, mit Betreuerin (Nachtwache/Demenz, teurer Auftrag)
+  # 304: offen, mit Betreuerin
+  # 305: offen, ABSICHTLICH ohne Betreuerin - zum Testen des "Betreuerin zuweisen"-Flows
+  # 306: geschlossen (FAMILY_CANCELLED) - historischer Auftrag
+  # 307: geschlossen (NURSING_HOME) - historischer Auftrag
+  - changeSet:
+      id: 20260905-09
+      author: o1jobs
+      context: dev
+      changes:
+        - insert:
+            tableName: assignment
+            columns:
+              - column: {name: id, valueNumeric: 301}
+              - column: {name: client_id, valueNumeric: 301}
+              - column: {name: care_recipient_id, valueNumeric: 301}
+              - column: {name: start_date, valueDate: "2026-02-01"}
+              - column: {name: city, value: Berlin}
+              - column: {name: street_address, value: "Unter den Linden 22"}
+              - column: {name: salary_monthly_net, valueNumeric: "2200.00"}
+              - column: {name: contract_value, valueNumeric: "2900.00"}
+              - column: {name: language_level, value: COMMUNICATIVE}
+              - column: {name: requirements, value: "Erfahrung mit Demenz und Transfer erforderlich."}
+              - column: {name: status, value: OPEN}
+              - column: {name: caregiver_id, valueNumeric: 301}
+              - column: {name: accommodation_type, value: HOUSE}
+              - column: {name: has_own_bathroom, valueBoolean: "true"}
+              - column: {name: has_own_room, valueBoolean: "true"}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: assignment
+            columns:
+              - column: {name: id, valueNumeric: 302}
+              - column: {name: client_id, valueNumeric: 302}
+              - column: {name: care_recipient_id, valueNumeric: 302}
+              - column: {name: start_date, valueDate: "2026-01-15"}
+              - column: {name: city, value: Wien}
+              - column: {name: street_address, value: "Rennweg 5"}
+              - column: {name: salary_monthly_net, valueNumeric: "2100.00"}
+              - column: {name: contract_value, valueNumeric: "2750.00"}
+              - column: {name: language_level, value: GOOD}
+              - column: {name: requirements, value: "Unterstützung im Haushalt und beim Kochen."}
+              - column: {name: status, value: OPEN}
+              - column: {name: caregiver_id, valueNumeric: 303}
+              - column: {name: accommodation_type, value: APARTMENT}
+              - column: {name: has_own_bathroom, valueBoolean: "false"}
+              - column: {name: has_own_room, valueBoolean: "true"}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: assignment
+            columns:
+              - column: {name: id, valueNumeric: 303}
+              - column: {name: client_id, valueNumeric: 303}
+              - column: {name: care_recipient_id, valueNumeric: 303}
+              - column: {name: start_date, valueDate: "2025-11-01"}
+              - column: {name: city, value: Zürich}
+              - column: {name: street_address, value: "Bahnhofstrasse 30"}
+              - column: {name: salary_monthly_net, valueNumeric: "2800.00"}
+              - column: {name: contract_value, valueNumeric: "3600.00"}
+              - column: {name: language_level, value: BASIC}
+              - column: {name: requirements, value: "Rundumbetreuung, Erfahrung mit Dauerkatheter und Nachtwachen."}
+              - column: {name: status, value: OPEN}
+              - column: {name: caregiver_id, valueNumeric: 304}
+              - column: {name: accommodation_type, value: APARTMENT}
+              - column: {name: has_own_bathroom, valueBoolean: "true"}
+              - column: {name: has_own_room, valueBoolean: "true"}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: assignment
+            columns:
+              - column: {name: id, valueNumeric: 304}
+              - column: {name: client_id, valueNumeric: 304}
+              - column: {name: care_recipient_id, valueNumeric: 304}
+              - column: {name: start_date, valueDate: "2026-03-01"}
+              - column: {name: city, value: München}
+              - column: {name: street_address, value: "Bayerstraße 14"}
+              - column: {name: salary_monthly_net, valueNumeric: "2150.00"}
+              - column: {name: contract_value, valueNumeric: "2800.00"}
+              - column: {name: language_level, value: VERY_GOOD}
+              - column: {name: requirements, value: "Erfahrung mit beginnender Demenz, feste Tagesstruktur wichtig."}
+              - column: {name: status, value: OPEN}
+              - column: {name: caregiver_id, valueNumeric: 302}
+              - column: {name: accommodation_type, value: HOUSE}
+              - column: {name: has_own_bathroom, valueBoolean: "true"}
+              - column: {name: has_own_room, valueBoolean: "true"}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: assignment
+            columns:
+              - column: {name: id, valueNumeric: 305}
+              - column: {name: client_id, valueNumeric: 305}
+              - column: {name: care_recipient_id, valueNumeric: 305}
+              - column: {name: start_date, valueDate: "2026-04-01"}
+              - column: {name: city, value: Hamburg}
+              - column: {name: street_address, value: "Mönckebergstraße 3"}
+              - column: {name: salary_monthly_net, valueNumeric: "2000.00"}
+              - column: {name: contract_value, valueNumeric: "2600.00"}
+              - column: {name: language_level, value: BASIC}
+              - column: {name: requirements, value: "Kurzfristige Unterstützung nach Hüftoperation, ca. 6 Wochen."}
+              - column: {name: status, value: OPEN}
+              - column: {name: caregiver_id, value: null}
+              - column: {name: accommodation_type, value: APARTMENT}
+              - column: {name: has_own_bathroom, valueBoolean: "false"}
+              - column: {name: has_own_room, valueBoolean: "true"}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: assignment
+            columns:
+              - column: {name: id, valueNumeric: 306}
+              - column: {name: client_id, valueNumeric: 304}
+              - column: {name: care_recipient_id, valueNumeric: 304}
+              - column: {name: start_date, valueDate: "2025-06-01"}
+              - column: {name: city, value: München}
+              - column: {name: street_address, value: "Bayerstraße 14"}
+              - column: {name: salary_monthly_net, valueNumeric: "2050.00"}
+              - column: {name: contract_value, valueNumeric: "2650.00"}
+              - column: {name: language_level, value: BASIC}
+              - column: {name: requirements, value: "Grundpflege, keine besonderen Sprachanforderungen."}
+              - column: {name: status, value: CLOSED}
+              - column: {name: close_reason, value: FAMILY_CANCELLED}
+              - column: {name: close_notes, value: "Familie hat sich vorübergehend für ein Pflegeheim entschieden, plant Rückkehr zur häuslichen Betreuung."}
+              - column: {name: caregiver_id, valueNumeric: 305}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+        - insert:
+            tableName: assignment
+            columns:
+              - column: {name: id, valueNumeric: 307}
+              - column: {name: client_id, valueNumeric: 302}
+              - column: {name: care_recipient_id, valueNumeric: 302}
+              - column: {name: start_date, valueDate: "2025-03-01"}
+              - column: {name: city, value: Wien}
+              - column: {name: street_address, value: "Rennweg 5"}
+              - column: {name: salary_monthly_net, valueNumeric: "1950.00"}
+              - column: {name: contract_value, valueNumeric: "2500.00"}
+              - column: {name: language_level, value: GOOD}
+              - column: {name: requirements, value: "Haushaltshilfe und Begleitung zu Arztterminen."}
+              - column: {name: status, value: CLOSED}
+              - column: {name: close_reason, value: NURSING_HOME}
+              - column: {name: close_notes, value: "Umzug ins Pflegeheim aufgrund zunehmenden Pflegebedarfs."}
+              - column: {name: caregiver_id, valueNumeric: 301}
+              - column: {name: created_at, valueDate: "now()"}
+              - column: {name: created_by_user_id, valueNumeric: 1}
+      rollback:
+        - delete:
+            tableName: assignment
+            where: "id IN (301, 302, 303, 304, 305, 306, 307)"
+
+  # --- reset liczników auto-increment po jawnym wstawieniu ID (tylko Postgres) ---
+  - changeSet:
+      id: 20260905-10
+      author: o1jobs
+      context: dev
+      dbms: postgresql
+      changes:
+        - sql:
+            sql: |
+              SELECT setval(pg_get_serial_sequence('intermediary', 'id'), (SELECT MAX(id) FROM intermediary));
+              SELECT setval(pg_get_serial_sequence('client', 'id'), (SELECT MAX(id) FROM client));
+              SELECT setval(pg_get_serial_sequence('caregiver', 'id'), (SELECT MAX(id) FROM caregiver));
+              SELECT setval(pg_get_serial_sequence('care_recipient', 'id'), (SELECT MAX(id) FROM care_recipient));
+              SELECT setval(pg_get_serial_sequence('assignment', 'id'), (SELECT MAX(id) FROM assignment));
+      rollback:
+        - empty
