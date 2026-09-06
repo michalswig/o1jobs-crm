@@ -38,6 +38,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
+                        // /error MUSI być dostępny bez autoryzacji - inaczej każdy wyjątek
+                        // rzucony w kontrolerze/serwisie kończy się fałszywym 403 zamiast
+                        // prawdziwego kodu błędu, bo wewnętrzne przekierowanie na /error
+                        // samo w sobie trafia w filtr bezpieczeństwa bez kontekstu uwierzytelnienia.
+                        .requestMatchers("/error").permitAll()
                         .requestMatchers("/api/v1/users").hasAuthority("ADMIN")
 
                         // clients: MANAGER pełny CRUD; RECRUITER i PARTNER tylko odczyt
@@ -69,6 +74,11 @@ public class SecurityConfig {
                         // tylko do własnego rekordu, nie do całej listy partnerów
                         .requestMatchers("/api/v1/intermediaries/**")
                         .hasAnyAuthority("ADMIN", "MANAGER")
+
+                        // dashboard: zawiera zagregowaną marżę finansową (analogicznie do
+                        // contractValue) - te same role co przy wartości kontraktu zlecenia
+                        .requestMatchers("/api/v1/dashboard/**")
+                        .hasAnyAuthority("ADMIN", "MANAGER", "PARTNER")
 
                         .anyRequest().authenticated())
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))

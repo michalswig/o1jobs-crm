@@ -1,1 +1,178 @@
-<p>dashboard works!</p>
+<div class="page-header">
+  <h2>Dashboard</h2>
+</div>
+
+@if (loading) {
+  <p>Wird geladen...</p>
+} @else if (error) {
+  <p class="error-message">Dashboard konnte nicht geladen werden.</p>
+} @else if (data) {
+
+  <div class="kpi-grid">
+    <mat-card class="kpi-card">
+      <mat-icon>assignment</mat-icon>
+      <div class="kpi-value">{{ data.openAssignmentsCount }}</div>
+      <div class="kpi-label">Offene Aufträge</div>
+    </mat-card>
+
+    <mat-card class="kpi-card" [class.kpi-warn]="data.careRecipientsWithoutAssignmentCount > 0">
+      <mat-icon>favorite</mat-icon>
+      <div class="kpi-value">{{ data.careRecipientsWithoutAssignmentCount }}</div>
+      <div class="kpi-label">Pflegebedürftige ohne Betreuerin</div>
+    </mat-card>
+
+    <mat-card class="kpi-card">
+      <mat-icon>volunteer_activism</mat-icon>
+      <div class="kpi-value">{{ assignedCaregivers.length }} / {{ data.caregiverAvailability.length }}</div>
+      <div class="kpi-label">Betreuerinnen im Einsatz</div>
+    </mat-card>
+
+    <mat-card class="kpi-card">
+      <mat-icon>payments</mat-icon>
+      <div class="kpi-value">{{ data.totalMonthlyContractValue | number:'1.0-0' }} €</div>
+      <div class="kpi-label">Auftragswert gesamt (offene Aufträge, monatlich)</div>
+    </mat-card>
+
+    <mat-card class="kpi-card" [class.kpi-warn]="data.openAssignmentsMissingDocumentCount > 0">
+      <mat-icon>picture_as_pdf</mat-icon>
+      <div class="kpi-value">{{ data.openAssignmentsMissingDocumentCount }}</div>
+      <div class="kpi-label">Offene Aufträge ohne Vertrag</div>
+    </mat-card>
+  </div>
+
+  <div class="charts-grid">
+
+    <mat-card class="chart-card">
+      <h3>Status der Aufträge</h3>
+      <div class="donut-wrapper">
+        <div class="donut" [style.background]="statusGradient">
+          <div class="donut-hole">
+            <span class="donut-percent">{{ openPercent }}%</span>
+            <span class="donut-sublabel">offen</span>
+          </div>
+        </div>
+        <div class="donut-legend">
+          <div class="legend-item"><span class="legend-dot legend-open"></span>Offen ({{ data.statusBreakdown['OPEN'] ?? 0 }})</div>
+          <div class="legend-item"><span class="legend-dot legend-closed"></span>Geschlossen ({{ data.statusBreakdown['CLOSED'] ?? 0 }})</div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="chart-card">
+      <h3>Gründe für Schließung</h3>
+      @if (closeReasonBars.length === 0) {
+        <p class="empty-state">Keine geschlossenen Aufträge.</p>
+      }
+      @for (bar of closeReasonBars; track bar.label) {
+        <div class="bar-row">
+          <span class="bar-label">{{ bar.label | enumLabel }}</span>
+          <div class="bar-track">
+            <div class="bar-fill bar-fill-coral" [style.width.%]="bar.percent"></div>
+          </div>
+          <span class="bar-value">{{ bar.value }}</span>
+        </div>
+      }
+    </mat-card>
+
+    <mat-card class="chart-card">
+      <h3>Betreuerinnen nach Nationalität</h3>
+      @for (bar of nationalityBars; track bar.label) {
+        <div class="bar-row">
+          <span class="bar-label">{{ bar.label | enumLabel }}</span>
+          <div class="bar-track">
+            <div class="bar-fill" [style.width.%]="bar.percent"></div>
+          </div>
+          <span class="bar-value">{{ bar.value }}</span>
+        </div>
+      }
+    </mat-card>
+
+    <mat-card class="chart-card">
+      <h3>Demenzerfahrung der Betreuerinnen</h3>
+      @for (bar of dementiaBars; track bar.label) {
+        <div class="bar-row">
+          <span class="bar-label">{{ bar.label | enumLabel }}</span>
+          <div class="bar-track">
+            <div class="bar-fill" [style.width.%]="bar.percent"></div>
+          </div>
+          <span class="bar-value">{{ bar.value }}</span>
+        </div>
+      }
+    </mat-card>
+
+    <mat-card class="chart-card trend-card">
+      <h3>Neue Aufträge pro Monat</h3>
+      <div class="trend-chart">
+        @for (m of data.monthlyTrend; track m.month) {
+          <div class="trend-bar-wrapper">
+            <div class="trend-bar" [style.height.%]="barHeightPercent(m.count)">
+              <span class="trend-count">{{ m.count }}</span>
+            </div>
+            <span class="trend-label">{{ monthLabel(m.month) }}</span>
+          </div>
+        }
+      </div>
+    </mat-card>
+
+    <mat-card class="chart-card list-card">
+      <h3>Betreuerinnen im Einsatz ({{ assignedCaregivers.length }})</h3>
+      @if (assignedCaregivers.length === 0) {
+        <p class="empty-state">Keine Betreuerin im Einsatz.</p>
+      }
+      @for (c of assignedCaregivers; track c.caregiverId) {
+        <div class="list-row">
+          <span class="status-dot status-dot-assigned"></span>
+          {{ c.fullName }}
+        </div>
+      }
+    </mat-card>
+
+    <mat-card class="chart-card list-card">
+      <h3>Freie Betreuerinnen ({{ idleCaregivers.length }})</h3>
+      @if (idleCaregivers.length === 0) {
+        <p class="empty-state">Alle Betreuerinnen sind im Einsatz.</p>
+      }
+      @for (c of idleCaregivers; track c.caregiverId) {
+        <div class="list-row">
+          <span class="status-dot status-dot-idle"></span>
+          {{ c.fullName }}
+        </div>
+      }
+    </mat-card>
+
+    <mat-card class="chart-card list-card trend-card">
+      <h3>Familien und Auftragswert je Partner</h3>
+      @if (data.partnerBreakdown.length === 0) {
+        <p class="empty-state">Keine Familien einem Partner zugeordnet.</p>
+      }
+      @for (p of data.partnerBreakdown; track p.partnerId) {
+        <div class="partner-row">
+          <div class="partner-header">
+            <span class="partner-name">{{ p.partnerName }}</span>
+            <span class="partner-value">{{ p.totalContractValue | number:'1.0-0' }} €</span>
+          </div>
+          <div class="partner-clients">{{ p.clientNames.join(', ') }}</div>
+        </div>
+      }
+    </mat-card>
+
+    <mat-card class="chart-card list-card trend-card">
+      <h3>Aufträge mit Start in diesem Monat ({{ data.assignmentsStartingThisMonth.length }})</h3>
+      @if (data.assignmentsStartingThisMonth.length === 0) {
+        <p class="empty-state">Keine Aufträge starten diesen Monat.</p>
+      }
+      @for (a of data.assignmentsStartingThisMonth; track a.assignmentId) {
+        <div class="assignment-row">
+          <span class="assignment-date">{{ a.startDate | date:'dd.MM.' }}</span>
+          <span class="assignment-client">{{ a.clientName }}</span>
+          <span class="assignment-city">{{ a.city }}</span>
+          @if (a.contractValue != null) {
+            <span class="assignment-value">{{ a.contractValue | number:'1.0-0' }} €</span>
+          }
+        </div>
+      }
+    </mat-card>
+
+  </div>
+
+}
