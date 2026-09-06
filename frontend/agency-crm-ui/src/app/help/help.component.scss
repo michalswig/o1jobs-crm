@@ -1,0 +1,76 @@
+.page-header {
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.intro-card {
+  background: #f4f8f9;
+  border-left: 4px solid var(--o1jobs-teal);
+  border-radius: 4px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+
+  p {
+    margin: 0;
+    line-height: 1.55;
+    color: #444;
+  }
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.feature-card {
+  padding: 20px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+
+  mat-icon {
+    color: var(--o1jobs-teal);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1rem;
+  }
+}
+
+.feature-card p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #55534d;
+}
+
+.closing-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  background: #fff4f2;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #6b6b6b;
+
+  mat-icon {
+    color: var(--o1jobs-coral);
+    flex-shrink: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+}

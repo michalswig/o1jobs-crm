@@ -14,6 +14,7 @@ import {AssignmentFormComponent} from './crm/assignments/assignment-form/assignm
 import {AssignmentDetailComponent} from './crm/assignments/assignment-detail/assignment-detail.component';
 import {IntermediaryListComponent} from './crm/intermediaries/intermediary-list/intermediary-list.component';
 import {IntermediaryFormComponent} from './crm/intermediaries/intermediary-form/intermediary-form.component';
+import {HelpComponent} from './help/help.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -24,6 +25,7 @@ export const routes: Routes = [
     children: [
       { path: 'clients', component: ClientListComponent },
       { path: 'dashboard', component: DashboardComponent },
+      { path: 'help', component: HelpComponent },
       { path: 'clients/new', component: ClientFormComponent },
       { path: 'clients/edit/:id', component: ClientFormComponent },
       { path: 'caregivers', component: CaregiverListComponent },
